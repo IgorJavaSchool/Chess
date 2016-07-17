@@ -109,7 +109,7 @@ public class ChessBoard {
           writeMessage("This data is not correct");
         }
       }
-      countGame++;
+//      countGame++;
     }
   }
 
