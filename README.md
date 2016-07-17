@@ -25,15 +25,15 @@ ChessGame
 
 Белые начинают
 
-White to move
+**White to move**
 
 Белым предлагается выбрать фигуру:
 
-Select chessman
+**Select chessman**
 
-a8
+**a8**
 
-Make a move
+**Make a move**
 
 После выбора фигуры предлагается сделать ход.
 
