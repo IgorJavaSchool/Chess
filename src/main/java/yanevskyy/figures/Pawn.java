@@ -46,9 +46,8 @@ public class Pawn extends Chess {
     return false;
   }
 
-  public List<Chess> addChess(List<Chess> chesses, int x, int y){
+  public List<Chess> addChess(List<Chess> chessList, int x, int y){
     Chess chess = keepChess(x, y);
-    List<Chess> chessList = new ArrayList<>();
     if (checkMoove(chess))
       chessList.add(chess);
     return chessList;

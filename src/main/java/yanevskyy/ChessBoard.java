@@ -98,10 +98,10 @@ public class ChessBoard {
   public void startGame(){
     User user;
     List<Chess> chessSteps;
-    fillChesses();
     while (!user1.isWin() && !user2.isWin()){
       createBoard();
       printBoard(board);
+      fillChesses();
       user = countGame % 2 != 0 ? user1 : user2;
       writeMessage(user.getName() + " to move");
       setActivChessman(null);
