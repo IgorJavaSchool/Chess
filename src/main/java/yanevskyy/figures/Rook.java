@@ -14,7 +14,7 @@ public class Rook extends Chess {
     super(y, x, name, front);
   }
 
-  public List<Chess> chessMove() {
+  public List<Chess> chessMove(List<Chess> chesses) {
     return null;
   }
 

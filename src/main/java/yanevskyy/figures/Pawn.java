@@ -1,6 +1,8 @@
 package yanevskyy.figures;
 
 import yanevskyy.Chess;
+import yanevskyy.ChessBoard;
+import yanevskyy.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,20 +18,39 @@ public class Pawn extends Chess {
     this.count = 0;
   }
 
-
-  public List<Chess> chessMove() {
+  public List<Chess> chessMove(List<Chess> chesses) {
+    this.chesses = chesses;
     int step = front ? 1 : -1;
-    List<Chess> chesses = new ArrayList<>();
-    chesses.add(keepChess(this.getX() + step, this.getY() + step));
-    chesses.add(keepChess(this.getX(), this.getY() + step));
-    chesses.add(keepChess(this.getX() - step, this.getY() + step));
+    List<Chess> chessList = new ArrayList<>();
+    chessList = addChess(chessList, this.getX() + step, this.getY() + step);
+    chessList = addChess(chessList, this.getX() - step, this.getY() + step);
+    chessList.add(keepChess(this.getX(), this.getY() + step));
     if (count == 0)
-      chesses.add(keepChess(this.getX(), this.getY() + (step + step)));
+      chessList.add(keepChess(this.getX(), this.getY() + (step + step)));
     count++;
-    return chesses;
+    return chessList;
   }
 
   public Chess keepChess(int x, int y){
     return new Pawn(y,x, this.name, front);
+  }
+
+  public boolean checkMoove(Chess chess){
+    for (Chess chessFront : chesses) {
+      if (chessFront.isFront() != chess.isFront()){
+        if (chess.getY() == chessFront.getY() && chess.getX() == chessFront.getX()){
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  public List<Chess> addChess(List<Chess> chesses, int x, int y){
+    Chess chess = keepChess(x, y);
+    List<Chess> chessList = new ArrayList<>();
+    if (checkMoove(chess))
+      chessList.add(chess);
+    return chessList;
   }
 }

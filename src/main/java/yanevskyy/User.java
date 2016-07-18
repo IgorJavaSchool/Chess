@@ -2,6 +2,8 @@ package yanevskyy;
 
 import yanevskyy.figures.*;
 
+import java.util.List;
+
 public class User {
 
   private Chess[] chess;
@@ -38,13 +40,21 @@ public class User {
     return name;
   }
 
-  public void move(String message, Chess activChessman, String[][] board) {
+  public Chess move(String message, Chess activChessman, List<Chess> chesses) {
+    List<Chess> chessList;
     char[] coordinates = message.toCharArray();
     if (coordinates.length == 2) {
       int x = checkLater(String.valueOf(coordinates[0]).toLowerCase());
       int y = 8 - Integer.parseInt(String.valueOf(coordinates[1]));
-//      activChessman.chessMove(x, y);
+      chessList = activChessman.chessMove(chesses);
+      for (Chess chess :chessList) {
+        if (chess.getX() == x && chess.getY() == y) {
+          activChessman.setX(x);
+          activChessman.setX(y);
+        }
+      }
     }
+    return activChessman;
   }
 
   public Chess selectChess(String message){

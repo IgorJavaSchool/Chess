@@ -4,6 +4,7 @@ package yanevskyy;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChessBoard {
@@ -13,14 +14,29 @@ public class ChessBoard {
   private String[][]board;
   private int countGame;
   private Chess activChessman;
+  private List<Chess> chesses;
+
   BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
   public ChessBoard() {
     this.board = new String[8][8];
     this.user1 = new User(false, "Black");
     this.user2 = new User(true, "White");
+    this.countGame = 0;
+    chesses = new ArrayList<>();
   }
 
+  public List<Chess> getChesses() {
+    return chesses;
+  }
+
+  public User getUser1() {
+    return user1;
+  }
+
+  public User getUser2() {
+    return user2;
+  }
   public String[][] getBoard() {
     return board;
   }
@@ -43,8 +59,10 @@ public class ChessBoard {
         board[i][j] = (i + j) % 2 != 0 ? " " : "+";
       }
     }
-    this.user1.createChess(board);
-    this.user2.createChess(board);
+    if (countGame == 0) {
+      this.user1.createChess(board);
+      this.user2.createChess(board);
+    }
   }
 
   public void printBoard(String[][] board){
@@ -78,11 +96,12 @@ public class ChessBoard {
   }
 
   public void startGame(){
-    createBoard();
-    printBoard(board);
     User user;
     List<Chess> chessSteps;
+    fillChesses();
     while (!user1.isWin() && !user2.isWin()){
+      createBoard();
+      printBoard(board);
       user = countGame % 2 != 0 ? user1 : user2;
       writeMessage(user.getName() + " to move");
       setActivChessman(null);
@@ -92,7 +111,7 @@ public class ChessBoard {
           setActivChessman(user.selectChess(readMessage()));
           if(getActivChessman() != null)
           {
-            chessSteps = getActivChessman().chessMove();
+            chessSteps = getActivChessman().chessMove(chesses);
             break;
           }
           else writeMessage("The square is not contain your chess");
@@ -104,12 +123,19 @@ public class ChessBoard {
         try {
           writeMessage("Make a move");
 
-        user.move(readMessage(), activChessman, board);
+        user.move(readMessage(), activChessman, chesses);
         } catch (Exception e) {
           writeMessage("This data is not correct");
         }
+        countGame++;
       }
-//      countGame++;
+    }
+  }
+
+  public void fillChesses(){
+    for (int i = 0; i < 15; i++) {
+      this.chesses.add(getUser1().getChess()[i]);
+      this.chesses.add(getUser2().getChess()[i]);
     }
   }
 

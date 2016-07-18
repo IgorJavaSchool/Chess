@@ -14,7 +14,7 @@ public class Bishop extends Chess {
     super(y, x, name, front);
   }
 
-  public List<Chess> chessMove() {
+  public List<Chess> chessMove(List<Chess> chesses) {
     boolean checkPlace = false;
     checkPlace = check(x,y);
     return null;

@@ -11,6 +11,7 @@ public abstract class Chess {
     public int y;
     public boolean front;
     public String name;
+    public List<Chess> chesses;
 
     /**
      *
@@ -61,7 +62,7 @@ public abstract class Chess {
 
     public boolean alive;
 
-    public abstract List<Chess> chessMove();
+    public abstract List<Chess> chessMove(List<Chess> chesses);
 
     @Override
     public String toString() {
