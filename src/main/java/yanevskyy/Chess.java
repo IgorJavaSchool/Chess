@@ -5,7 +5,7 @@ import java.util.List;
 /**
  *
  */
-public abstract class Chess {
+public abstract class Chess implements Cloneable {
 
     public int x;
     public int y;
@@ -91,5 +91,10 @@ public abstract class Chess {
         result = 31 * result + (front ? 1 : 0);
         result = 31 * result + name.hashCode();
         return result;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

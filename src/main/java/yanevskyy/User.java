@@ -8,14 +8,12 @@ public class User {
 
   private Chess[] chess;
   private boolean front;
-  private boolean check;
   private boolean win;
   private String name;
 
   public User(boolean front, String name) {
     this.chess = new Chess[16];
     this.front = front;
-    this.check = false;
     this.win = false;
     this.name = name;
   }
@@ -28,10 +26,6 @@ public class User {
     return front;
   }
 
-  public boolean isCheck() {
-    return check;
-  }
-
   public boolean isWin() {
     return win;
   }
@@ -40,21 +34,20 @@ public class User {
     return name;
   }
 
-  public Chess move(String message, Chess activChessman, List<Chess> chesses) {
-    List<Chess> chessList;
+  public Chess move(String message, List<Chess> chessSteps, Chess activChessman) throws CloneNotSupportedException {
+    Chess chessman = (Chess) activChessman.clone();
     char[] coordinates = message.toCharArray();
     if (coordinates.length == 2) {
       int x = checkLater(String.valueOf(coordinates[0]).toLowerCase());
       int y = 8 - Integer.parseInt(String.valueOf(coordinates[1]));
-      chessList = activChessman.chessMove(chesses);
-      for (Chess chess :chessList) {
+      for (Chess chess :chessSteps) {
         if (chess.getX() == x && chess.getY() == y) {
-          activChessman.setX(x);
-          activChessman.setX(y);
+          chessman.setX(x);
+          chessman.setY(y);
         }
       }
     }
-    return activChessman;
+    return chessman;
   }
 
   public Chess selectChess(String message){

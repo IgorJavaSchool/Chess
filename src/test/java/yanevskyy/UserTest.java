@@ -3,10 +3,14 @@ package yanevskyy;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import sun.plugin.javascript.navig.Array;
 import yanevskyy.figures.Bishop;
 import yanevskyy.figures.Pawn;
 import yanevskyy.figures.Queen;
 import yanevskyy.figures.Rook;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -17,6 +21,7 @@ public class UserTest {
     String[][] board;
     User user = new User(true, "While");
     User user1 = new User(false, "Black");
+    ChessBoard chessBoard = new ChessBoard();
 
     /**
      *
@@ -24,15 +29,24 @@ public class UserTest {
      */
     @Before
     public void setUp() throws Exception {
-        ChessBoard chessBoard = new ChessBoard();
         chessBoard.createBoard();
         board = chessBoard.getBoard();
         user.createChess(board);
         user1.createChess(board);
+        chessBoard.fillChesses();
     }
 
     @Test
     public void move() throws Exception {
+        List<Chess> chessesStep = new ArrayList<>();
+        chessesStep.add(new Pawn(5,3, "p", false));
+        chessesStep.add(new Pawn(4,3, "p", false));
+        String coordinat = "D3";
+        Pawn chessActiv = new Pawn(5,3, "p", false);
+
+        Chess result = user1.move(coordinat,chessesStep,new Pawn(6,3, "p", false));
+
+        assertEquals(chessActiv,result);
 
     }
 

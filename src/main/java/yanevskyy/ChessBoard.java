@@ -62,6 +62,11 @@ public class ChessBoard {
     if (countGame == 0) {
       this.user1.createChess(board);
       this.user2.createChess(board);
+    } else {
+      for (Chess chess : chesses) {
+        board[chess.getY()][chess.getX()] = chess.toString();
+      }
+
     }
   }
 
@@ -122,20 +127,44 @@ public class ChessBoard {
       while (true){
         try {
           writeMessage("Make a move");
-
-        user.move(readMessage(), activChessman, chesses);
+          Chess chessmanMove = user.move(readMessage(), chessSteps, activChessman);
+          if (!chessmanMove.equals(activChessman)){
+            if (checkMoveChess(chessmanMove)){
+              activChessman.setY(chessmanMove.getY());
+              activChessman.setX(chessmanMove.getX());
+              break;
+            }
+          } else writeMessage("Movement in this square is not possible.");
         } catch (Exception e) {
           writeMessage("This data is not correct");
         }
-        countGame++;
       }
+      countGame++;
     }
   }
 
+  public boolean checkMoveChess(Chess chessActiv){
+    if (chessActiv.getX() > 8 || chessActiv.getX() < 0)
+      return false;
+    if (chessActiv.getY() > 8 || chessActiv.getY() < 0)
+      return false;
+      for (Chess chess : chesses) {
+        if (chess.getX() == chessActiv.getX() && chess.getY() == chessActiv.getY()){
+          if (chess.isFront() == chessActiv.isFront()){
+            return false;
+          } else chess.setAlive(false);
+        }
+      }
+    return true;
+  }
   public void fillChesses(){
     for (int i = 0; i < 15; i++) {
-      this.chesses.add(getUser1().getChess()[i]);
-      this.chesses.add(getUser2().getChess()[i]);
+      if (getUser1().getChess()[i].isAlive()) {
+        this.chesses.add(getUser1().getChess()[i]);
+      }
+      if (getUser2().getChess()[i].isAlive()) {
+        this.chesses.add(getUser2().getChess()[i]);
+      }
     }
   }
 
