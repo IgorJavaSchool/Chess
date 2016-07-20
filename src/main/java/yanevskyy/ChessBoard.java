@@ -60,13 +60,8 @@ public class ChessBoard {
       }
     }
     if (countGame == 0) {
-      this.user1.createChess(board);
-      this.user2.createChess(board);
-    } else {
-      for (Chess chess : chesses) {
-        board[chess.getY()][chess.getX()] = chess.toString();
-      }
-
+      this.user1.createChess();
+      this.user2.createChess();
     }
   }
 
@@ -76,7 +71,18 @@ public class ChessBoard {
     System.out.println(String.format("%-2s%-5s" , "   ","---------------"));
     for (int i = 0; i < 8; i++) {
       System.out.print(8 - i + " |");
+      step:
       for (int j = 0; j < 8; j++) {
+        for (Chess chess : chesses) {
+          if (chess.getY() == i && chess.getX() == j){
+            if (chess.isFront()) {
+              System.out.print("\033[30m" + chess.toString() + "\033[37m|");
+            } else {
+              System.out.print("\033[34m" + chess.toString() + "\033[37m|");
+            }
+            continue step;
+          }
+        }
         System.out.print(board[i][j] + "|");
       }
       System.out.print(" " + (8 - i));
@@ -105,8 +111,8 @@ public class ChessBoard {
     List<Chess> chessSteps;
     while (!user1.isWin() && !user2.isWin()){
       createBoard();
-      printBoard(board);
       fillChesses();
+      printBoard(board);
       user = countGame % 2 != 0 ? user1 : user2;
       writeMessage(user.getName() + " to move");
       setActivChessman(null);
@@ -144,9 +150,9 @@ public class ChessBoard {
   }
 
   public boolean checkMoveChess(Chess chessActiv){
-    if (chessActiv.getX() > 8 || chessActiv.getX() < 0)
+    if (chessActiv.getX() > 7 || chessActiv.getX() < 0)
       return false;
-    if (chessActiv.getY() > 8 || chessActiv.getY() < 0)
+    if (chessActiv.getY() > 7 || chessActiv.getY() < 0)
       return false;
       for (Chess chess : chesses) {
         if (chess.getX() == chessActiv.getX() && chess.getY() == chessActiv.getY()){
@@ -158,7 +164,8 @@ public class ChessBoard {
     return true;
   }
   public void fillChesses(){
-    for (int i = 0; i < 15; i++) {
+    chesses = new ArrayList<>();
+    for (int i = 0; i < 16; i++) {
       if (getUser1().getChess()[i].isAlive()) {
         this.chesses.add(getUser1().getChess()[i]);
       }

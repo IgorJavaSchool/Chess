@@ -31,8 +31,8 @@ public class UserTest {
     public void setUp() throws Exception {
         chessBoard.createBoard();
         board = chessBoard.getBoard();
-        user.createChess(board);
-        user1.createChess(board);
+        user.createChess();
+        user1.createChess();
         chessBoard.fillChesses();
     }
 

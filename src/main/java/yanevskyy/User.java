@@ -93,7 +93,7 @@ public class User {
 
 
 
-  public String[][] createChess(String[][] board){
+  public void createChess(){
     int count = 0;
     int startCreate = (front) ? 0 : 6;
     int endCreate = (front) ? 2 : 8;
@@ -103,7 +103,6 @@ public class User {
       for (int j = 0; j < 8; j++) {
         if (i == selectAction){
           chess[count] = new Pawn(i, j, "p", front);
-            board[i][j] = chess[count].toString();
         } else {
           switch ( j ){
             case 0 :
@@ -121,12 +120,10 @@ public class User {
               break;
             default:break;
           }
-            board[i][j] = chess[count].toString();
         }
         count++;
       }
     }
-    return board;
   }
 
 }
