@@ -41,6 +41,7 @@ public class PawnTest {
 
         List<Chess> result = pawn.chessMove(chessBoard.getChesses());
 
+        assertEquals(result, chesses);
         for (int i = 0; i < chesses.size(); i++) {
             assertEquals(result.get(i).getX(), chesses.get(i).getX());
             assertEquals(result.get(i).getY(), chesses.get(i).getY());
@@ -53,6 +54,7 @@ public class PawnTest {
 
         result = pawn.chessMove(chessBoard.getChesses());
 
+        assertEquals(result, chesses);
         for (int i = 0; i < chesses.size(); i++) {
             assertEquals(result.get(i).getX(), chesses.get(i).getX());
             assertEquals(result.get(i).getY(), chesses.get(i).getY());
@@ -79,6 +81,7 @@ public class PawnTest {
 
         List<Chess> result = pawn.chessMove(chessBoard.getChesses());
 
+        assertEquals(result, chesses);
         for (int i = 0; i < chesses.size(); i++) {
             assertEquals(result.get(i).getX(), chesses.get(i).getX());
             assertEquals(result.get(i).getY(), chesses.get(i).getY());
@@ -98,6 +101,7 @@ public class PawnTest {
 
         List<Chess> result = pawn.chessMove(chessBoard.getChesses());
 
+        assertEquals(result, chesses);
         for (int i = 0; i < chesses.size(); i++) {
             assertEquals(result.get(i).getX(), chesses.get(i).getX());
             assertEquals(result.get(i).getY(), chesses.get(i).getY());
@@ -108,6 +112,7 @@ public class PawnTest {
 
         result = pawn.chessMove(chessBoard.getChesses());
 
+        assertEquals(result, chesses);
         for (int i = 0; i < chesses.size(); i++) {
             assertEquals(result.get(i).getX(), chesses.get(i).getX());
             assertEquals(result.get(i).getY(), chesses.get(i).getY());
@@ -133,6 +138,7 @@ public class PawnTest {
 
         List<Chess> result = pawn.chessMove(chessBoard.getChesses());
 
+        assertEquals(result, chesses);
         for (int i = 0; i < chesses.size(); i++) {
             assertEquals(result.get(i).getX(), chesses.get(i).getX());
             assertEquals(result.get(i).getY(), chesses.get(i).getY());

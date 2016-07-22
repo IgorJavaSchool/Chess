@@ -62,7 +62,6 @@ public class User {
           return activChessman;
         }
       }
-      System.out.println("The square is not contain your chess");
     } else System.out.println("This data is not correct");
     return activChessman;
   }

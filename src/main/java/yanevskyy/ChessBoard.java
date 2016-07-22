@@ -15,6 +15,7 @@ public class ChessBoard {
   private int countGame;
   private Chess activChessman;
   private List<Chess> chesses;
+  private List<Chess> chessesAliveFalse;
 
   BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
@@ -23,7 +24,8 @@ public class ChessBoard {
     this.user1 = new User(false, "Black");
     this.user2 = new User(true, "White");
     this.countGame = 0;
-    chesses = new ArrayList<>();
+    this.chesses = new ArrayList<>();
+    this.chessesAliveFalse = new ArrayList<>();
   }
 
   public List<Chess> getChesses() {
@@ -66,7 +68,16 @@ public class ChessBoard {
   }
 
   public void printBoard(String[][] board){
-    System.out.println(String.format("%-7s%-5s" , "  ", user2.getName()));
+    System.out.print(String.format("%-7s%-5s" , "  ", user2.getName()));
+    if (chessesAliveFalse.size() > 0) {
+      System.out.print(String.format("%-2s%-5s" , "  ", "Destroyed"));
+      for (Chess chess : chessesAliveFalse) {
+        if (!chess.isFront()){
+          System.out.print(String.format("%-1s%-1s" , "  ", "\033[34m" + chess.toString() + "\033[37m"));
+        }
+      }
+    }
+    System.out.println();
     System.out.println("  "+" "+"a"+" "+"b"+" "+"c"+" "+"d"+" "+"e"+" "+"f"+" "+"g"+" "+"h");
     System.out.println(String.format("%-2s%-5s" , "   ","---------------"));
     for (int i = 0; i < 8; i++) {
@@ -90,7 +101,16 @@ public class ChessBoard {
     }
     System.out.println(String.format("%-2s%-5s" , "   ","---------------"));
     System.out.println("  "+" "+"a"+" "+"b"+" "+"c"+" "+"d"+" "+"e"+" "+"f"+" "+"g"+" "+"h");
-    System.out.println(String.format("%-7s%-5s" , "  ",user1.getName()));
+    System.out.print(String.format("%-7s%-5s" , "  ",user1.getName()));
+    if (chessesAliveFalse.size() > 0) {
+      System.out.print(String.format("%-2s%-5s" , "  ", "Destroyed"));
+      for (Chess chess : chessesAliveFalse) {
+        if (chess.isFront()){
+          System.out.print(String.format("%-1s%-1s" , "  ", "\033[30m" + chess.toString() + "\033[37m"));
+        }
+      }
+    }
+    System.out.println();
   }
 
   public void writeMessage(String message){
@@ -120,10 +140,14 @@ public class ChessBoard {
         try {
           writeMessage("Select chessman");
           setActivChessman(user.selectChess(readMessage()));
-          if(getActivChessman() != null)
-          {
+
+          if(getActivChessman() != null){
             chessSteps = getActivChessman().chessMove(chesses);
-            break;
+            if (chessSteps.isEmpty()){
+              writeMessage("The chessman can't move");
+            } else {
+              break;
+            }
           }
           else writeMessage("The square is not contain your chess");
         } catch (Exception e) {
@@ -149,6 +173,13 @@ public class ChessBoard {
     }
   }
 
+
+  /**
+   * Checked move chessman and if it fight opponent's chessman them
+   * opponent's chessman status "Alive = false".
+   * @param chessActiv
+   * @return
+     */
   public boolean checkMoveChess(Chess chessActiv){
     if (chessActiv.getX() > 7 || chessActiv.getX() < 0)
       return false;
@@ -158,11 +189,18 @@ public class ChessBoard {
         if (chess.getX() == chessActiv.getX() && chess.getY() == chessActiv.getY()){
           if (chess.isFront() == chessActiv.isFront()){
             return false;
-          } else chess.setAlive(false);
+          } else{
+            chess.setAlive(false);
+            chessesAliveFalse.add(chess);
+          }
         }
       }
     return true;
   }
+
+  /**
+   * Filled array with chessmen which have status "Alive = true"
+   */
   public void fillChesses(){
     chesses = new ArrayList<>();
     for (int i = 0; i < 16; i++) {

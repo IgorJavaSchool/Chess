@@ -2,6 +2,7 @@ package yanevskyy.figures;
 
 import yanevskyy.Chess;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,15 +15,14 @@ public class Bishop extends Chess {
     super(y, x, name, front);
   }
 
-  public List<Chess> chessMove(List<Chess> chesses) {
-    boolean checkPlace = false;
-    checkPlace = check(x,y);
-    return null;
+  public List<Chess> chessMove(List<Chess> chessmen) throws CloneNotSupportedException {
+    this.chessmen = chessmen;
+    List<Chess> chessList = new ArrayList<>();
+    moveUpLeft(chessList);
+    moveUpRight(chessList);
+    moveDownRight(chessList);
+    moveDownLeft(chessList);
+    return chessList;
   }
 
-  public boolean check(int x, int y){
-    int step = isFront() == true ? 1 : -1;
-
-    return true;
-  }
 }

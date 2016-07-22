@@ -14,7 +14,7 @@ public class King extends Chess {
     super(y, x, name, front);
   }
 
-  public List<Chess> chessMove(List<Chess> chesses) {
+  public List<Chess> chessMove(List<Chess> chessmen) {
     return null;
   }
 
