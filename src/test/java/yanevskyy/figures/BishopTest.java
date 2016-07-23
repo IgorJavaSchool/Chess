@@ -18,7 +18,6 @@ public class BishopTest {
     ChessBoard chessBoard;
     Bishop bishop;
     Pawn pawn;
-    Pawn pawn2;
     @Before
     public void setUp() throws Exception {
         chessBoard = new ChessBoard();
@@ -31,7 +30,6 @@ public class BishopTest {
             if (chess.getY() == 7 && chess.getX() == 2)
                 bishop = (Bishop) chess;
         }
-        chessBoard.printBoard(chessBoard.getBoard());
     }
 
     @After
@@ -46,16 +44,20 @@ public class BishopTest {
         bishop.setX(1);
         bishop.setY(4);
         List<Chess> chesses = new ArrayList<>();
-        chesses.add(bishop.copyChess(1,1));
-        chesses.add(bishop.copyChess(0,2));
+        chesses.add(bishop.copyChess(2,5));
+        chesses.add(bishop.copyChess(0,5));
+        chesses.add(bishop.copyChess(0,3));
+        chesses.add(bishop.copyChess(2,3));
+        chesses.add(bishop.copyChess(3,2));
+        chesses.add(bishop.copyChess(4,1));
 
         List<Chess> result = bishop.chessMove(chessBoard.getChesses());
 
         for (int i = 0; i < result.size(); i++) {
             assertEquals(result.get(i).getX(), chesses.get(i).getX());
             assertEquals(result.get(i).getY(), chesses.get(i).getY());
-        }
-        assertEquals(result, chesses);
-    }
 
+            assertEquals(result, chesses);
+        }
+    }
 }
