@@ -50,13 +50,13 @@ public class User {
     return chessman;
   }
 
-  public Chess selectChess(String message){
+  public Chess selectChess(String message, List<Chess> chessList){
     char[] coordinates = message.toCharArray();
     Chess activChessman = null;
     if (coordinates.length == 2){
       int x = checkLater(String.valueOf(coordinates[0]).toLowerCase());
       int y = 8 - Integer.parseInt(String.valueOf(coordinates[1]));
-      for (Chess figure : chess) {
+      for (Chess figure : chessList) {
         if (figure.getY() == y && figure.getX() == x){
           activChessman = figure;
           return activChessman;

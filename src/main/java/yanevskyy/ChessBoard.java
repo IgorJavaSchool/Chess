@@ -139,7 +139,7 @@ public class ChessBoard {
       while (true) {
         try {
           writeMessage("Select chessman");
-          setActivChessman(user.selectChess(readMessage()));
+          setActivChessman(user.selectChess(readMessage(), chesses));
 
           if(getActivChessman() != null){
             chessSteps = getActivChessman().chessMove(chesses);
@@ -192,6 +192,7 @@ public class ChessBoard {
           } else{
             chess.setAlive(false);
             chessesAliveFalse.add(chess);
+            break;
           }
         }
       }

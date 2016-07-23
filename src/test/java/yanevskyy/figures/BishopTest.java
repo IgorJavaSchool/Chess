@@ -28,9 +28,10 @@ public class BishopTest {
             if (chess.getY() == 1 && chess.getX() == 1) {
                 pawn = (Pawn) chess;
             }
-            if (chess.getY() == 0 && chess.getX() == 2)
+            if (chess.getY() == 7 && chess.getX() == 2)
                 bishop = (Bishop) chess;
         }
+        chessBoard.printBoard(chessBoard.getBoard());
     }
 
     @After
@@ -42,6 +43,8 @@ public class BishopTest {
     public void chessMove() throws Exception {
         pawn.setY(3);
         pawn.setX(1);
+        bishop.setX(1);
+        bishop.setY(4);
         List<Chess> chesses = new ArrayList<>();
         chesses.add(bishop.copyChess(1,1));
         chesses.add(bishop.copyChess(0,2));

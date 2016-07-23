@@ -53,22 +53,22 @@ public class UserTest {
     @Test
     public void selectChess() throws Exception {
         Rook rook = new Rook(0,0, "R", true);
-        Chess chess = user.selectChess("a8");
+        Chess chess = user.selectChess("a8", chessBoard.getChesses());
 
         assertEquals(rook,chess);
 
         Pawn pawn = new Pawn(6,3, "p", false);
-        chess = user1.selectChess("D2");
+        chess = user1.selectChess("D2", chessBoard.getChesses());
 
         assertEquals(pawn,chess);
 
         Queen queen = new Queen(7,3, "Q", false);
-        chess = user1.selectChess("d1");
+        chess = user1.selectChess("d1", chessBoard.getChesses());
 
         assertEquals(queen,chess);
 
         Bishop bishop = new Bishop(0,2, "B", true);
-        chess = user.selectChess("C8");
+        chess = user.selectChess("C8", chessBoard.getChesses());
 
         assertEquals(bishop,chess);
 
