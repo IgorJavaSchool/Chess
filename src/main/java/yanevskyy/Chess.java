@@ -1,5 +1,7 @@
 package yanevskyy;
 
+import yanevskyy.figures.King;
+
 import java.util.List;
 
 /**
@@ -291,6 +293,8 @@ public abstract class Chess implements Cloneable {
             if (checkMoveNegativeFront(stepChess))
                 break;
             step = step + countStep;
+            if (this instanceof King)
+                break;
         }
         this.step = front ? 1 : -1;
     }
@@ -307,6 +311,8 @@ public abstract class Chess implements Cloneable {
             if (checkMoveNegativeFront(stepChess))
                 break;
             step = step + countStep;
+            if (this instanceof King)
+                break;
         }
         this.step = front ? 1 : -1;
     }
@@ -323,6 +329,8 @@ public abstract class Chess implements Cloneable {
             if (checkMoveNegativeFront(stepChess))
                 break;
             step = step + countStep;
+            if (this instanceof King)
+                break;
         }
         this.step = front ? 1 : -1;
     }
@@ -339,6 +347,8 @@ public abstract class Chess implements Cloneable {
             if (checkMoveNegativeFront(stepChess))
                 break;
             step = step + countStep;
+            if (this instanceof King)
+                break;
         }
         this.step = front ? 1 : -1;
     }
@@ -355,6 +365,8 @@ public abstract class Chess implements Cloneable {
             if (checkMoveNegativeFront(stepChess))
                 break;
             step = step + countStep;
+            if (this instanceof King)
+                break;
         }
         this.step = front ? 1 : -1;
     }
@@ -371,6 +383,8 @@ public abstract class Chess implements Cloneable {
             if (checkMoveNegativeFront(stepChess))
                 break;
             step = step + countStep;
+            if (this instanceof King)
+                break;
         }
         this.step = front ? 1 : -1;
     }
@@ -387,6 +401,8 @@ public abstract class Chess implements Cloneable {
             if (checkMoveNegativeFront(stepChess))
                 break;
             step = step + countStep;
+            if (this instanceof King)
+                break;
         }
         this.step = front ? 1 : -1;
     }
@@ -403,6 +419,8 @@ public abstract class Chess implements Cloneable {
             if (checkMoveNegativeFront(stepChess))
                 break;
             step = step + countStep;
+            if (this instanceof King)
+                break;
         }
         this.step = front ? 1 : -1;
     }
