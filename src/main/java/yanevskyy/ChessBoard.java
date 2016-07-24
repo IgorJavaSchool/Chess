@@ -214,6 +214,31 @@ public class ChessBoard {
     }
   }
 
+  public boolean checkShah(boolean front) throws CloneNotSupportedException {
+    Chess myKing = null;
+    List<Chess> chessSteps;
+    for (Chess chess : getChesses()) {
+      if (chess.front == front) {
+        if (chess.toString().equals("К"))
+          myKing = chess;
+        break;
+      }
+    }
+    if (myKing != null) {
+      for (Chess chess : getChesses()) {
+        if (chess.front = !front) {
+          chessSteps = chess.chessMove(getChesses());
+          for (Chess chessFight : chessSteps) {
+            if (chessFight.getX() == myKing.getX() && chessFight.getY() == myKing.getY())
+              return true;
+          }
+
+        }
+      }
+    }
+    return false;
+  }
+
   public static void main(String[] args) {
     ChessBoard chessBoard = new ChessBoard();
     chessBoard.startGame();
