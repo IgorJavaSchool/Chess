@@ -138,6 +138,9 @@ public class ChessBoard {
       setActivChessman(null);
       while (true) {
         try {
+          if (checkShah(user.isFront())){
+            writeMessage("\033[32mYou SHAH"+ "\033[37m");
+          }
           writeMessage("Select chessman");
           setActivChessman(user.selectChess(readMessage(), chesses));
 
@@ -192,7 +195,7 @@ public class ChessBoard {
           } else{
             chess.setAlive(false);
             chessesAliveFalse.add(chess);
-            break;
+            return true;
           }
         }
       }
@@ -219,14 +222,15 @@ public class ChessBoard {
     List<Chess> chessSteps;
     for (Chess chess : getChesses()) {
       if (chess.front == front) {
-        if (chess.toString().equals("К"))
+        if (chess.toString().equals("K")) {
           myKing = chess;
-        break;
+          break;
+        }
       }
     }
     if (myKing != null) {
       for (Chess chess : getChesses()) {
-        if (chess.front = !front) {
+        if (chess.front != front) {
           chessSteps = chess.chessMove(getChesses());
           for (Chess chessFight : chessSteps) {
             if (chessFight.getX() == myKing.getX() && chessFight.getY() == myKing.getY())
@@ -238,6 +242,31 @@ public class ChessBoard {
     }
     return false;
   }
+
+  public boolean checkShahAfterMove(Chess chessMove) throws CloneNotSupportedException {
+    int xActiv = activChessman.getX();
+    int yActiv = activChessman.getY();
+
+    for (Chess chess : chesses) {
+      if (chess.isFront() != chessMove.isFront()) {
+        if (chess.getX() == chessMove.getX() && chess.getY() == chessMove.getY()) {
+          chess.setAlive(false);
+        }
+          activChessman.setX(chessMove.getX());
+          activChessman.setY(chessMove.getY());
+          if (checkShah(activChessman.isFront())){
+            chess.setAlive(true);
+            activChessman.setX(xActiv);
+            activChessman.setY(yActiv);
+            return true;
+          } else
+          chessesAliveFalse.add(chess);
+        }
+      }
+    return false;
+  }
+
+
 
   public static void main(String[] args) {
     ChessBoard chessBoard = new ChessBoard();
