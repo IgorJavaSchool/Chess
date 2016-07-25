@@ -1,5 +1,6 @@
 package yanevskyy;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -18,10 +19,16 @@ import static org.junit.Assert.*;
  * Created by MM on 30.06.2016.
  */
 public class UserTest {
-    String[][] board;
     User user = new User(true, "While");
     User user1 = new User(false, "Black");
-    ChessBoard chessBoard = new ChessBoard();
+    ChessBoard chessBoard;
+    Queen queen;
+    Queen queen2;
+    Pawn pawn;
+    Pawn pawn2;
+    Pawn pawn3;
+    Pawn pawn4;
+    Rook rook;
 
     /**
      *
@@ -29,11 +36,29 @@ public class UserTest {
      */
     @Before
     public void setUp() throws Exception {
+        chessBoard = new ChessBoard();
         chessBoard.createBoard();
-        board = chessBoard.getBoard();
-        user.createChess();
-        user1.createChess();
         chessBoard.fillChesses();
+        user = chessBoard.getUser2();
+        for (Chess chess : chessBoard.getChesses()) {
+            if (chess.getY() == 1 && chess.getX() == 3) {
+                pawn = (Pawn) chess;
+            }
+            if (chess.getY() == 1 && chess.getX() == 2) {
+                pawn2 = (Pawn) chess;
+            }
+            if (chess.getY() == 1 && chess.getX() == 4) {
+                pawn3 = (Pawn) chess;
+            }
+            if (chess.getY() == 7 && chess.getX() == 3)
+                queen = (Queen) chess;
+            if (chess.getY() == 7 && chess.getX() == 7)
+                rook = (Rook) chess;
+        }
+    }
+    @After
+    public void after() throws Exception{
+        chessBoard.printBoard(chessBoard.getBoard());
     }
 
     @Test
@@ -95,8 +120,49 @@ public class UserTest {
     }
 
     @Test
-    public void createChess() throws Exception {
+    public void checkShah() throws Exception {
+        pawn.setY(2);
+        pawn.setX(3);
+        queen.setX(0);
+        queen.setY(4);
 
+        boolean result = user.checkShah(chessBoard.getChesses());
+
+        assertEquals(result, true);
+    }
+
+    @Test
+    public void checkShahAfterMove() throws Exception {
+        Pawn pawnMove = (Pawn) pawn2.copyChess(2,2);
+        pawn.setY(2);
+        pawn.setX(3);
+        queen.setX(0);
+        queen.setY(4);
+        chessBoard.setActivChessman(pawn2);
+
+
+        boolean result = user.checkShahAfterMove( chessBoard, pawnMove);
+
+        assertEquals(result, false);
+
+
+    }
+
+    @Test
+    public void checkShahAfterMove2() throws Exception {
+        Pawn pawnMove = (Pawn) pawn.copyChess(4,2);
+        pawn3.setY(2);
+        pawn3.setX(5);
+        queen.setX(0);
+        queen.setY(4);
+        rook.setY(2);
+        rook.setX(4);
+        chessBoard.setActivChessman(pawn);
+
+
+        boolean result = user.checkShahAfterMove( chessBoard, pawnMove);
+
+        assertEquals(result, true);
     }
 
 }

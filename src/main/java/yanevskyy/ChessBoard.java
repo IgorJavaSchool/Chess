@@ -51,6 +51,10 @@ public class ChessBoard {
     return activChessman;
   }
 
+  public List<Chess> getChessesAliveFalse() {
+    return chessesAliveFalse;
+  }
+
   public void setActivChessman(Chess activChessman) {
     this.activChessman = activChessman;
   }
@@ -128,7 +132,10 @@ public class ChessBoard {
 
   public void startGame(){
     User user;
+    Chess chessmanMove;
     List<Chess> chessSteps;
+    String message;
+    stop:
     while (!user1.isWin() && !user2.isWin()){
       createBoard();
       fillChesses();
@@ -138,11 +145,17 @@ public class ChessBoard {
       setActivChessman(null);
       while (true) {
         try {
-          if (checkShah(user.isFront())){
+          if (user.checkShah(getChesses())){
             writeMessage("\033[32mYou SHAH"+ "\033[37m");
           }
           writeMessage("Select chessman");
-          setActivChessman(user.selectChess(readMessage(), chesses));
+          message = readMessage();
+          if (message.equals("exit")){
+            user.setWin(true);
+            writeMessage(user.getName() + " has lost");
+            continue stop;
+          }
+          setActivChessman(user.selectChess(message, chesses));
 
           if(getActivChessman() != null){
             chessSteps = getActivChessman().chessMove(chesses);
@@ -160,11 +173,17 @@ public class ChessBoard {
       while (true){
         try {
           writeMessage("Make a move");
-          Chess chessmanMove = user.move(readMessage(), chessSteps, activChessman);
+          chessmanMove = user.move(readMessage(), chessSteps, activChessman);
           if (!chessmanMove.equals(activChessman)){
-            if (checkMoveChess(chessmanMove)){
-              activChessman.setY(chessmanMove.getY());
-              activChessman.setX(chessmanMove.getX());
+            if (!user.checkShahAfterMove(this, chessmanMove)) {
+              if (checkMoveChess(chessmanMove)) {
+                activChessman.setY(chessmanMove.getY());
+                activChessman.setX(chessmanMove.getX());
+                break;
+              }
+            } else {
+              writeMessage("\033[32mType \"exit\" and give up or make another run." + "\033[37m");
+              countGame--;
               break;
             }
           } else writeMessage("Movement in this square is not possible.");
@@ -180,17 +199,17 @@ public class ChessBoard {
   /**
    * Checked move chessman and if it fight opponent's chessman them
    * opponent's chessman status "Alive = false".
-   * @param chessActiv
+   * @param chessmanMove
    * @return
      */
-  public boolean checkMoveChess(Chess chessActiv){
-    if (chessActiv.getX() > 7 || chessActiv.getX() < 0)
+  public boolean checkMoveChess(Chess chessmanMove){
+    if (chessmanMove.getX() > 7 || chessmanMove.getX() < 0)
       return false;
-    if (chessActiv.getY() > 7 || chessActiv.getY() < 0)
+    if (chessmanMove.getY() > 7 || chessmanMove.getY() < 0)
       return false;
       for (Chess chess : chesses) {
-        if (chess.getX() == chessActiv.getX() && chess.getY() == chessActiv.getY()){
-          if (chess.isFront() == chessActiv.isFront()){
+        if (chess.getX() == chessmanMove.getX() && chess.getY() == chessmanMove.getY()){
+          if (chess.isFront() == chessmanMove.isFront()){
             return false;
           } else{
             chess.setAlive(false);
@@ -215,55 +234,6 @@ public class ChessBoard {
         this.chesses.add(getUser2().getChess()[i]);
       }
     }
-  }
-
-  public boolean checkShah(boolean front) throws CloneNotSupportedException {
-    Chess myKing = null;
-    List<Chess> chessSteps;
-    for (Chess chess : getChesses()) {
-      if (chess.front == front) {
-        if (chess.toString().equals("K")) {
-          myKing = chess;
-          break;
-        }
-      }
-    }
-    if (myKing != null) {
-      for (Chess chess : getChesses()) {
-        if (chess.front != front) {
-          chessSteps = chess.chessMove(getChesses());
-          for (Chess chessFight : chessSteps) {
-            if (chessFight.getX() == myKing.getX() && chessFight.getY() == myKing.getY())
-              return true;
-          }
-
-        }
-      }
-    }
-    return false;
-  }
-
-  public boolean checkShahAfterMove(Chess chessMove) throws CloneNotSupportedException {
-    int xActiv = activChessman.getX();
-    int yActiv = activChessman.getY();
-
-    for (Chess chess : chesses) {
-      if (chess.isFront() != chessMove.isFront()) {
-        if (chess.getX() == chessMove.getX() && chess.getY() == chessMove.getY()) {
-          chess.setAlive(false);
-        }
-          activChessman.setX(chessMove.getX());
-          activChessman.setY(chessMove.getY());
-          if (checkShah(activChessman.isFront())){
-            chess.setAlive(true);
-            activChessman.setX(xActiv);
-            activChessman.setY(yActiv);
-            return true;
-          } else
-          chessesAliveFalse.add(chess);
-        }
-      }
-    return false;
   }
 
 

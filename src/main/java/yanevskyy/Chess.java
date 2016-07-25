@@ -349,6 +349,7 @@ public abstract class Chess implements Cloneable {
             step = step + countStep;
             if (this instanceof King)
                 break;
+
         }
         this.step = front ? 1 : -1;
     }
