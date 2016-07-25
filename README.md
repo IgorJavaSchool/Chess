@@ -39,3 +39,4 @@ ChessGame
 
 После выбора фигуры предлагается сделать ход. Необходимо так же в консоль ввести координаты, куда переместить фигуру.
 
+![Chess](https://github.com/IgorJavaSchool/Chess/blob/master/Mat.png)
