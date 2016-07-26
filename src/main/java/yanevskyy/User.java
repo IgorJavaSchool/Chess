@@ -136,7 +136,7 @@ public class User {
     List<Chess> chessSteps;
     for (Chess chess : chesses) {
       if (chess.isFront() == isFront()) {
-        if (chess.toString().equals("K")) {
+        if (chess.toString().equals("♔")) {
           myKing = chess;
           break;
         }
