@@ -107,21 +107,21 @@ public class User {
     for (int i = startCreate; i < endCreate; i++) {
       for (int j = 0; j < 8; j++) {
         if (i == selectAction){
-          chess[count] = new Pawn(i, j, "p", front);
+          chess[count] = new Pawn(i, j, "♟", front);
         } else {
           switch ( j ){
             case 0 :
-            case 7 : chess[count] = new Rook(i, j, "R", front);
+            case 7 : chess[count] = new Rook(i, j, "♖", front);
               break;
             case 1 :
-            case 6 : chess[count] = new Knight(i, j, "N", front);
+            case 6 : chess[count] = new Knight(i, j, "♘", front);
               break;
             case 2 :
-            case 5 : chess[count] = new Bishop(i, j, "B", front);
+            case 5 : chess[count] = new Bishop(i, j, "♗", front);
               break;
-            case 3 : chess[count] = new Queen(i, j, "Q", front);
+            case 3 : chess[count] = new Queen(i, j, "♕", front);
               break;
-            case 4 : chess[count] = new King(i, j, "K", front);
+            case 4 : chess[count] = new King(i, j, "♔", front);
               break;
             default:break;
           }

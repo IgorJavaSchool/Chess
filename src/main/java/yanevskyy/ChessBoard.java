@@ -81,7 +81,7 @@ public class ChessBoard {
   public void createBoard(){
     for (int i = 7; i > -1; i--) {
       for (int j = 7; j > -1; j--) {
-        board[i][j] = (i + j) % 2 != 0 ? " " : "+";
+        board[i][j] = (i + j) % 2 != 0 ? "\033[30m☐" + "\033[37m" : "☒";
       }
     }
     if (countGame == 0) {
@@ -103,7 +103,7 @@ public class ChessBoard {
    * Print top part chessboard and username in console
    */
   public void printTopBoard(){
-    System.out.print(String.format("%-7s%-5s" , "  ", user2.getName()));
+    System.out.print(String.format("%-11s%-5s" , "  ", user2.getName()));
     if (chessesAliveFalse.size() > 0) {
       System.out.print(String.format("%-2s%-5s" , "  ", "Destroyed"));
       for (Chess chess : chessesAliveFalse) {
@@ -113,8 +113,8 @@ public class ChessBoard {
       }
     }
     System.out.println();
-    System.out.println("  "+" "+"a"+" "+"b"+" "+"c"+" "+"d"+" "+"e"+" "+"f"+" "+"g"+" "+"h");
-    System.out.println(String.format("%-2s%-5s" , "   ","---------------"));
+    System.out.println("  "+" "+"Ⓐ"+" "+"Ⓑ"+" "+"Ⓒ"+" "+"Ⓓ"+" "+"Ⓔ"+" "+"Ⓕ"+" "+"Ⓖ"+" "+"Ⓗ");
+    System.out.println(String.format("%-2s%-5s" , "   ","_____________________"));
   }
 
   /**
@@ -146,9 +146,9 @@ public class ChessBoard {
    * Print in console bottom part chessboard and username.
    */
   public void printBottomBoard(){
-    System.out.println(String.format("%-2s%-5s" , "   ","---------------"));
-    System.out.println("  "+" "+"a"+" "+"b"+" "+"c"+" "+"d"+" "+"e"+" "+"f"+" "+"g"+" "+"h");
-    System.out.print(String.format("%-7s%-5s" , "  ",user1.getName()));
+    System.out.println(String.format("%-2s%-5s" , "   ","_____________________"));
+    System.out.println("  "+" "+"Ⓐ"+" "+"Ⓑ"+" "+"Ⓒ"+" "+"Ⓓ"+" "+"Ⓔ"+" "+"Ⓕ"+" "+"Ⓖ"+" "+"Ⓗ");
+    System.out.print(String.format("%-11s%-5s" , "  ",user1.getName()));
     if (chessesAliveFalse.size() > 0) {
       System.out.print(String.format("%-2s%-5s" , "  ", "Destroyed"));
       for (Chess chess : chessesAliveFalse) {
