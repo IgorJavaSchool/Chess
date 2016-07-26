@@ -25,7 +25,7 @@ ChessGame
 
 После выбора фигуры предлагается сделать ход. Необходимо так же в консоль ввести координаты, куда переместить фигуру. Справа от имени игрока отображаются побитые им фигуры.
 
-![Chess](https://github.com/IgorJavaSchool/Chess/blob/master/destroed.png)
+![Chess](https://github.com/IgorJavaSchool/Chess/blob/master/distroed.png)
 
 Если игрок выбрал фигуру он обязан сделать ход. Отменить решение не возможно.
 
