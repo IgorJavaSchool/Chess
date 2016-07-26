@@ -34,7 +34,7 @@ public class BishopTest {
 
     @After
     public void tearDown() throws Exception {
-        chessBoard.printBoard(chessBoard.getBoard());
+        chessBoard.printBoard();
     }
 
     @Test

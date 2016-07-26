@@ -47,7 +47,7 @@ public class RookTest {
             assertEquals(result.get(i).getY(), chesses.get(i).getY());
         }
         assertEquals(result, chesses);
-        chessBoard.printBoard(chessBoard.getBoard());
+        chessBoard.printBoard();
     }
 
     @Test
@@ -68,7 +68,7 @@ public class RookTest {
             assertEquals(result.get(i).getY(), chesses.get(i).getY());
         }
         assertEquals(result, chesses);
-        chessBoard.printBoard(chessBoard.getBoard());
+        chessBoard.printBoard();
     }
 
 
@@ -99,7 +99,7 @@ public class RookTest {
             assertEquals(result.get(i).getY(), chesses.get(i).getY());
         }
         assertEquals(result, chesses);
-        chessBoard.printBoard(chessBoard.getBoard());
+        chessBoard.printBoard();
     }
 
     @Test
@@ -123,7 +123,7 @@ public class RookTest {
             assertEquals(result.get(i).getY(), chesses.get(i).getY());
         }
         assertEquals(result, chesses);
-        chessBoard.printBoard(chessBoard.getBoard());
+        chessBoard.printBoard();
     }
 
 /**

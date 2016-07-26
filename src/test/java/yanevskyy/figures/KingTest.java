@@ -35,7 +35,7 @@ public class KingTest {
 
     @After
     public void tearDown() throws Exception {
-        chessBoard.printBoard(chessBoard.getBoard());
+        chessBoard.printBoard();
     }
 
     @Test
@@ -55,10 +55,6 @@ public class KingTest {
         chesses.add(king.copyChess(3,3));
 
         List<Chess> result = king.chessMove(chessBoard.getChesses());
-//        for (int i = 0; i < result.size(); i++) {
-//            System.out.println(result.get(i).toString() + " Result X " + result.get(i).getX() + " Chess X " + chesses.get(i).getX());
-//            System.out.println(result.get(i).toString() + " Result Y " + result.get(i).getY() + " Chess Y " + chesses.get(i).getY());
-//        }
 
         for (int i = 0; i < result.size(); i++) {
             assertEquals(result.get(i).getX(), chesses.get(i).getX());

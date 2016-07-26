@@ -7,8 +7,15 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Used for create and print chessboard. Gets message with coordinate chess from users.
+ * @author Yanevskyy Igor igor2000@inbox.ru
+ * @version 0.1
+ */
 public class ChessBoard {
-
+  /**
+   *
+   */
   private User user1;
   private User user2;
   private User activeUser;
@@ -17,6 +24,9 @@ public class ChessBoard {
   private Chess activeChessman;
   private List<Chess> chesses;
   private List<Chess> chessesAliveFalse;
+  private List<Chess> chessSteps;
+  private String message;
+
 
   BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
@@ -27,6 +37,7 @@ public class ChessBoard {
     this.countGame = 0;
     this.chesses = new ArrayList<>();
     this.chessesAliveFalse = new ArrayList<>();
+    this.chessSteps = new ArrayList<>();
   }
 
   public List<Chess> getChesses() {
@@ -60,6 +71,10 @@ public class ChessBoard {
     this.activeChessman = activChessman;
   }
 
+  public List<Chess> getChessSteps() {
+    return chessSteps;
+  }
+
   /**
    * Create array 8x8, fills empty squares and "+" with out chess.
    */
@@ -85,7 +100,7 @@ public class ChessBoard {
   }
 
   /**
-   * Print top part chess board and username in console
+   * Print top part chessboard and username in console
    */
   public void printTopBoard(){
     System.out.print(String.format("%-7s%-5s" , "  ", user2.getName()));
@@ -128,7 +143,7 @@ public class ChessBoard {
   }
 
   /**
-   * Print in console bottom part chess board and username.
+   * Print in console bottom part chessboard and username.
    */
   public void printBottomBoard(){
     System.out.println(String.format("%-2s%-5s" , "   ","---------------"));
@@ -169,9 +184,7 @@ public class ChessBoard {
   /**
    * Starts game, selects user for move and said user moves.
    */
-  public void startGame(){
-    List<Chess> chessSteps = new ArrayList<>();
-    String message = "";
+  public void startGame() throws CloneNotSupportedException {
     while (!user1.isWin() && !user2.isWin()){
       createBoard();
       fillChesses();
@@ -179,7 +192,7 @@ public class ChessBoard {
       activeUser = countGame % 2 != 0 ? user1 : user2;
       writeMessage(activeUser.getName() + " to move");
       setActiveChessman(null);
-      selectChess(message, chessSteps);
+      selectChess();
       if (message.equals("exit")){
         activeUser.setWin(true);
         writeMessage(activeUser.getName() + " has lost");
@@ -192,10 +205,8 @@ public class ChessBoard {
 
   /**
    * Gets from user message with coordinate and finds chessman by them.
-   * @param message Gets from user.
-   * @param chessSteps All possible steps for selected figure.
      */
-  public void selectChess(String message, List<Chess> chessSteps){
+  public void selectChess(){
     while (true) {
         try {
           if (activeUser.checkShah(getChesses())){
@@ -209,7 +220,7 @@ public class ChessBoard {
             if (chessSteps.isEmpty()){
               writeMessage("The chessman can't move");
             } else {
-              break;
+              return;
             }
           }
           else writeMessage("The square is not contain your chess");
@@ -235,12 +246,12 @@ public class ChessBoard {
             if (checkMoveChess(chessmanMove)) {
               activeChessman.setY(chessmanMove.getY());
               activeChessman.setX(chessmanMove.getX());
-              break;
+              return;
             }
           } else {
             writeMessage("\033[32mType \"exit\" and give up or make another run." + "\033[37m");
             countGame--;
-            break;
+            return;
           }
         } else writeMessage("Movement in this square is not possible.");
       } catch (Exception e) {
@@ -250,7 +261,7 @@ public class ChessBoard {
   }
 
   /**
-   * Checked move chessman and if it fight opponent's chessman them
+   * Checked move chessman and if it fight opponent's chessman then
    * opponent's chessman status "Alive = false".
    * @param chessmanMove
    * @return
@@ -293,6 +304,10 @@ public class ChessBoard {
 
   public static void main(String[] args) {
     ChessBoard chessBoard = new ChessBoard();
-    chessBoard.startGame();
+    try {
+      chessBoard.startGame();
+    } catch (CloneNotSupportedException e) {
+      e.printStackTrace();
+    }
   }
 }

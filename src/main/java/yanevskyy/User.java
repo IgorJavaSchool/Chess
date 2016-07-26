@@ -170,7 +170,6 @@ public class User {
     if (boardTestShah.checkMoveChess(chessMove)) {
       boardTestShah.getActiveChessman().setY(chessMove.getY());
       boardTestShah.getActiveChessman().setX(chessMove.getX());
-//      boardTestShah.fillChesses();
       if (checkShah(boardTestShah.getChesses())) {
         System.out.println("\033[32mYou SHAH" + "\033[37m");
         return true;

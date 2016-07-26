@@ -33,7 +33,7 @@ public class QueenTest {
     }
     @After
     public void after() throws Exception{
-        chessBoard.printBoard(chessBoard.getBoard());
+        chessBoard.printBoard();
     }
 
     @Test
