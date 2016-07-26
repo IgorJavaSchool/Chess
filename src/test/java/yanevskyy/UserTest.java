@@ -2,9 +2,7 @@ package yanevskyy;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import sun.plugin.javascript.navig.Array;
 import yanevskyy.figures.Bishop;
 import yanevskyy.figures.Pawn;
 import yanevskyy.figures.Queen;
@@ -138,7 +136,7 @@ public class UserTest {
         pawn.setX(3);
         queen.setX(0);
         queen.setY(4);
-        chessBoard.setActivChessman(pawn2);
+        chessBoard.setActiveChessman(pawn2);
 
 
         boolean result = user.checkShahAfterMove( chessBoard, pawnMove);
@@ -157,7 +155,7 @@ public class UserTest {
         queen.setY(4);
         rook.setY(2);
         rook.setX(4);
-        chessBoard.setActivChessman(pawn);
+        chessBoard.setActiveChessman(pawn);
 
 
         boolean result = user.checkShahAfterMove( chessBoard, pawnMove);

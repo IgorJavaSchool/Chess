@@ -11,9 +11,10 @@ public class ChessBoard {
 
   private User user1;
   private User user2;
+  private User activeUser;
   private String[][]board;
   private int countGame;
-  private Chess activChessman;
+  private Chess activeChessman;
   private List<Chess> chesses;
   private List<Chess> chessesAliveFalse;
 
@@ -47,18 +48,21 @@ public class ChessBoard {
     return countGame;
   }
 
-  public Chess getActivChessman() {
-    return activChessman;
+  public Chess getActiveChessman() {
+    return activeChessman;
   }
 
   public List<Chess> getChessesAliveFalse() {
     return chessesAliveFalse;
   }
 
-  public void setActivChessman(Chess activChessman) {
-    this.activChessman = activChessman;
+  public void setActiveChessman(Chess activChessman) {
+    this.activeChessman = activChessman;
   }
 
+  /**
+   * Create array 8x8, fills empty squares and "+" with out chess.
+   */
   public void createBoard(){
     for (int i = 7; i > -1; i--) {
       for (int j = 7; j > -1; j--) {
@@ -71,7 +75,19 @@ public class ChessBoard {
     }
   }
 
-  public void printBoard(String[][] board){
+  /**
+   * Print filled chessboard in console.
+   */
+  public void printBoard(){
+    printTopBoard();
+    printBodyBoard();
+    printBottomBoard();
+  }
+
+  /**
+   * Print top part chess board and username in console
+   */
+  public void printTopBoard(){
     System.out.print(String.format("%-7s%-5s" , "  ", user2.getName()));
     if (chessesAliveFalse.size() > 0) {
       System.out.print(String.format("%-2s%-5s" , "  ", "Destroyed"));
@@ -84,6 +100,12 @@ public class ChessBoard {
     System.out.println();
     System.out.println("  "+" "+"a"+" "+"b"+" "+"c"+" "+"d"+" "+"e"+" "+"f"+" "+"g"+" "+"h");
     System.out.println(String.format("%-2s%-5s" , "   ","---------------"));
+  }
+
+  /**
+   * Print board's body in console.
+   */
+  public void printBodyBoard(){
     for (int i = 0; i < 8; i++) {
       System.out.print(8 - i + " |");
       step:
@@ -103,6 +125,12 @@ public class ChessBoard {
       System.out.print(" " + (8 - i));
       System.out.println();
     }
+  }
+
+  /**
+   * Print in console bottom part chess board and username.
+   */
+  public void printBottomBoard(){
     System.out.println(String.format("%-2s%-5s" , "   ","---------------"));
     System.out.println("  "+" "+"a"+" "+"b"+" "+"c"+" "+"d"+" "+"e"+" "+"f"+" "+"g"+" "+"h");
     System.out.print(String.format("%-7s%-5s" , "  ",user1.getName()));
@@ -117,10 +145,18 @@ public class ChessBoard {
     System.out.println();
   }
 
+  /**
+   * Write message in console
+   * @param message
+   */
   public void writeMessage(String message){
     System.out.println(message);
   }
 
+  /**
+   * Gets message from user
+   * @return
+   */
   public String readMessage(){
     try {
       return reader.readLine();
@@ -130,35 +166,46 @@ public class ChessBoard {
     }
   }
 
+  /**
+   * Starts game, selects user for move and said user moves.
+   */
   public void startGame(){
-    User user;
-    Chess chessmanMove;
-    List<Chess> chessSteps;
-    String message;
-    stop:
+    List<Chess> chessSteps = new ArrayList<>();
+    String message = "";
     while (!user1.isWin() && !user2.isWin()){
       createBoard();
       fillChesses();
-      printBoard(board);
-      user = countGame % 2 != 0 ? user1 : user2;
-      writeMessage(user.getName() + " to move");
-      setActivChessman(null);
-      while (true) {
+      printBoard();
+      activeUser = countGame % 2 != 0 ? user1 : user2;
+      writeMessage(activeUser.getName() + " to move");
+      setActiveChessman(null);
+      selectChess(message, chessSteps);
+      if (message.equals("exit")){
+        activeUser.setWin(true);
+        writeMessage(activeUser.getName() + " has lost");
+        break;
+      }
+      moveChess(chessSteps);
+      countGame++;
+    }
+  }
+
+  /**
+   * Gets from user message with coordinate and finds chessman by them.
+   * @param message Gets from user.
+   * @param chessSteps All possible steps for selected figure.
+     */
+  public void selectChess(String message, List<Chess> chessSteps){
+    while (true) {
         try {
-          if (user.checkShah(getChesses())){
+          if (activeUser.checkShah(getChesses())){
             writeMessage("\033[32mYou SHAH"+ "\033[37m");
           }
           writeMessage("Select chessman");
           message = readMessage();
-          if (message.equals("exit")){
-            user.setWin(true);
-            writeMessage(user.getName() + " has lost");
-            continue stop;
-          }
-          setActivChessman(user.selectChess(message, chesses));
-
-          if(getActivChessman() != null){
-            chessSteps = getActivChessman().chessMove(chesses);
+          setActiveChessman(activeUser.selectChess(message, chesses));
+          if(getActiveChessman() != null){
+            chessSteps = getActiveChessman().chessMove(chesses);
             if (chessSteps.isEmpty()){
               writeMessage("The chessman can't move");
             } else {
@@ -170,31 +217,37 @@ public class ChessBoard {
           writeMessage("This data is not correct");
         }
       }
-      while (true){
-        try {
-          writeMessage("Make a move");
-          chessmanMove = user.move(readMessage(), chessSteps, activChessman);
-          if (!chessmanMove.equals(activChessman)){
-            if (!user.checkShahAfterMove(this, chessmanMove)) {
-              if (checkMoveChess(chessmanMove)) {
-                activChessman.setY(chessmanMove.getY());
-                activChessman.setX(chessmanMove.getX());
-                break;
-              }
-            } else {
-              writeMessage("\033[32mType \"exit\" and give up or make another run." + "\033[37m");
-              countGame--;
-              break;
-            }
-          } else writeMessage("Movement in this square is not possible.");
-        } catch (Exception e) {
-          writeMessage("This data is not correct");
-        }
-      }
-      countGame++;
-    }
   }
 
+  /**
+   * Gets from user new coordinate for move. If array chessSteps contain figure
+   * with new coordinate, move the figure to new place.
+   * @param chessSteps All possible steps for selected figure.
+     */
+  public void moveChess(List<Chess> chessSteps){
+    Chess chessmanMove;
+    while (true){
+      try {
+        writeMessage("Make a move");
+        chessmanMove = activeUser.move(readMessage(), chessSteps, activeChessman);
+        if (!chessmanMove.equals(activeChessman)){
+          if (!activeUser.checkShahAfterMove(this, chessmanMove)) {
+            if (checkMoveChess(chessmanMove)) {
+              activeChessman.setY(chessmanMove.getY());
+              activeChessman.setX(chessmanMove.getX());
+              break;
+            }
+          } else {
+            writeMessage("\033[32mType \"exit\" and give up or make another run." + "\033[37m");
+            countGame--;
+            break;
+          }
+        } else writeMessage("Movement in this square is not possible.");
+      } catch (Exception e) {
+        writeMessage("This data is not correct");
+      }
+    }
+  }
 
   /**
    * Checked move chessman and if it fight opponent's chessman them

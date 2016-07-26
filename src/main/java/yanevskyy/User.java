@@ -163,13 +163,13 @@ public class User {
       boardTestShah.getChesses().add((Chess) chess.clone());
     }
     for (Chess chess : boardTestShah.getChesses()) {
-      if (chess.equals(chessBoard.getActivChessman())) {
-        boardTestShah.setActivChessman(chess);
+      if (chess.equals(chessBoard.getActiveChessman())) {
+        boardTestShah.setActiveChessman(chess);
       }
     }
     if (boardTestShah.checkMoveChess(chessMove)) {
-      boardTestShah.getActivChessman().setY(chessMove.getY());
-      boardTestShah.getActivChessman().setX(chessMove.getX());
+      boardTestShah.getActiveChessman().setY(chessMove.getY());
+      boardTestShah.getActiveChessman().setX(chessMove.getX());
 //      boardTestShah.fillChesses();
       if (checkShah(boardTestShah.getChesses())) {
         System.out.println("\033[32mYou SHAH" + "\033[37m");
