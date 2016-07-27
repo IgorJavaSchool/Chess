@@ -3,23 +3,9 @@ ChessGame
 
 #**Игра шахматы.**
 #В консоль отрисовывается шахматная доска. 
-![Chess](https://github.com/IgorJavaSchool/Chess/blob/master/Game.png)
+![Chess](https://github.com/IgorJavaSchool/Chess/blob/master/board.png)
 
 Буквы на доске используются вместо фигур. Каждая буква - начальная буква имени фигуры.
-
-Имена фигур
-
-(K) King   - король (♔, ♚)
-
-(Q) Queen  - ферзь  (♕, ♛)
-
-(R) Rook   - ладья  (♖, ♜)
-
-(B) Bishop - слон   (♗, ♝)
-
-(N) Knight - конь   (♘, ♞)
-
-(p) Pawn   - пешка  (♙, ♟)
 
 Начало игры: 
 
@@ -39,7 +25,7 @@ ChessGame
 
 После выбора фигуры предлагается сделать ход. Необходимо так же в консоль ввести координаты, куда переместить фигуру. Справа от имени игрока отображаются побитые им фигуры.
 
-![Chess](https://github.com/IgorJavaSchool/Chess/blob/master/2016-07-17_171914.png)
+![Chess](https://github.com/IgorJavaSchool/Chess/blob/master/distroed.png)
 
 Если игрок выбрал фигуру он обязан сделать ход. Отменить решение не возможно.
 
