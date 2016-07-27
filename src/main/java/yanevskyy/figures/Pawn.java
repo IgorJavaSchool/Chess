@@ -14,6 +14,7 @@ public class Pawn extends Chess {
   public Pawn(int y, int x, String name, boolean front) {
     super(y, x, name, front);
     this.count = 0;
+    setStepY(front ? 1 : -1);
   }
 
   /**
@@ -23,30 +24,42 @@ public class Pawn extends Chess {
    * @throws CloneNotSupportedException
      */
   public List<Chess> chessMove(List<Chess> chessmen) throws CloneNotSupportedException {
-    this.chessmen = chessmen;
+    setChessmen(chessmen);
     List<Chess> chessList = new ArrayList<>();
-    chessList = addChessFrontNegative(chessList, getX() + step, getY() + step);
-    chessList = addChessFrontNegative(chessList, getX() - step, getY() + step);
-    Chess chessFront = this.copyChess(getX(), getY() + step);
-    if (!checkMove(chessFront))
-      chessList.add(copyChess(getX(), getY() + step));
-    if (count == 0 && (!checkMove(chessFront)))
-        chessList.add(copyChess(getX(), getY() + (step + step)));
-      count++;
+    setStepX(1);
+    moveFight(chessList);
+    setStepX(-1);
+    moveFight(chessList);
+    setStepX(0);
+    if (count == 0) {
+      moveAhead(chessList);
+      setStepY(isFront() ? 1 : -1);
+    }
+    moveAhead(chessList);
     return chessList;
   }
 
-  /**
-   * Checked array with all chessmen. Return true if one chessman contains some the coordinate.
-   * @param chess
-   * @return
-   */
-  public boolean checkMove(Chess chess){
-    for (Chess chessFront : chessmen) {
-        if (chess.getY() == chessFront.getY() && chess.getX() == chessFront.getX()){
-          return true;
+  public void moveFight(List<Chess> chessList) throws CloneNotSupportedException {
+    setStepChess(this.copyChess(getX(), getY()));
+        getStepChess().setX(getStepChess().getX() + getStepX());
+    getStepChess().setY(getStepChess().getY() + getStepY());
+    if (checkMoveNegativeFront(getStepChess())){
+      chessList.add(getStepChess().copyChess(getStepChess().getX(), getStepChess().getY()));
       }
     }
-    return false;
+
+  public void moveAhead(List<Chess> chessList) throws CloneNotSupportedException {
+    setStepChess(this.copyChess(getX(), getY()));
+    if (count == 0) {
+      setStepY(getStepY() + getStepY());
+    }
+      if (getStepChess().checkMove()) {
+        if (!checkMoveNegativeFront(getStepChess())) {
+          getStepChess().setX(getStepChess().getX() + getStepX());
+          getStepChess().setY(getStepChess().getY() + getStepY());
+          chessList.add(getStepChess().copyChess(getStepChess().getX(), getStepChess().getY()));
+          count++;
+        }
+      }
   }
 }

@@ -214,6 +214,9 @@ public class ChessBoard {
           }
           writeMessage("Select chessman");
           message = readMessage();
+          if (message.equals("exit")){
+            break;
+          }
           setActiveChessman(activeUser.selectChess(message, chesses));
           if(getActiveChessman() != null){
             chessSteps = getActiveChessman().chessMove(chesses);
@@ -246,12 +249,12 @@ public class ChessBoard {
             if (checkMoveChess(chessmanMove)) {
               activeChessman.setY(chessmanMove.getY());
               activeChessman.setX(chessmanMove.getX());
-              return;
+              break;
             }
           } else {
             writeMessage("\033[32mType \"exit\" and give up or make another run." + "\033[37m");
             countGame--;
-            return;
+            break;
           }
         } else writeMessage("Movement in this square is not possible.");
       } catch (Exception e) {
@@ -267,10 +270,6 @@ public class ChessBoard {
    * @return
      */
   public boolean checkMoveChess(Chess chessmanMove){
-    if (chessmanMove.getX() > 7 || chessmanMove.getX() < 0)
-      return false;
-    if (chessmanMove.getY() > 7 || chessmanMove.getY() < 0)
-      return false;
       for (Chess chess : chesses) {
         if (chess.getX() == chessmanMove.getX() && chess.getY() == chessmanMove.getY()){
           if (chess.isFront() == chessmanMove.isFront()){

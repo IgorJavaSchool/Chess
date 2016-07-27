@@ -16,16 +16,32 @@ public class Queen extends Chess {
   }
 
   public List<Chess> chessMove(List<Chess> chessmen) throws CloneNotSupportedException {
-    this.chessmen = chessmen;
+    setChessmen(chessmen);
     List<Chess> chessList = new ArrayList<>();
-    moveRight(chessList);
-    moveLeft(chessList);
-    moveDown(chessList);
-    moveUp(chessList);
-    moveUpLeft(chessList);
-    moveUpRight(chessList);
-    moveDownRight(chessList);
-    moveDownLeft(chessList);
+    setStepX(1);
+    setStepY(0);
+    move(chessList);
+    setStepX(-1);
+    setStepY(0);
+    move(chessList);
+    setStepX(0);
+    setStepY(1);
+    move(chessList);
+    setStepX(0);
+    setStepY(-1);
+    move(chessList);
+    setStepX(-1);
+    setStepY(-1);
+    move(chessList);
+    setStepX(1);
+    setStepY(-1);
+    move(chessList);
+    setStepX(1);
+    setStepY(1);
+    move(chessList);
+    setStepX(-1);
+    setStepY(1);
+    move(chessList);
     return chessList;
   }
 

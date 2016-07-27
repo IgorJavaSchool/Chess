@@ -21,7 +21,6 @@ public class UserTest {
     User user1 = new User(false, "Black");
     ChessBoard chessBoard;
     Queen queen;
-    Queen queen2;
     Pawn pawn;
     Pawn pawn2;
     Pawn pawn3;
@@ -48,6 +47,9 @@ public class UserTest {
             if (chess.getY() == 1 && chess.getX() == 4) {
                 pawn3 = (Pawn) chess;
             }
+            if (chess.getY() == 1 && chess.getX() == 5) {
+                pawn4 = (Pawn) chess;
+            }
             if (chess.getY() == 7 && chess.getX() == 3)
                 queen = (Queen) chess;
             if (chess.getY() == 7 && chess.getX() == 7)
@@ -62,12 +64,12 @@ public class UserTest {
     @Test
     public void move() throws Exception {
         List<Chess> chessesStep = new ArrayList<>();
-        chessesStep.add(new Pawn(5,3, "p", false));
-        chessesStep.add(new Pawn(4,3, "p", false));
+        chessesStep.add(new Pawn(5,3, "♟", false));
+        chessesStep.add(new Pawn(4,3, "♟", false));
         String coordinat = "D3";
-        Pawn chessActiv = new Pawn(5,3, "p", false);
+        Pawn chessActiv = new Pawn(5,3, "♟", false);
 
-        Chess result = user1.move(coordinat,chessesStep,new Pawn(6,3, "p", false));
+        Chess result = user1.move(coordinat,chessesStep,new Pawn(6,3, "♟", false));
 
         assertEquals(chessActiv,result);
 
@@ -75,22 +77,22 @@ public class UserTest {
 
     @Test
     public void selectChess() throws Exception {
-        Rook rook = new Rook(0,0, "R", true);
+        Rook rook = new Rook(0,0, "♖", true);
         Chess chess = user.selectChess("a8", chessBoard.getChesses());
 
         assertEquals(rook,chess);
 
-        Pawn pawn = new Pawn(6,3, "p", false);
+        Pawn pawn = new Pawn(6,3, "♟", false);
         chess = user1.selectChess("D2", chessBoard.getChesses());
 
         assertEquals(pawn,chess);
 
-        Queen queen = new Queen(7,3, "Q", false);
+        Queen queen = new Queen(7,3, "♕", false);
         chess = user1.selectChess("d1", chessBoard.getChesses());
 
         assertEquals(queen,chess);
 
-        Bishop bishop = new Bishop(0,2, "B", true);
+        Bishop bishop = new Bishop(0,2, "♗", true);
         chess = user.selectChess("C8", chessBoard.getChesses());
 
         assertEquals(bishop,chess);
@@ -161,6 +163,23 @@ public class UserTest {
         boolean result = user.checkShahAfterMove( chessBoard, pawnMove);
 
         assertEquals(result, true);
+    }
+
+    @Test
+    public void checkShahAfterMove3() throws Exception {
+        Pawn pawnMove = (Pawn) pawn4.copyChess(4,2);
+        pawn3.setY(2);
+        pawn3.setX(5);
+        queen.setX(0);
+        queen.setY(4);
+        rook.setY(2);
+        rook.setX(4);
+        chessBoard.setActiveChessman(pawn4);
+
+
+        boolean result = user.checkShahAfterMove( chessBoard, pawnMove);
+
+        assertEquals(result, false);
     }
 
 }

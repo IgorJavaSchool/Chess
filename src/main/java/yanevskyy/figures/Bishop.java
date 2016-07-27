@@ -16,12 +16,20 @@ public class Bishop extends Chess {
   }
 
   public List<Chess> chessMove(List<Chess> chessmen) throws CloneNotSupportedException {
-    this.chessmen = chessmen;
+    setChessmen(chessmen);
     List<Chess> chessList = new ArrayList<>();
-    moveUpLeft(chessList);
-    moveUpRight(chessList);
-    moveDownRight(chessList);
-    moveDownLeft(chessList);
+    setStepX(-1);
+    setStepY(-1);
+    move(chessList);
+    setStepX(1);
+    setStepY(-1);
+    move(chessList);
+    setStepX(1);
+    setStepY(1);
+    move(chessList);
+    setStepX(-1);
+    setStepY(1);
+    move(chessList);
     return chessList;
   }
 

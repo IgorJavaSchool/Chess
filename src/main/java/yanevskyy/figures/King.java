@@ -16,17 +16,42 @@ public class King extends Chess {
   }
 
   public List<Chess> chessMove(List<Chess> chessmen) throws CloneNotSupportedException {
-    this.chessmen = chessmen;
+    setChessmen(chessmen);
     List<Chess> chessList = new ArrayList<>();
-    moveLeft(chessList);
-    moveRight(chessList);
-    moveDown(chessList);
-    moveUp(chessList);
-    moveUpLeft(chessList);
-    moveUpRight(chessList);
-    moveDownRight(chessList);
-    moveDownLeft(chessList);
+    setStepX(-1);
+    setStepY(0);
+    move(chessList);
+    setStepX(1);
+    setStepY(0);
+    move(chessList);
+    setStepX(0);
+    setStepY(-1);
+    move(chessList);
+    setStepX(0);
+    setStepY(1);
+    move(chessList);
+    setStepX(1);
+    setStepY(1);
+    move(chessList);
+    setStepX(-1);
+    setStepY(1);
+    move(chessList);
+    setStepX(-1);
+    setStepY(-1);
+    move(chessList);
+    setStepX(1);
+    setStepY(-1);
+    move(chessList);
     return chessList;
+  }
+
+  public void move(List<Chess> chessList) throws CloneNotSupportedException {
+    setStepChess(this.copyChess(getX(), getY()));
+    if (getStepChess().checkMove()){
+      getStepChess().setX(getStepChess().getX() + getStepX());
+      getStepChess().setY(getStepChess().getY() + getStepY());
+      chessList.add(getStepChess().copyChess(getStepChess().getX(),getStepChess().getY()));
+    }
   }
 
 }

@@ -18,12 +18,17 @@ public class KingTest {
     ChessBoard chessBoard;
     King king;
     Pawn pawn;
+    ChessBoard chessBoardTest;
+    List<Chess> result;
+    List<Chess> chesses;
 
     @Before
     public void setUp() throws Exception {
         chessBoard = new ChessBoard();
         chessBoard.createBoard();
         chessBoard.fillChesses();
+        chessBoardTest = new ChessBoard();
+        chessBoardTest.createBoard();
         for (Chess chess : chessBoard.getChesses()) {
             if (chess.getY() == 1 && chess.getX() == 1) {
                 pawn = (Pawn) chess;
@@ -35,7 +40,14 @@ public class KingTest {
 
     @After
     public void tearDown() throws Exception {
-        chessBoard.printBoard();
+        for (int i = 0; i < result.size(); i++) {
+            System.out.println(result.get(i).toString() + "X  " + result.get(i).getX() + "  " + chesses.get(i).getX());
+            System.out.println(result.get(i).toString() + "Y  " + result.get(i).getY() + "  " + chesses.get(i).getY());
+        }
+        for (int i = 0; i < result.size(); i++) {
+            chessBoardTest.getChesses().add(result.get(i));
+        }
+        chessBoardTest.printBoard();
     }
 
     @Test
@@ -44,7 +56,7 @@ public class KingTest {
         pawn.setX(1);
         king.setX(2);
         king.setY(4);
-        List<Chess> chesses = new ArrayList<>();
+        chesses = new ArrayList<>();
         chesses.add(king.copyChess(1,4));
         chesses.add(king.copyChess(3,4));
         chesses.add(king.copyChess(2,3));
@@ -53,8 +65,10 @@ public class KingTest {
         chesses.add(king.copyChess(1,5));
         chesses.add(king.copyChess(1,3));
         chesses.add(king.copyChess(3,3));
+        chessBoard.printBoard();
 
-        List<Chess> result = king.chessMove(chessBoard.getChesses());
+
+        result = king.chessMove(chessBoard.getChesses());
 
         for (int i = 0; i < result.size(); i++) {
             assertEquals(result.get(i).getX(), chesses.get(i).getX());
