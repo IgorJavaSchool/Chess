@@ -3,6 +3,7 @@ package yanevskyy.figures;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import yanevskyy.BoardGame;
 import yanevskyy.Chess;
 import yanevskyy.ChessBoard;
 
@@ -15,10 +16,10 @@ import static org.junit.Assert.*;
  * Created by MM on 22.07.2016.
  */
 public class BishopTest {
-    ChessBoard chessBoard;
+    BoardGame chessBoard;
     Bishop bishop;
     Pawn pawn;
-    ChessBoard chessBoardTest;
+    BoardGame chessBoardTest;
     List<Chess> result;
     List<Chess> chesses;
 
@@ -58,11 +59,11 @@ public class BishopTest {
         bishop.setY(4);
         chesses = new ArrayList<>();
         chesses.add(bishop.copyChess(0,3));
+        chesses.add(bishop.copyChess(0,5));
         chesses.add(bishop.copyChess(2,3));
         chesses.add(bishop.copyChess(3,2));
         chesses.add(bishop.copyChess(4,1));
         chesses.add(bishop.copyChess(2,5));
-        chesses.add(bishop.copyChess(0,5));
 
         chessBoard.printBoard();
 

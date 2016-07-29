@@ -12,7 +12,7 @@ import java.util.List;
  * @author Yanevskyy Igor igor2000@inbox.ru
  * @version 0.1
  */
-public class ChessBoard {
+public class ChessBoard implements BoardGame {
   /**
    *
    */
@@ -49,10 +49,10 @@ public class ChessBoard {
   User getUser2() {
     return user2;
   }
-  Chess getActiveChessman() {
+  public Chess getActiveChessman() {
     return activeChessman;
   }
-  void setActiveChessman(Chess activChessman) {
+  public void setActiveChessman(Chess activChessman) {
     this.activeChessman = activChessman;
   }
 
@@ -250,7 +250,7 @@ public class ChessBoard {
    * @param chessmanMove copy active figure which contain coordinates new step.
    * @return true if chessmanMove can make run.
      */
-  boolean checkMoveChess(Chess chessmanMove){
+  public boolean checkMoveChess(Chess chessmanMove){
       for (Chess chess : chesses) {
         if (chess.getX() == chessmanMove.getX() && chess.getY() == chessmanMove.getY()){
           if (chess.isFront() == chessmanMove.isFront()){

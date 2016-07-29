@@ -157,8 +157,8 @@ public class User {
     return false;
   }
 
-  boolean checkShahAfterMove(ChessBoard chessBoard, Chess chessMove) throws CloneNotSupportedException {
-    ChessBoard boardTestShah = new ChessBoard();
+  boolean checkShahAfterMove(BoardGame chessBoard, Chess chessMove) throws CloneNotSupportedException {
+    BoardGame boardTestShah = new ChessBoard();
     boardTestShah.createBoard();
     for (Chess chess : chessBoard.getChesses()) {
       boardTestShah.getChesses().add((Chess) chess.clone());

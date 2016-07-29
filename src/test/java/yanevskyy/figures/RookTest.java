@@ -3,23 +3,23 @@ package yanevskyy.figures;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import yanevskyy.BoardGame;
 import yanevskyy.Chess;
 import yanevskyy.ChessBoard;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
 /**
  * Created by MM on 21.07.2016.
  */
 public class RookTest {
-    ChessBoard chessBoard;
-    Rook rook;
-    Pawn pawn;
-    ChessBoard chessBoardTest;
+    BoardGame chessBoard;
+    Chess rook;
+    Chess pawn;
+    BoardGame chessBoardTest;
     List<Chess> result;
     List<Chess> chesses;
 
