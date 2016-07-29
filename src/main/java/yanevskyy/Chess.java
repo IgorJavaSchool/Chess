@@ -196,7 +196,7 @@ public abstract class Chess implements Cloneable {
      * @return If movement possible.
      * @throws CloneNotSupportedException
      */
-    protected boolean checkMove() throws CloneNotSupportedException {
+    public boolean checkMove() throws CloneNotSupportedException {
         if (getY() + stepY > 7 || getY() + stepY < 0)
             return false;
         if (getX() + stepX > 7 || getX() + stepX < 0)
