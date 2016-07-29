@@ -13,23 +13,31 @@ import java.util.List;
  * @version 0.1
  */
 public class ChessBoard implements BoardGame {
-  /**
-   *
-   */
+  /*First user*/
   private User user1;
+  /*Second user*/
   private User user2;
+  /*Active user at this time*/
   private User activeUser;
+  /*Array 8x8 imitation chess board*/
   private String[][]board;
+  /*The numbers of moves*/
   private int countGame;
+  /*Active chessman at this time*/
   private Chess activeChessman;
+  /*All alive chessmen on the board*/
   private List<Chess> chesses;
+  /*All destroyed chessmen on the board*/
   private List<Chess> chessesAliveFalse;
+  /*All possible steps for this figure*/
   private List<Chess> chessSteps;
+  /*Message in console*/
   private String message;
-
-
   private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
+  /**
+   * Constructor default.
+   */
   public ChessBoard() {
     this.board = new String[8][8];
     this.user1 = new User(false, "Black");
@@ -40,15 +48,57 @@ public class ChessBoard implements BoardGame {
     this.chessSteps = new ArrayList<>();
   }
 
-  @Override
-  public List<Chess> getChesses() {
-    return chesses;
+
+  private User getActiveUser() {
+    return activeUser;
   }
+
+  private void setActiveUser(User activeUser) {
+    this.activeUser = activeUser;
+  }
+
+  private String[][] getBoard() {
+    return board;
+  }
+
+
+  private int getCountGame() {
+    return countGame;
+  }
+
+  private void setChesses(List<Chess> chesses) {
+    this.chesses = chesses;
+  }
+
+  private List<Chess> getChessesAliveFalse() {
+    return chessesAliveFalse;
+  }
+
+  private List<Chess> getChessSteps() {
+    return chessSteps;
+  }
+
+  private void setChessSteps(List<Chess> chessSteps) {
+    this.chessSteps = chessSteps;
+  }
+
+  private String getMessage() {
+    return message;
+  }
+
+  private void setMessage(String message) {
+    this.message = message;
+  }
+
   User getUser1() {
     return user1;
   }
   User getUser2() {
     return user2;
+  }
+  @Override
+  public List<Chess> getChesses() {
+    return chesses;
   }
   @Override
   public Chess getActiveChessman() {
@@ -66,12 +116,12 @@ public class ChessBoard implements BoardGame {
   public void createBoard(){
     for (int i = 7; i > -1; i--) {
       for (int j = 7; j > -1; j--) {
-        board[i][j] = (i + j) % 2 != 0 ? "\033[30m☐" + "\033[37m" : "☒";
+        getBoard()[i][j] = (i + j) % 2 != 0 ? "\033[30m☐" + "\033[37m" : "☒";
       }
     }
-    if (countGame == 0) {
-      this.user1.createChess();
-      this.user2.createChess();
+    if (getCountGame() == 0) {
+      this.getUser1().createChess();
+      this.getUser2().createChess();
     }
   }
 
@@ -89,10 +139,10 @@ public class ChessBoard implements BoardGame {
    * Print top part chessboard and username in console
    */
   private void printTopBoard(){
-    System.out.print(String.format("%-11s%-5s" , "  ", user2.getName()));
-    if (chessesAliveFalse.size() > 0) {
+    System.out.print(String.format("%-11s%-5s" , "  ", getUser2().getName()));
+    if (getChessesAliveFalse().size() > 0) {
       System.out.print(String.format("%-2s%-5s" , "  ", "Destroyed"));
-      for (Chess chess : chessesAliveFalse) {
+      for (Chess chess : getChessesAliveFalse()) {
         if (!chess.isFront()){
           System.out.print(String.format("%-1s%-1s" , "  ", "\033[34m" + chess.toString() + "\033[37m"));
         }
@@ -111,7 +161,7 @@ public class ChessBoard implements BoardGame {
       System.out.print(8 - i + " |");
       step:
       for (int j = 0; j < 8; j++) {
-        for (Chess chess : chesses) {
+        for (Chess chess : getChesses()) {
           if (chess.getY() == i && chess.getX() == j){
             if (chess.isFront()) {
               System.out.print("\033[30m" + chess.toString() + "\033[37m|");
@@ -121,7 +171,7 @@ public class ChessBoard implements BoardGame {
             continue step;
           }
         }
-        System.out.print(board[i][j] + "|");
+        System.out.print(getBoard()[i][j] + "|");
       }
       System.out.print(" " + (8 - i));
       System.out.println();
@@ -134,10 +184,10 @@ public class ChessBoard implements BoardGame {
   private void printBottomBoard(){
     System.out.println(String.format("%-2s%-5s" , "   ","_____________________"));
     System.out.println("  "+" "+"Ⓐ"+" "+"Ⓑ"+" "+"Ⓒ"+" "+"Ⓓ"+" "+"Ⓔ"+" "+"Ⓕ"+" "+"Ⓖ"+" "+"Ⓗ");
-    System.out.print(String.format("%-11s%-5s" , "  ",user1.getName()));
-    if (chessesAliveFalse.size() > 0) {
+    System.out.print(String.format("%-11s%-5s" , "  ",getUser1().getName()));
+    if (getChessesAliveFalse().size() > 0) {
       System.out.print(String.format("%-2s%-5s" , "  ", "Destroyed"));
-      for (Chess chess : chessesAliveFalse) {
+      for (Chess chess : getChessesAliveFalse()) {
         if (chess.isFront()){
           System.out.print(String.format("%-1s%-1s" , "  ", "\033[30m" + chess.toString() + "\033[37m"));
         }
@@ -171,70 +221,75 @@ public class ChessBoard implements BoardGame {
    * Starts game, selects user for move and said user moves.
    */
   private void startGame() throws CloneNotSupportedException {
-    while (!user1.isWin() && !user2.isWin()){
+    while (!getUser1().isWin() && !getUser2().isWin()){
       createBoard();
       fillChesses();
       printBoard();
-      activeUser = countGame % 2 != 0 ? user1 : user2;
-      writeMessage(activeUser.getName() + " to move");
+      setActiveUser(getCountGame() % 2 != 0 ? getUser1() : getUser2());
+      writeMessage(getActiveUser().getName() + " to move");
       setActiveChessman(null);
       selectChess();
-      if (message.equals("exit")){
-        activeUser.setWin(true);
-        writeMessage(activeUser.getName() + " has lost");
+      if (getMessage().equals("exit")){
+        getActiveUser().setWin(true);
+        writeMessage(getActiveUser().getName() + " has lost");
         break;
       }
-      moveChess(chessSteps);
+      moveChess(getChessSteps());
       countGame++;
+    }
+    try {
+      reader.close();
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 
   /**
    * Gets from user message with coordinate and finds chessman by them.
-     */
+   */
   private void selectChess(){
     while (true) {
-        try {
-          if (activeUser.checkShah(getChesses())){
-            writeMessage("\033[32mYou SHAH"+ "\033[37m");
-          }
-          writeMessage("Select chessman");
-          message = readMessage();
-          if (message.equals("exit")){
-            break;
-          }
-          setActiveChessman(activeUser.selectChess(message, chesses));
-          if(getActiveChessman() != null){
-            chessSteps = getActiveChessman().chessMove(chesses);
-            if (chessSteps.isEmpty()){
-              writeMessage("The chessman can't move");
-            } else {
-              return;
-            }
-          }
-          else writeMessage("The square is not contain your chess");
-        } catch (Exception e) {
-          writeMessage("This data is not correct");
+      try {
+        if (getActiveUser().checkShah(getChesses())){
+          writeMessage("\033[32mYou SHAH"+ "\033[37m");
         }
+        writeMessage("Select chessman");
+        setMessage(readMessage());
+        if (getMessage().equals("exit")){
+          break;
+        }
+        setActiveChessman(getActiveUser().selectChess(getMessage(), getChesses()));
+        if(getActiveChessman() != null){
+          setChessSteps(getActiveChessman().chessMove(getChesses()));
+          if (getChessSteps().isEmpty()){
+            writeMessage("The chessman can't move");
+          } else {
+            return;
+          }
+        }
+        else writeMessage("The square is not contain your chess");
+      } catch (Exception e) {
+        writeMessage("This data is not correct");
       }
+    }
   }
 
   /**
    * Gets from user new coordinate for move. If array chessSteps contain figure
    * with new coordinate, move the figure to new place.
    * @param chessSteps All possible steps for selected figure.
-     */
+   */
   private void moveChess(List<Chess> chessSteps){
     Chess chessmanMove;
     while (true){
       try {
         writeMessage("Make a move");
-        chessmanMove = activeUser.move(readMessage(), chessSteps, activeChessman);
-        if (!chessmanMove.equals(activeChessman)){
-          if (!activeUser.checkShahAfterMove(this, chessmanMove)) {
+        chessmanMove = getActiveUser().move(readMessage(), chessSteps, getActiveChessman());
+        if (!chessmanMove.equals(getActiveChessman())){
+          if (!getActiveUser().checkShahAfterMove(this, chessmanMove)) {
             if (checkMoveChess(chessmanMove)) {
-              activeChessman.setY(chessmanMove.getY());
-              activeChessman.setX(chessmanMove.getX());
+              getActiveChessman().setY(chessmanMove.getY());
+              getActiveChessman().setX(chessmanMove.getX());
               break;
             }
           } else {
@@ -254,20 +309,20 @@ public class ChessBoard implements BoardGame {
    * opponent's chessman status "Alive = false".
    * @param chessmanMove copy active figure which contain coordinates new step.
    * @return true if chessmanMove can make run.
-     */
+   */
   @Override
   public boolean checkMoveChess(Chess chessmanMove){
-      for (Chess chess : chesses) {
-        if (chess.getX() == chessmanMove.getX() && chess.getY() == chessmanMove.getY()){
-          if (chess.isFront() == chessmanMove.isFront()){
-            return false;
-          } else{
-            chess.setAlive(false);
-            chessesAliveFalse.add(chess);
-            return true;
-          }
+    for (Chess chess : getChesses()) {
+      if (chess.getX() == chessmanMove.getX() && chess.getY() == chessmanMove.getY()){
+        if (chess.isFront() == chessmanMove.isFront()){
+          return false;
+        } else{
+          chess.setAlive(false);
+          getChessesAliveFalse().add(chess);
+          return true;
         }
       }
+    }
     return true;
   }
 
@@ -276,13 +331,13 @@ public class ChessBoard implements BoardGame {
    */
   @Override
   public void fillChesses(){
-    chesses = new ArrayList<>();
+    setChesses(new ArrayList<Chess>());
     for (int i = 0; i < 16; i++) {
       if (getUser1().getChess()[i].isAlive()) {
-        this.chesses.add(getUser1().getChess()[i]);
+        getChesses().add(getUser1().getChess()[i]);
       }
       if (getUser2().getChess()[i].isAlive()) {
-        this.chesses.add(getUser2().getChess()[i]);
+        getChesses().add(getUser2().getChess()[i]);
       }
     }
   }

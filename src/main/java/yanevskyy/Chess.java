@@ -5,21 +5,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Imitations chessman.
+ * @author Yanevskyy Igor igor2000@inbox.ru
+ * @version 0.1
  */
 public abstract class Chess implements Cloneable {
-
+    /*Horizontal coordinates*/
     private int x;
+    /*Vertical coordinates*/
     private int y;
+    /*One step horizontally*/
     private int stepX;
+    /*One step vertically*/
     private int stepY;
+    /*White or black*/
     private boolean front;
+    /*Chessman name*/
     private String name;
+    /*All alive chessmen on the board*/
     private List<Chess> chessmen;
+    /*All possible steps for this figure*/
     private Chess stepChess;
+    /*set parameter figure's life*/
+    private boolean alive;
+
 
     /**
-     *
+     * Constructor default.
      * @param y Coordinate figure in array.
      * @param x Coordinate figure in array.
      * @param name Name(Picture) figure
@@ -31,6 +43,14 @@ public abstract class Chess implements Cloneable {
         this.front = front;
         this.name = name;
         this.alive = true;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Chess> getChessmen() {
+        return chessmen;
     }
 
     public int getX() {
@@ -89,8 +109,6 @@ public abstract class Chess implements Cloneable {
         this.stepChess = stepChess;
     }
 
-    private boolean alive;
-
     public abstract List<Chess> chessMove(List<Chess> chessmen) throws CloneNotSupportedException;
 
     @Override
@@ -105,20 +123,20 @@ public abstract class Chess implements Cloneable {
 
         Chess chess = (Chess) o;
 
-        if (x != chess.x) return false;
-        if (y != chess.y) return false;
-        if (front != chess.front) return false;
-        if (!name.equals(chess.name)) return false;
+        if (getX() != chess.getX()) return false;
+        if (getY() != chess.getY()) return false;
+        if (isFront() != chess.isFront()) return false;
+        if (!getName().equals(chess.getName())) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = x;
-        result = 31 * result + y;
-        result = 31 * result + (front ? 1 : 0);
-        result = 31 * result + name.hashCode();
+        int result = getX();
+        result = 31 * result + getY();
+        result = 31 * result + (isFront() ? 1 : 0);
+        result = 31 * result + getName().hashCode();
         return result;
     }
 
@@ -148,7 +166,7 @@ public abstract class Chess implements Cloneable {
      * @return true if there is opponent's chessman stand in active chessman's new step.
      */
     protected boolean checkMoveNegativeFront(Chess chess){
-        for (Chess chessFront : chessmen) {
+        for (Chess chessFront : getChessmen()) {
             if (chessFront.isFront() != chess.isFront()){
                 if (chess.getY() == chessFront.getY() && chess.getX() == chessFront.getX()){
                     return true;
@@ -165,14 +183,14 @@ public abstract class Chess implements Cloneable {
      * @return true if there is own's chessman stand in active chessman's new step.
      */
     private boolean checkMovePositiveFront(Chess chess) {
-        for (Chess chessFront : chessmen) {
+        for (Chess chessFront : getChessmen()) {
             if (chessFront.isFront() == chess.isFront()) {
                 if (chess.getY() == chessFront.getY() && chess.getX() == chessFront.getX()) {
                     return true;
                 }
             }
         }
-            return false;
+        return false;
     }
 
     /**
@@ -180,28 +198,28 @@ public abstract class Chess implements Cloneable {
      * @param chessList List steps.
      * @throws CloneNotSupportedException
      */
-    public void move(List chessList) throws CloneNotSupportedException {
-        stepChess = this.copyChess(getX(), getY());
-        while (stepChess.checkMove()){
-            stepChess.setX(stepChess.getX() + stepX);
-            stepChess.setY(stepChess.getY() + stepY);
-            chessList.add(stepChess.copyChess(stepChess.getX(),stepChess.getY()));
-            if (checkMoveNegativeFront(stepChess))
+    public void move(List<Chess> chessList) throws CloneNotSupportedException {
+        setStepChess(this.copyChess(getX(), getY()));
+        while (getStepChess().checkMove()){
+            getStepChess().setX(getStepChess().getX() + getStepX());
+            getStepChess().setY(getStepChess().getY() + getStepY());
+            chessList.add(getStepChess().copyChess(getStepChess().getX(),getStepChess().getY()));
+            if (checkMoveNegativeFront(getStepChess()))
                 break;
         }
     }
 
     /**
      * Checks the possibility of movement chessman within the coordinates
-     * @return If movement possible.
+     * @return true if movement possible.
      * @throws CloneNotSupportedException
      */
     public boolean checkMove() throws CloneNotSupportedException {
-        if (getY() + stepY > 7 || getY() + stepY < 0)
+        if (getY() + getStepY() > 7 || getY() + getStepY() < 0)
             return false;
-        if (getX() + stepX > 7 || getX() + stepX < 0)
+        if (getX() + getStepX() > 7 || getX() + getStepX() < 0)
             return false;
-        if (checkMovePositiveFront(this.copyChess(getX() + stepX , getY() + stepY)))
+        if (checkMovePositiveFront(this.copyChess(getX() + getStepX() , getY() + getStepY())))
             return false;
         return true;
     }
@@ -212,9 +230,9 @@ public abstract class Chess implements Cloneable {
      * @return array all steps.
      * @throws CloneNotSupportedException
      */
-    protected List allStepsChess(List chessmen) throws CloneNotSupportedException {
+    protected List<Chess> allStepsChess(List<Chess> chessmen) throws CloneNotSupportedException {
         setChessmen(chessmen);
-        List chessList = new ArrayList<>();
+        List<Chess> chessList = new ArrayList<>();
         for (int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
                 setStepX(i);

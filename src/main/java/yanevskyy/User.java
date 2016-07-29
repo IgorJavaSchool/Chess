@@ -4,179 +4,237 @@ import yanevskyy.figures.*;
 
 import java.util.List;
 
-
+/**
+ * Used for imitation actions user.
+ * @author Yanevskyy Igor igor2000@inbox.ru
+ * @version 0.1
+ */
 public class User {
+    /*All user's chessmen*/
+    private Chess[] chess;
+    /*White or black*/
+    private boolean front;
+    /*set parameter User's win*/
+    private boolean win;
+    /*User name*/
+    private String name;
+    /*Active chessman at this time*/
+    private Chess activeChessman;
 
-  private Chess[] chess;
-  private boolean front;
-  private boolean win;
-  private String name;
-  private Chess activeChessman;
+    /**
+     * Constructor default.
+     * @param front User's win
+     * @param name User name
+     */
+    User(boolean front, String name) {
+        this.chess = new Chess[16];
+        this.front = front;
+        this.win = false;
+        this.name = name;
+    }
 
+    public void setChess(Chess[] chess) {
+        this.chess = chess;
+    }
 
-  User(boolean front, String name) {
-    this.chess = new Chess[16];
-    this.front = front;
-    this.win = false;
-    this.name = name;
-  }
+    public Chess getActiveChessman() {
+        return activeChessman;
+    }
 
-  public Chess[] getChess() {
-    return chess;
-  }
+    public void setActiveChessman(Chess activeChessman) {
+        this.activeChessman = activeChessman;
+    }
 
-  private boolean isFront() {
-    return front;
-  }
+    public Chess[] getChess() {
+        return chess;
+    }
 
-  boolean isWin() {
-    return win;
-  }
+    private boolean isFront() {
+        return front;
+    }
 
-  String getName() {
-    return name;
-  }
+    boolean isWin() {
+        return win;
+    }
 
-  void setWin(boolean win) {
-    this.win = win;
-  }
+    String getName() {
+        return name;
+    }
 
-  public Chess move(String message, List<Chess> chessSteps, Chess activChessman) throws CloneNotSupportedException {
-    Chess chessman = (Chess) activChessman.clone();
-    char[] coordinates = message.toCharArray();
-    if (coordinates.length == 2) {
-      int x = checkLater(String.valueOf(coordinates[0]).toLowerCase());
-      int y = 8 - Integer.parseInt(String.valueOf(coordinates[1]));
-      for (Chess chess :chessSteps) {
-        if (chess.getX() == x && chess.getY() == y) {
-          chessman.setX(x);
-          chessman.setY(y);
+    void setWin(boolean win) {
+        this.win = win;
+    }
+
+    /**
+     * Makes new chessman with coordinates which writes user.
+     * @param message from console.
+     * @param chessSteps all possible steps active figure.
+     * @param activeChessman Active chessman at this time
+     * @return Copy active figure with coordinates which writes user.
+     * @throws CloneNotSupportedException
+     */
+    public Chess move(String message, List<Chess> chessSteps, Chess activeChessman) throws CloneNotSupportedException {
+        Chess chessman = (Chess) activeChessman.clone();
+        char[] coordinates = message.toCharArray();
+        if (coordinates.length == 2) {
+            int x = checkLater(String.valueOf(coordinates[0]).toLowerCase());
+            int y = 8 - Integer.parseInt(String.valueOf(coordinates[1]));
+            for (Chess chess :chessSteps) {
+                if (chess.getX() == x && chess.getY() == y) {
+                    chessman.setX(x);
+                    chessman.setY(y);
+                }
+            }
         }
-      }
+        return chessman;
     }
-    return chessman;
-  }
 
-  Chess selectChess(String message, List<Chess> chessList){
-    char[] coordinates = message.toCharArray();
-    if (coordinates.length == 2){
-      int x = checkLater(String.valueOf(coordinates[0]).toLowerCase());
-      int y = 8 - Integer.parseInt(String.valueOf(coordinates[1]));
-      for (Chess figure : chessList) {
-        if (figure.isFront() == front) {
-          if (figure.getY() == y && figure.getX() == x) {
-            activeChessman = figure;
-            return activeChessman;
-          }
+    /**
+     *
+     * @param message from console.
+     * @param chessList All alive chessmen on the board.
+     * @return User's figure if its coordinates match those that the user wrote.
+     */
+    Chess selectChess(String message, List<Chess> chessList){
+        char[] coordinates = message.toCharArray();
+        if (coordinates.length == 2){
+            int x = checkLater(String.valueOf(coordinates[0]).toLowerCase());
+            int y = 8 - Integer.parseInt(String.valueOf(coordinates[1]));
+            for (Chess figure : chessList) {
+                if (figure.isFront() == isFront()) {
+                    if (figure.getY() == y && figure.getX() == x) {
+                        setActiveChessman(figure);
+                        return getActiveChessman();
+                    }
+                }
+            }
+        } else System.out.println("This data is not correct");
+        return getActiveChessman();
+    }
+
+    /**
+     * Checks the letters from user and number on the board horizontally.
+     * @param firstLater Letter which write user.
+     * @return number on the board horizontally.
+     */
+    private int checkLater(String firstLater){
+        int firstNumber;
+        switch ( firstLater ){
+            case "a" : firstNumber = 0;
+                break;
+            case "b" : firstNumber = 1;
+                break;
+            case "c" : firstNumber = 2;
+                break;
+            case "d" : firstNumber = 3;
+                break;
+            case "e" : firstNumber = 4;
+                break;
+            case "f" : firstNumber = 5;
+                break;
+            case "g" : firstNumber = 6;
+                break;
+            case "h" : firstNumber = 7;
+                break;
+            default  : firstNumber = -1;
         }
-      }
-    } else System.out.println("This data is not correct");
-    return activeChessman;
-  }
-
-  private int checkLater(String firstLater){
-    int firstNumber;
-    switch ( firstLater ){
-      case "a" : firstNumber = 0;
-        break;
-      case "b" : firstNumber = 1;
-        break;
-      case "c" : firstNumber = 2;
-        break;
-      case "d" : firstNumber = 3;
-        break;
-      case "e" : firstNumber = 4;
-        break;
-      case "f" : firstNumber = 5;
-        break;
-      case "g" : firstNumber = 6;
-        break;
-      case "h" : firstNumber = 7;
-        break;
-      default  : firstNumber = -1;
+        return firstNumber;
     }
-    return firstNumber;
-  }
 
+    /**
+     * Creates all user's chessmen.
+     */
+    void createChess(){
+        int count = 0;
+        int startCreate = (isFront()) ? 0 : 6;
+        int endCreate = (isFront()) ? 2 : 8;
+        int selectAction = (isFront()) ? 1 : 6;
 
-
-  void createChess(){
-    int count = 0;
-    int startCreate = (front) ? 0 : 6;
-    int endCreate = (front) ? 2 : 8;
-    int selectAction = (front) ? 1 : 6;
-
-    for (int i = startCreate; i < endCreate; i++) {
-      for (int j = 0; j < 8; j++) {
-        if (i == selectAction){
-          chess[count] = new Pawn(i, j, "♟", front);
-        } else {
-          switch ( j ){
-            case 0 :
-            case 7 : chess[count] = new Rook(i, j, "♖", front);
-              break;
-            case 1 :
-            case 6 : chess[count] = new Knight(i, j, "♘", front);
-              break;
-            case 2 :
-            case 5 : chess[count] = new Bishop(i, j, "♗", front);
-              break;
-            case 3 : chess[count] = new Queen(i, j, "♕", front);
-              break;
-            case 4 : chess[count] = new King(i, j, "♔", front);
-              break;
-            default:break;
-          }
+        for (int i = startCreate; i < endCreate; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (i == selectAction){
+                    getChess()[count] = new Pawn(i, j, "♟", isFront());
+                } else {
+                    switch ( j ){
+                        case 0 :
+                        case 7 : getChess()[count] = new Rook(i, j, "♖", isFront());
+                            break;
+                        case 1 :
+                        case 6 : getChess()[count] = new Knight(i, j, "♘", isFront());
+                            break;
+                        case 2 :
+                        case 5 : getChess()[count] = new Bishop(i, j, "♗", isFront());
+                            break;
+                        case 3 : getChess()[count] = new Queen(i, j, "♕", isFront());
+                            break;
+                        case 4 : getChess()[count] = new King(i, j, "♔", isFront());
+                            break;
+                        default:break;
+                    }
+                }
+                count++;
+            }
         }
-        count++;
-      }
     }
-  }
 
-  boolean checkShah(List<Chess> chesses) throws CloneNotSupportedException {
-    Chess myKing = null;
-    List<Chess> chessSteps;
-    for (Chess chess : chesses) {
-      if (chess.isFront() == isFront()) {
-        if (chess.toString().equals("♔")) {
-          myKing = chess;
-          break;
+    /**
+     * Checks opportunity opponent's figure fights to user's king.
+     * @param chesses All alive chessmen on the board.
+     * @return true if opponent's figure can fight to user's king.
+     * @throws CloneNotSupportedException
+     */
+    boolean checkShah(List<Chess> chesses) throws CloneNotSupportedException {
+        Chess myKing = null;
+        List<Chess> chessSteps;
+        for (Chess chess : chesses) {
+            if (chess.isFront() == isFront()) {
+                if (chess.toString().equals("♔")) {
+                    myKing = chess;
+                    break;
+                }
+            }
         }
-      }
-    }
-    if (myKing != null) {
-      for (Chess chess : chesses) {
-        if (chess.isFront() != isFront() && chess.isAlive()) {
-          chessSteps = chess.copyChess(chess.getX(),chess.getY()).chessMove(chesses);
-          for (Chess chessFight : chessSteps) {
-            if (chessFight.getX() == myKing.getX() && chessFight.getY() == myKing.getY())
-              return true;
-          }
+        if (myKing != null) {
+            for (Chess chess : chesses) {
+                if (chess.isFront() != isFront() && chess.isAlive()) {
+                    chessSteps = chess.copyChess(chess.getX(),chess.getY()).chessMove(chesses);
+                    for (Chess chessFight : chessSteps) {
+                        if (chessFight.getX() == myKing.getX() && chessFight.getY() == myKing.getY())
+                            return true;
+                    }
+                }
+            }
         }
-      }
+        return false;
     }
-    return false;
-  }
 
-  boolean checkShahAfterMove(BoardGame chessBoard, Chess chessMove) throws CloneNotSupportedException {
-    BoardGame boardTestShah = new ChessBoard();
-    boardTestShah.createBoard();
-    for (Chess chess : chessBoard.getChesses()) {
-      boardTestShah.getChesses().add((Chess) chess.clone());
+    /**
+     * Creates copy chess board with user's new step. If after that shah is true for user's king,
+     * then user must correct his step or must be lost.
+     * @param chessBoard chess board.
+     * @param chessMove new step from user.
+     * @return true or false
+     * @throws CloneNotSupportedException
+     */
+    boolean checkShahAfterMove(BoardGame chessBoard, Chess chessMove) throws CloneNotSupportedException {
+        BoardGame boardTestShah = new ChessBoard();
+        boardTestShah.createBoard();
+        for (Chess chess : chessBoard.getChesses()) {
+            boardTestShah.getChesses().add((Chess) chess.clone());
+        }
+        for (Chess chess : boardTestShah.getChesses()) {
+            if (chess.equals(chessBoard.getActiveChessman())) {
+                boardTestShah.setActiveChessman(chess);
+            }
+        }
+        if (boardTestShah.checkMoveChess(chessMove)) {
+            boardTestShah.getActiveChessman().setY(chessMove.getY());
+            boardTestShah.getActiveChessman().setX(chessMove.getX());
+            if (checkShah(boardTestShah.getChesses())) {
+                System.out.println("\033[32mYou SHAH" + "\033[37m");
+                return true;
+            }
+        }
+        return false;
     }
-    for (Chess chess : boardTestShah.getChesses()) {
-      if (chess.equals(chessBoard.getActiveChessman())) {
-        boardTestShah.setActiveChessman(chess);
-      }
-    }
-    if (boardTestShah.checkMoveChess(chessMove)) {
-      boardTestShah.getActiveChessman().setY(chessMove.getY());
-      boardTestShah.getActiveChessman().setX(chessMove.getX());
-      if (checkShah(boardTestShah.getChesses())) {
-        System.out.println("\033[32mYou SHAH" + "\033[37m");
-        return true;
-      }
-    }
-    return false;
-  }
 }
