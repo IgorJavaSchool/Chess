@@ -15,9 +15,9 @@ public class Bishop extends Chess {
     super(y, x, name, front);
   }
 
-  public List<Chess> chessMove(List<Chess> chessmen) throws CloneNotSupportedException {
+  public List chessMove(List chessmen) throws CloneNotSupportedException {
     setChessmen(chessmen);
-    List<Chess> chessList = new ArrayList<>();
+    List chessList = new ArrayList<>();
     for (int i = -1; i < 2; i++) {
       for (int j = -1; j < 2; j++) {
         setStepX(i);

@@ -14,13 +14,13 @@ public class King extends Chess {
     super(y, x, name, front);
   }
 
-  public List<Chess> chessMove(List<Chess> chessmen) throws CloneNotSupportedException {
+  public List chessMove(List chessmen) throws CloneNotSupportedException {
 
     return allStepsChess(chessmen);
   }
 
   @Override
-  public void move(List<Chess> chessList) throws CloneNotSupportedException {
+  public void move(List chessList) throws CloneNotSupportedException {
     setStepChess(this.copyChess(getX(), getY()));
     if (getStepChess().checkMove()){
       getStepChess().setX(getStepChess().getX() + getStepX());

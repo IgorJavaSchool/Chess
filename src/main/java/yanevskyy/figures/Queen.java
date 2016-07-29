@@ -14,7 +14,7 @@ public class Queen extends Chess {
     super(y, x, name, front);
   }
 
-  public List<Chess> chessMove(List<Chess> chessmen) throws CloneNotSupportedException {
+  public List chessMove(List chessmen) throws CloneNotSupportedException {
 
       return allStepsChess(chessmen);
     }

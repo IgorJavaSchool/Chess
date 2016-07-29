@@ -23,9 +23,9 @@ public class Pawn extends Chess {
    * @return
    * @throws CloneNotSupportedException
      */
-  public List<Chess> chessMove(List<Chess> chessmen) throws CloneNotSupportedException {
+  public List chessMove(List chessmen) throws CloneNotSupportedException {
     setChessmen(chessmen);
-    List<Chess> chessList = new ArrayList<>();
+    List chessList = new ArrayList<>();
     setStepX(1);
     moveFight(chessList);
     setStepX(-1);
@@ -39,7 +39,7 @@ public class Pawn extends Chess {
     return chessList;
   }
 
-  public void moveFight(List<Chess> chessList) throws CloneNotSupportedException {
+  public void moveFight(List chessList) throws CloneNotSupportedException {
     setStepChess(this.copyChess(getX(), getY()));
         getStepChess().setX(getStepChess().getX() + getStepX());
     getStepChess().setY(getStepChess().getY() + getStepY());
@@ -48,7 +48,7 @@ public class Pawn extends Chess {
       }
     }
 
-  public void moveAhead(List<Chess> chessList) throws CloneNotSupportedException {
+  public void moveAhead(List chessList) throws CloneNotSupportedException {
     setStepChess(this.copyChess(getX(), getY()));
     if (count == 0) {
       setStepY(getStepY() + getStepY());

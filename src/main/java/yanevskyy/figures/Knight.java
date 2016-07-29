@@ -14,9 +14,9 @@ public class Knight extends Chess {
     super(y, x, name, front);
   }
 
-  public List<Chess> chessMove(List<Chess> chessmen) throws CloneNotSupportedException {
+  public List chessMove(List chessmen) throws CloneNotSupportedException {
     setChessmen(chessmen);
-    List<Chess> chessList = new ArrayList<>();
+    List chessList = new ArrayList<>();
     for (int i = -2; i < 3; i++) {
       if (i == 0) continue;
       for (int j = -2; j < 3; j++) {
@@ -31,7 +31,7 @@ public class Knight extends Chess {
   }
 
   @Override
-  public void move(List<Chess> chessList) throws CloneNotSupportedException {
+  public void move(List chessList) throws CloneNotSupportedException {
     setStepChess(this.copyChess(getX(), getY()));
     if (getStepChess().checkMove()){
       getStepChess().setX(getStepChess().getX() + getStepX());

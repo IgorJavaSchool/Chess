@@ -180,7 +180,7 @@ public abstract class Chess implements Cloneable {
      * @param chessList List steps.
      * @throws CloneNotSupportedException
      */
-    public void move(List<Chess> chessList) throws CloneNotSupportedException {
+    public void move(List chessList) throws CloneNotSupportedException {
         stepChess = this.copyChess(getX(), getY());
         while (stepChess.checkMove()){
             stepChess.setX(stepChess.getX() + stepX);
@@ -212,9 +212,9 @@ public abstract class Chess implements Cloneable {
      * @return array all steps.
      * @throws CloneNotSupportedException
      */
-    protected List<Chess> allStepsChess(List<Chess> chessmen) throws CloneNotSupportedException {
+    protected List allStepsChess(List chessmen) throws CloneNotSupportedException {
         setChessmen(chessmen);
-        List<Chess> chessList = new ArrayList<>();
+        List chessList = new ArrayList<>();
         for (int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
                 setStepX(i);
