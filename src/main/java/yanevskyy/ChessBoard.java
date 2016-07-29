@@ -12,7 +12,7 @@ import java.util.List;
  * @author Yanevskyy Igor igor2000@inbox.ru
  * @version 0.1
  */
-public class ChessBoard implements BoardGame {
+public class ChessBoard implements BoardGam {
   /**
    *
    */

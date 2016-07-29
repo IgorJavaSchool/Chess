@@ -3,7 +3,7 @@ package yanevskyy.figures;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import yanevskyy.BoardGame;
+import yanevskyy.BoardGam;
 import yanevskyy.Chess;
 import yanevskyy.ChessBoard;
 
@@ -16,10 +16,10 @@ import static org.junit.Assert.assertEquals;
  * Created by MM on 21.07.2016.
  */
 public class RookTest {
-    BoardGame chessBoard;
+    BoardGam chessBoard;
     Chess rook;
     Chess pawn;
-    BoardGame chessBoardTest;
+    BoardGam chessBoardTest;
     List<Chess> result;
     List<Chess> chesses;
 

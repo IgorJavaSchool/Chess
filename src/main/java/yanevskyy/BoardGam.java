@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by MM on 29.07.2016.
  */
-public interface BoardGame {
+public interface BoardGam {
     List<Chess> getChesses();
     void createBoard();
     void printBoard();

@@ -3,7 +3,7 @@ package yanevskyy.figures;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import yanevskyy.BoardGame;
+import yanevskyy.BoardGam;
 import yanevskyy.Chess;
 import yanevskyy.ChessBoard;
 
@@ -16,8 +16,8 @@ import static org.junit.Assert.*;
  * Created by Y on 23.07.2016.
  */
 public class QueenTest {
-    BoardGame chessBoard;
-    BoardGame chessBoardTest;
+    BoardGam chessBoard;
+    BoardGam chessBoardTest;
     Chess queen;
     Chess pawn;
     @Before
