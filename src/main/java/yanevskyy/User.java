@@ -4,6 +4,7 @@ import yanevskyy.figures.*;
 
 import java.util.List;
 
+
 public class User {
 
   private Chess[] chess;
