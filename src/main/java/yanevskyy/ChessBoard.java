@@ -40,6 +40,7 @@ public class ChessBoard implements BoardGame {
     this.chessSteps = new ArrayList<>();
   }
 
+  @Override
   public List<Chess> getChesses() {
     return chesses;
   }
@@ -49,9 +50,11 @@ public class ChessBoard implements BoardGame {
   User getUser2() {
     return user2;
   }
+  @Override
   public Chess getActiveChessman() {
     return activeChessman;
   }
+  @Override
   public void setActiveChessman(Chess activChessman) {
     this.activeChessman = activChessman;
   }
@@ -59,6 +62,7 @@ public class ChessBoard implements BoardGame {
   /**
    * Create array 8x8, fills empty squares and "+" with out chess.
    */
+  @Override
   public void createBoard(){
     for (int i = 7; i > -1; i--) {
       for (int j = 7; j > -1; j--) {
@@ -74,6 +78,7 @@ public class ChessBoard implements BoardGame {
   /**
    * Print filled chessboard in console.
    */
+  @Override
   public void printBoard(){
     printTopBoard();
     printBodyBoard();
@@ -250,6 +255,7 @@ public class ChessBoard implements BoardGame {
    * @param chessmanMove copy active figure which contain coordinates new step.
    * @return true if chessmanMove can make run.
      */
+  @Override
   public boolean checkMoveChess(Chess chessmanMove){
       for (Chess chess : chesses) {
         if (chess.getX() == chessmanMove.getX() && chess.getY() == chessmanMove.getY()){
@@ -268,6 +274,7 @@ public class ChessBoard implements BoardGame {
   /**
    * Filled array with chessmen which have status "Alive = true"
    */
+  @Override
   public void fillChesses(){
     chesses = new ArrayList<>();
     for (int i = 0; i < 16; i++) {
