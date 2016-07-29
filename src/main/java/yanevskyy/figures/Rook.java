@@ -18,18 +18,14 @@ public class Rook extends Chess {
   public List<Chess> chessMove(List<Chess> chessmen) throws CloneNotSupportedException {
     setChessmen(chessmen);
     List<Chess> chessList = new ArrayList<>();
-    setStepX(1);
-    setStepY(0);
-    move(chessList);
-    setStepX(-1);
-    setStepY(0);
-    move(chessList);
-    setStepX(0);
-    setStepY(1);
-    move(chessList);
-    setStepX(0);
-    setStepY(-1);
-    move(chessList);
+    for (int i = -1; i < 2; i++) {
+      for (int j = -1; j < 2; j++) {
+        if (Math.abs(i) == Math.abs(j)) continue;
+        setStepX(i);
+        setStepY(j);
+        move(chessList);
+      }
+    }
     return chessList;
   }
 }

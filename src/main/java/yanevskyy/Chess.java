@@ -1,6 +1,7 @@
 package yanevskyy;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -179,7 +180,7 @@ public abstract class Chess implements Cloneable {
         }
     }
 
-    public boolean checkMove() throws CloneNotSupportedException {
+    protected boolean checkMove() throws CloneNotSupportedException {
         if (getY() + stepY > 7 || getY() + stepY < 0)
             return false;
         if (getX() + stepX > 7 || getX() + stepX < 0)
@@ -187,5 +188,25 @@ public abstract class Chess implements Cloneable {
         if (checkMovePositiveFront(this.copyChess(getX() + stepX , getY() + stepY)))
             return false;
         return true;
+    }
+
+    /**
+     *
+     * @param chessmen
+     * @return array steps
+     * @throws CloneNotSupportedException
+     */
+    protected List<Chess> allStepsChess(List<Chess> chessmen) throws CloneNotSupportedException {
+        setChessmen(chessmen);
+        List<Chess> chessList = new ArrayList<>();
+        for (int i = -1; i < 2; i++) {
+            for (int j = -1; j < 2; j++) {
+                setStepX(i);
+                setStepY(j);
+                move(chessList);
+            }
+        }
+        return chessList;
+
     }
 }

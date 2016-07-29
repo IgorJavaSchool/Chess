@@ -59,9 +59,9 @@ public class KnightTest {
         chesses = new ArrayList<>();
         chesses.add(knight.copyChess(0,1));
         chesses.add(knight.copyChess(2,1));
+        chesses.add(knight.copyChess(2,5));
         chesses.add(knight.copyChess(3,2));
         chesses.add(knight.copyChess(3,4));
-        chesses.add(knight.copyChess(2,5));
 
         chessBoard.printBoard();
 

@@ -56,8 +56,8 @@ public class RookTest {
         pawn.setY(3);
         pawn.setX(0);
         chesses = new ArrayList<>();
-        chesses.add(new Rook(1,0, "♖", true));
-        chesses.add(new Rook(2,0, "♖", true));
+        chesses.add(rook.copyChess(0,1));
+        chesses.add(rook.copyChess(0,2));
         chessBoard.printBoard();
 
         result = rook.chessMove(chessBoard.getChesses());
@@ -73,12 +73,12 @@ public class RookTest {
         pawn.setY(5);
         pawn.setX(1);
         chesses = new ArrayList<>();
-        chesses.add(new Rook(1,0, "♖", true));
-        chesses.add(new Rook(2,0, "♖", true));
-        chesses.add(new Rook(3,0, "♖", true));
-        chesses.add(new Rook(4,0, "♖", true));
-        chesses.add(new Rook(5,0, "♖", true));
-        chesses.add(new Rook(6,0, "♖", true));
+        chesses.add(rook.copyChess(0,1));
+        chesses.add(rook.copyChess(0,2));
+        chesses.add(rook.copyChess(0,3));
+        chesses.add(rook.copyChess(0,4));
+        chesses.add(rook.copyChess(0,5));
+        chesses.add(rook.copyChess(0,6));
         chessBoard.printBoard();
 
         result = rook.chessMove(chessBoard.getChesses());
@@ -97,19 +97,19 @@ public class RookTest {
         rook.setX(0);
         rook.setY(3);
         chesses = new ArrayList<>();
-        chesses.add(new Rook(3,1, "♖", true));
-        chesses.add(new Rook(3,2, "♖", true));
-        chesses.add(new Rook(3,3, "♖", true));
-        chesses.add(new Rook(3,4, "♖", true));
-        chesses.add(new Rook(3,5, "♖", true));
-        chesses.add(new Rook(3,6, "♖", true));
-        chesses.add(new Rook(3,7, "♖", true));
-        chesses.add(new Rook(4,0, "♖", true));
-        chesses.add(new Rook(5,0, "♖", true));
-        chesses.add(new Rook(6,0, "♖", true));
-        chesses.add(new Rook(2,0, "♖", true));
-        chesses.add(new Rook(1,0, "♖", true));
-        chesses.add(new Rook(0,0, "♖", true));
+        chesses.add(rook.copyChess(0,2));
+        chesses.add(rook.copyChess(0,1));
+        chesses.add(rook.copyChess(0,0));
+        chesses.add(rook.copyChess(0,4));
+        chesses.add(rook.copyChess(0,5));
+        chesses.add(rook.copyChess(0,6));
+        chesses.add(rook.copyChess(1,3));
+        chesses.add(rook.copyChess(2,3));
+        chesses.add(rook.copyChess(3,3));
+        chesses.add(rook.copyChess(4,3));
+        chesses.add(rook.copyChess(5,3));
+        chesses.add(rook.copyChess(6,3));
+        chesses.add(rook.copyChess(7,3));
         chessBoard.printBoard();
 
         result = rook.chessMove(chessBoard.getChesses());
@@ -127,13 +127,13 @@ public class RookTest {
         rook.setX(0);
         rook.setY(3);
         chesses = new ArrayList<>();
-        chesses.add(new Rook(3,1, "♖", true));
-        chesses.add(new Rook(4,0, "♖", true));
-        chesses.add(new Rook(5,0, "♖", true));
-        chesses.add(new Rook(6,0, "♖", true));
-        chesses.add(new Rook(2,0, "♖", true));
-        chesses.add(new Rook(1,0, "♖", true));
-        chesses.add(new Rook(0,0, "♖", true));
+        chesses.add(rook.copyChess(0,2));
+        chesses.add(rook.copyChess(0,1));
+        chesses.add(rook.copyChess(0,0));
+        chesses.add(rook.copyChess(0,4));
+        chesses.add(rook.copyChess(0,5));
+        chesses.add(rook.copyChess(0,6));
+        chesses.add(rook.copyChess(1,3));
         chessBoard.printBoard();
 
         result = rook.chessMove(chessBoard.getChesses());

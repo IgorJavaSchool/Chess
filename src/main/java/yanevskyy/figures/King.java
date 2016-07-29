@@ -2,7 +2,6 @@ package yanevskyy.figures;
 
 import yanevskyy.Chess;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,16 +15,8 @@ public class King extends Chess {
   }
 
   public List<Chess> chessMove(List<Chess> chessmen) throws CloneNotSupportedException {
-    setChessmen(chessmen);
-    List<Chess> chessList = new ArrayList<>();
-    for (int i = -1; i < 2; i++) {
-      for (int j = -1; j < 2; j++) {
-        setStepX(i);
-        setStepY(j);
-        move(chessList);
-      }
-    }
-    return chessList;
+
+    return allStepsChess(chessmen);
   }
 
   @Override
