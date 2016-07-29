@@ -28,7 +28,7 @@ public class ChessBoard {
   private String message;
 
 
-  BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+  private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
   public ChessBoard() {
     this.board = new String[8][8];
@@ -43,36 +43,17 @@ public class ChessBoard {
   public List<Chess> getChesses() {
     return chesses;
   }
-
-  public User getUser1() {
+  User getUser1() {
     return user1;
   }
-
-  public User getUser2() {
+  User getUser2() {
     return user2;
   }
-  public String[][] getBoard() {
-    return board;
-  }
-
-  public int getCountGame() {
-    return countGame;
-  }
-
-  public Chess getActiveChessman() {
+  Chess getActiveChessman() {
     return activeChessman;
   }
-
-  public List<Chess> getChessesAliveFalse() {
-    return chessesAliveFalse;
-  }
-
-  public void setActiveChessman(Chess activChessman) {
+  void setActiveChessman(Chess activChessman) {
     this.activeChessman = activChessman;
-  }
-
-  public List<Chess> getChessSteps() {
-    return chessSteps;
   }
 
   /**
@@ -102,7 +83,7 @@ public class ChessBoard {
   /**
    * Print top part chessboard and username in console
    */
-  public void printTopBoard(){
+  private void printTopBoard(){
     System.out.print(String.format("%-11s%-5s" , "  ", user2.getName()));
     if (chessesAliveFalse.size() > 0) {
       System.out.print(String.format("%-2s%-5s" , "  ", "Destroyed"));
@@ -120,7 +101,7 @@ public class ChessBoard {
   /**
    * Print board's body in console.
    */
-  public void printBodyBoard(){
+  private void printBodyBoard(){
     for (int i = 0; i < 8; i++) {
       System.out.print(8 - i + " |");
       step:
@@ -145,7 +126,7 @@ public class ChessBoard {
   /**
    * Print in console bottom part chessboard and username.
    */
-  public void printBottomBoard(){
+  private void printBottomBoard(){
     System.out.println(String.format("%-2s%-5s" , "   ","_____________________"));
     System.out.println("  "+" "+"Ⓐ"+" "+"Ⓑ"+" "+"Ⓒ"+" "+"Ⓓ"+" "+"Ⓔ"+" "+"Ⓕ"+" "+"Ⓖ"+" "+"Ⓗ");
     System.out.print(String.format("%-11s%-5s" , "  ",user1.getName()));
@@ -162,17 +143,17 @@ public class ChessBoard {
 
   /**
    * Write message in console
-   * @param message
+   * @param message Message for user in console.
    */
-  public void writeMessage(String message){
+  private void writeMessage(String message){
     System.out.println(message);
   }
 
   /**
    * Gets message from user
-   * @return
+   * @return text which write user in console.
    */
-  public String readMessage(){
+  private String readMessage(){
     try {
       return reader.readLine();
     } catch (IOException e) {
@@ -184,7 +165,7 @@ public class ChessBoard {
   /**
    * Starts game, selects user for move and said user moves.
    */
-  public void startGame() throws CloneNotSupportedException {
+  private void startGame() throws CloneNotSupportedException {
     while (!user1.isWin() && !user2.isWin()){
       createBoard();
       fillChesses();
@@ -206,7 +187,7 @@ public class ChessBoard {
   /**
    * Gets from user message with coordinate and finds chessman by them.
      */
-  public void selectChess(){
+  private void selectChess(){
     while (true) {
         try {
           if (activeUser.checkShah(getChesses())){
@@ -238,7 +219,7 @@ public class ChessBoard {
    * with new coordinate, move the figure to new place.
    * @param chessSteps All possible steps for selected figure.
      */
-  public void moveChess(List<Chess> chessSteps){
+  private void moveChess(List<Chess> chessSteps){
     Chess chessmanMove;
     while (true){
       try {
@@ -266,10 +247,10 @@ public class ChessBoard {
   /**
    * Checked move chessman and if it fight opponent's chessman then
    * opponent's chessman status "Alive = false".
-   * @param chessmanMove
-   * @return
+   * @param chessmanMove copy active figure which contain coordinates new step.
+   * @return true if chessmanMove can make run.
      */
-  public boolean checkMoveChess(Chess chessmanMove){
+  boolean checkMoveChess(Chess chessmanMove){
       for (Chess chess : chesses) {
         if (chess.getX() == chessmanMove.getX() && chess.getY() == chessmanMove.getY()){
           if (chess.isFront() == chessmanMove.isFront()){

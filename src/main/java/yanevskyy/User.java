@@ -10,8 +10,10 @@ public class User {
   private boolean front;
   private boolean win;
   private String name;
+  private Chess activeChessman;
 
-  public User(boolean front, String name) {
+
+  User(boolean front, String name) {
     this.chess = new Chess[16];
     this.front = front;
     this.win = false;
@@ -22,19 +24,19 @@ public class User {
     return chess;
   }
 
-  public boolean isFront() {
+  private boolean isFront() {
     return front;
   }
 
-  public boolean isWin() {
+  boolean isWin() {
     return win;
   }
 
-  public String getName() {
+  String getName() {
     return name;
   }
 
-  public void setWin(boolean win) {
+  void setWin(boolean win) {
     this.win = win;
   }
 
@@ -54,25 +56,24 @@ public class User {
     return chessman;
   }
 
-  public Chess selectChess(String message, List<Chess> chessList){
+  Chess selectChess(String message, List<Chess> chessList){
     char[] coordinates = message.toCharArray();
-    Chess activChessman = null;
     if (coordinates.length == 2){
       int x = checkLater(String.valueOf(coordinates[0]).toLowerCase());
       int y = 8 - Integer.parseInt(String.valueOf(coordinates[1]));
       for (Chess figure : chessList) {
         if (figure.isFront() == front) {
           if (figure.getY() == y && figure.getX() == x) {
-            activChessman = figure;
-            return activChessman;
+            activeChessman = figure;
+            return activeChessman;
           }
         }
       }
     } else System.out.println("This data is not correct");
-    return activChessman;
+    return activeChessman;
   }
 
-  public int checkLater(String firstLater){
+  private int checkLater(String firstLater){
     int firstNumber;
     switch ( firstLater ){
       case "a" : firstNumber = 0;
@@ -98,7 +99,7 @@ public class User {
 
 
 
-  public void createChess(){
+  void createChess(){
     int count = 0;
     int startCreate = (front) ? 0 : 6;
     int endCreate = (front) ? 2 : 8;
@@ -131,7 +132,7 @@ public class User {
     }
   }
 
-  public boolean checkShah(List<Chess> chesses) throws CloneNotSupportedException {
+  boolean checkShah(List<Chess> chesses) throws CloneNotSupportedException {
     Chess myKing = null;
     List<Chess> chessSteps;
     for (Chess chess : chesses) {
@@ -144,7 +145,7 @@ public class User {
     }
     if (myKing != null) {
       for (Chess chess : chesses) {
-        if (chess.isFront() != isFront()) {
+        if (chess.isFront() != isFront() && chess.isAlive()) {
           chessSteps = chess.copyChess(chess.getX(),chess.getY()).chessMove(chesses);
           for (Chess chessFight : chessSteps) {
             if (chessFight.getX() == myKing.getX() && chessFight.getY() == myKing.getY())
@@ -156,7 +157,7 @@ public class User {
     return false;
   }
 
-  public boolean checkShahAfterMove(ChessBoard chessBoard, Chess chessMove) throws CloneNotSupportedException {
+  boolean checkShahAfterMove(ChessBoard chessBoard, Chess chessMove) throws CloneNotSupportedException {
     ChessBoard boardTestShah = new ChessBoard();
     boardTestShah.createBoard();
     for (Chess chess : chessBoard.getChesses()) {
@@ -170,7 +171,6 @@ public class User {
     if (boardTestShah.checkMoveChess(chessMove)) {
       boardTestShah.getActiveChessman().setY(chessMove.getY());
       boardTestShah.getActiveChessman().setX(chessMove.getX());
-      boardTestShah.fillChesses();
       if (checkShah(boardTestShah.getChesses())) {
         System.out.println("\033[32mYou SHAH" + "\033[37m");
         return true;

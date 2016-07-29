@@ -1,6 +1,5 @@
 package yanevskyy;
 
-import yanevskyy.figures.King;
 
 import java.util.List;
 
@@ -11,7 +10,6 @@ public abstract class Chess implements Cloneable {
 
     private int x;
     private int y;
-    private int step;
     private int stepX;
     private int stepY;
     private boolean front;
@@ -21,10 +19,10 @@ public abstract class Chess implements Cloneable {
 
     /**
      *
-     * @param y
-     * @param x
-     * @param name
-     * @param front
+     * @param y Coordinate figure in array.
+     * @param x Coordinate figure in array.
+     * @param name Name(Picture) figure
+     * @param front White or Black.
      */
     public Chess(int y, int x, String name, boolean front) {
         this.x = x;
@@ -32,7 +30,6 @@ public abstract class Chess implements Cloneable {
         this.front = front;
         this.name = name;
         this.alive = true;
-        this.step = front ? 1 : -1;
     }
 
     public int getX() {
@@ -51,55 +48,47 @@ public abstract class Chess implements Cloneable {
         this.y = y;
     }
 
-    public int getStepX() {
+    protected int getStepX() {
         return stepX;
     }
 
-    public void setStepX(int stepX) {
+    protected void setStepX(int stepX) {
         this.stepX = stepX;
     }
 
-    public int getStepY() {
+    protected int getStepY() {
         return stepY;
     }
 
-    public void setStepY(int stepY) {
+    protected void setStepY(int stepY) {
         this.stepY = stepY;
     }
 
-    public boolean isFront() {
+    protected boolean isFront() {
         return front;
     }
 
-    public void setFront(boolean front) {
-        this.front = front;
-    }
-
-    public boolean isAlive() {
+    boolean isAlive() {
         return alive;
     }
 
-    public void setAlive(boolean alive) {
+    void setAlive(boolean alive) {
         this.alive = alive;
     }
 
-    public void setChessmen(List<Chess> chessmen) {
+    protected void setChessmen(List<Chess> chessmen) {
         this.chessmen = chessmen;
     }
 
-    public List<Chess> getChessmen() {
-        return chessmen;
-    }
-
-    public Chess getStepChess() {
+    protected Chess getStepChess() {
         return stepChess;
     }
 
-    public void setStepChess(Chess stepChess) {
+    protected void setStepChess(Chess stepChess) {
         this.stepChess = stepChess;
     }
 
-    public boolean alive;
+    private boolean alive;
 
     public abstract List<Chess> chessMove(List<Chess> chessmen) throws CloneNotSupportedException;
 
@@ -147,10 +136,10 @@ public abstract class Chess implements Cloneable {
     /**
      * Checked array with all chessmen. Return true if one chessman have discrepant Front
      * and contains some the coordinate.
-     * @param chess
-     * @return
+     * @param chess active chessman.
+     * @return true if there is opponent's chessman stand in active chessman's new step.
      */
-    public boolean checkMoveNegativeFront(Chess chess){
+    protected boolean checkMoveNegativeFront(Chess chess){
         for (Chess chessFront : chessmen) {
             if (chessFront.isFront() != chess.isFront()){
                 if (chess.getY() == chessFront.getY() && chess.getX() == chessFront.getX()){
@@ -164,10 +153,10 @@ public abstract class Chess implements Cloneable {
     /**
      * Checked array with all chessmen. Return true if one chessman have some Front
      * and contains some the coordinate.
-     * @param chess
-     * @return
+     * @param chess active chessman.
+     * @return true if there is own's chessman stand in active chessman's new step.
      */
-    public boolean checkMovePositiveFront(Chess chess) {
+    private boolean checkMovePositiveFront(Chess chess) {
         for (Chess chessFront : chessmen) {
             if (chessFront.isFront() == chess.isFront()) {
                 if (chess.getY() == chessFront.getY() && chess.getX() == chessFront.getX()) {

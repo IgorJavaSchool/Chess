@@ -18,18 +18,15 @@ public class Bishop extends Chess {
   public List<Chess> chessMove(List<Chess> chessmen) throws CloneNotSupportedException {
     setChessmen(chessmen);
     List<Chess> chessList = new ArrayList<>();
-    setStepX(-1);
-    setStepY(-1);
-    move(chessList);
-    setStepX(1);
-    setStepY(-1);
-    move(chessList);
-    setStepX(1);
-    setStepY(1);
-    move(chessList);
-    setStepX(-1);
-    setStepY(1);
-    move(chessList);
+    for (int i = -1; i < 2; i++) {
+      for (int j = -1; j < 2; j++) {
+        setStepX(i);
+        setStepY(j);
+        move(chessList);
+        j++;
+      }
+      i++;
+    }
     return chessList;
   }
 

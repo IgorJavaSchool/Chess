@@ -57,14 +57,14 @@ public class KingTest {
         king.setX(2);
         king.setY(4);
         chesses = new ArrayList<>();
+        chesses.add(king.copyChess(1,3));
         chesses.add(king.copyChess(1,4));
-        chesses.add(king.copyChess(3,4));
+        chesses.add(king.copyChess(1,5));
         chesses.add(king.copyChess(2,3));
         chesses.add(king.copyChess(2,5));
-        chesses.add(king.copyChess(3,5));
-        chesses.add(king.copyChess(1,5));
-        chesses.add(king.copyChess(1,3));
         chesses.add(king.copyChess(3,3));
+        chesses.add(king.copyChess(3,4));
+        chesses.add(king.copyChess(3,5));
         chessBoard.printBoard();
 
 
