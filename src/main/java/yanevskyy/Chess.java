@@ -127,6 +127,13 @@ public abstract class Chess implements Cloneable {
         return super.clone();
     }
 
+    /**
+     * Creates a clone of the caller.
+     * @param x Coordinate on X.
+     * @param y Coordinate on Y.
+     * @return New chess owen's clone.
+     * @throws CloneNotSupportedException
+     */
     public Chess copyChess(int x, int y) throws CloneNotSupportedException {
         Chess chess = (Chess)this.clone();
         chess.setX(x);
@@ -168,7 +175,11 @@ public abstract class Chess implements Cloneable {
             return false;
     }
 
-
+    /**
+     * Add into list steps new step with new coordinates.
+     * @param chessList List steps.
+     * @throws CloneNotSupportedException
+     */
     public void move(List<Chess> chessList) throws CloneNotSupportedException {
         stepChess = this.copyChess(getX(), getY());
         while (stepChess.checkMove()){
@@ -180,6 +191,11 @@ public abstract class Chess implements Cloneable {
         }
     }
 
+    /**
+     * Checks the possibility of movement chessman within the coordinates
+     * @return If movement possible.
+     * @throws CloneNotSupportedException
+     */
     protected boolean checkMove() throws CloneNotSupportedException {
         if (getY() + stepY > 7 || getY() + stepY < 0)
             return false;
@@ -191,9 +207,9 @@ public abstract class Chess implements Cloneable {
     }
 
     /**
-     *
-     * @param chessmen
-     * @return array steps
+     * Return all possible steps. Use only for King and Queen
+     * @param chessmen List steps
+     * @return array all steps.
      * @throws CloneNotSupportedException
      */
     protected List<Chess> allStepsChess(List<Chess> chessmen) throws CloneNotSupportedException {
