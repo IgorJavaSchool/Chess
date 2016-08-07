@@ -1,6 +1,8 @@
 package yanevskyy.figures;
 
 import yanevskyy.Chess;
+import yanevskyy.ChessAction;
+import yanevskyy.Square;
 
 import java.util.List;
 
@@ -8,7 +10,7 @@ import java.util.List;
  * Король
  * Imitations chessman King. Makes only one step but in any direction.
  */
-public class King extends Chess {
+public class King extends Chess implements ChessAction {
 
   /**
    * Constructor default.
@@ -25,26 +27,24 @@ public class King extends Chess {
    * Makes steps in any direction.
    * @param chessmen All alive chessmen on the board.
    * @return All possible steps for this figure.
-   * @throws CloneNotSupportedException
    */
-  @Override
-  public List<Chess> chessMove(List<Chess> chessmen) throws CloneNotSupportedException {
-
-    return allStepsChess(chessmen);
-  }
+//  @Override
+//  public List<Square> chessMove(List<Chess> chessmen){
+//
+//    return allStepsChess(chessmen);
+//  }
 
   /**
    * Makes one step in that direction.
    * @param chessList List steps.
-   * @throws CloneNotSupportedException
    */
   @Override
-  public void move(List<Chess> chessList) throws CloneNotSupportedException {
-    setStepChess(this.copyChess(getX(), getY()));
-    if (getStepChess().checkMove()){
+  public void move(List<Square> chessList) {
+    setStepChess(new Square(getX(), getY()));
+    if (checkMove()){
       getStepChess().setX(getStepChess().getX() + getStepX());
       getStepChess().setY(getStepChess().getY() + getStepY());
-      chessList.add(getStepChess().copyChess(getStepChess().getX(),getStepChess().getY()));
+      chessList.add(new Square(getStepChess()));
     }
   }
 

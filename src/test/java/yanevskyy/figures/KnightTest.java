@@ -6,6 +6,7 @@ import org.junit.Test;
 import yanevskyy.BoardGame;
 import yanevskyy.Chess;
 import yanevskyy.ChessBoard;
+import yanevskyy.Square;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +21,8 @@ public class KnightTest {
     Chess knight;
     Chess pawn;
     BoardGame chessBoardTest;
-    List<Chess> result;
-    List<Chess> chesses;
+    List<Square> result;
+    List<Square> chesses;
 
     @Before
     public void setUp() throws Exception {
@@ -45,10 +46,10 @@ public class KnightTest {
                 System.out.println(result.get(i).toString() + "X  " + result.get(i).getX() + "  " + chesses.get(i).getX());
                 System.out.println(result.get(i).toString() + "Y  " + result.get(i).getY() + "  " + chesses.get(i).getY());
             }
-            for (int i = 0; i < result.size(); i++) {
-                chessBoardTest.getChesses().add(result.get(i));
-            }
-            chessBoardTest.printBoard();
+//            for (int i = 0; i < result.size(); i++) {
+//                chessBoardTest.getChesses().add(result.get(i));
+//            }
+//            chessBoardTest.printBoard();
     }
 
     @Test
@@ -58,11 +59,11 @@ public class KnightTest {
         knight.setX(1);
         knight.setY(3);
         chesses = new ArrayList<>();
-        chesses.add(knight.copyChess(0,1));
-        chesses.add(knight.copyChess(2,1));
-        chesses.add(knight.copyChess(2,5));
-        chesses.add(knight.copyChess(3,2));
-        chesses.add(knight.copyChess(3,4));
+        chesses.add(new Square(0,1));
+        chesses.add(new Square(2,1));
+        chesses.add(new Square(2,5));
+        chesses.add(new Square(3,2));
+        chesses.add(new Square(3,4));
 
         chessBoard.printBoard();
 

@@ -73,20 +73,20 @@ public class User {
      * @return Copy active figure with coordinates which writes user.
      * @throws CloneNotSupportedException
      */
-    public Chess move(String message, List<Chess> chessSteps, Chess activeChessman) throws CloneNotSupportedException {
-        Chess chessman = (Chess) activeChessman.clone();
+    public Square move(String message, List<Square> chessSteps, Chess activeChessman) throws CloneNotSupportedException {
+        Square chessmanSquare = new Square(activeChessman.getX(), activeChessman.getY());
         char[] coordinates = message.toCharArray();
         if (coordinates.length == 2) {
             int x = checkLater(String.valueOf(coordinates[0]).toLowerCase());
             int y = 8 - Integer.parseInt(String.valueOf(coordinates[1]));
-            for (Chess chess :chessSteps) {
+            for (Square chess :chessSteps) {
                 if (chess.getX() == x && chess.getY() == y) {
-                    chessman.setX(x);
-                    chessman.setY(y);
+                    chessmanSquare.setX(x);
+                    chessmanSquare.setY(y);
                 }
             }
         }
-        return chessman;
+        return chessmanSquare;
     }
 
     /**
@@ -181,11 +181,10 @@ public class User {
      * Checks opportunity opponent's figure fights to user's king.
      * @param chesses All alive chessmen on the board.
      * @return true if opponent's figure can fight to user's king.
-     * @throws CloneNotSupportedException
      */
-    boolean checkShah(List<Chess> chesses) throws CloneNotSupportedException {
+    boolean checkShah(List<Chess> chesses) {
         Chess myKing = null;
-        List<Chess> chessSteps;
+        List<Square> chessSteps;
         for (Chess chess : chesses) {
             if (chess.isFront() == isFront()) {
                 if (chess.toString().equals("♔")) {
@@ -197,8 +196,8 @@ public class User {
         if (myKing != null) {
             for (Chess chess : chesses) {
                 if (chess.isFront() != isFront() && chess.isAlive()) {
-                    chessSteps = chess.copyChess(chess.getX(),chess.getY()).chessMove(chesses);
-                    for (Chess chessFight : chessSteps) {
+                    chessSteps = chess.chessMove(chesses);
+                    for (Square chessFight : chessSteps) {
                         if (chessFight.getX() == myKing.getX() && chessFight.getY() == myKing.getY())
                             return true;
                     }
@@ -209,28 +208,17 @@ public class User {
     }
 
     /**
-     * Creates copy chess board with user's new step. If after that shah is true for user's king,
+     * User make new step. If after that shah is true for user's king,
      * then user must correct his step or must be lost.
      * @param chessBoard chess board.
      * @param chessMove new step from user.
      * @return true or false
-     * @throws CloneNotSupportedException
      */
-    boolean checkShahAfterMove(BoardGame chessBoard, Chess chessMove) throws CloneNotSupportedException {
-        BoardGame boardTestShah = new ChessBoard();
-        boardTestShah.createBoard();
-        for (Chess chess : chessBoard.getChesses()) {
-            boardTestShah.getChesses().add((Chess) chess.clone());
-        }
-        for (Chess chess : boardTestShah.getChesses()) {
-            if (chess.equals(chessBoard.getActiveChessman())) {
-                boardTestShah.setActiveChessman(chess);
-            }
-        }
-        if (boardTestShah.checkMoveChess(chessMove)) {
-            boardTestShah.getActiveChessman().setY(chessMove.getY());
-            boardTestShah.getActiveChessman().setX(chessMove.getX());
-            if (checkShah(boardTestShah.getChesses())) {
+    boolean checkShahAfterMove(BoardGame chessBoard, Square chessMove){
+        if (chessBoard.checkMoveChess(chessMove)) {
+            chessBoard.getActiveChessman().setY(chessMove.getY());
+            chessBoard.getActiveChessman().setX(chessMove.getX());
+            if (checkShah(chessBoard.getChesses())) {
                 System.out.println("\033[32mYou SHAH" + "\033[37m");
                 return true;
             }

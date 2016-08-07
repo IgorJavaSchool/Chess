@@ -1,6 +1,8 @@
 package yanevskyy.figures;
 
 import yanevskyy.Chess;
+import yanevskyy.ChessAction;
+import yanevskyy.Square;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +12,7 @@ import java.util.List;
  * Imitations chessman Knight. Makes first part of step on the two cells directly
  * and second one cell to the left or to the right.
  */
-public class Knight extends Chess {
+public class Knight extends Chess implements ChessAction {
 
   /**
    * Constructor default.
@@ -30,9 +32,10 @@ public class Knight extends Chess {
    * @return All possible steps for this figure.
    * @throws CloneNotSupportedException
    */
-  public List<Chess> chessMove(List<Chess> chessmen) throws CloneNotSupportedException {
+  @Override
+  public List<Square> chessMove(List<Chess> chessmen) {
     setChessmen(chessmen);
-    List<Chess> chessList = new ArrayList<>();
+    List<Square> chessList = new ArrayList<>();
     for (int i = -2; i < 3; i++) {
       if (i == 0) continue;
       for (int j = -2; j < 3; j++) {
@@ -49,15 +52,14 @@ public class Knight extends Chess {
   /**
    * Makes one step in that direction.
    * @param chessList List steps.
-   * @throws CloneNotSupportedException
    */
   @Override
-  public void move(List<Chess> chessList) throws CloneNotSupportedException {
-    setStepChess(this.copyChess(getX(), getY()));
-    if (getStepChess().checkMove()){
+  public void move(List<Square> chessList) {
+    setStepChess(new Square(getX(), getY()));
+    if (checkMove()){
       getStepChess().setX(getStepChess().getX() + getStepX());
       getStepChess().setY(getStepChess().getY() + getStepY());
-      chessList.add(getStepChess().copyChess(getStepChess().getX(),getStepChess().getY()));
+      chessList.add(new Square(getStepChess()));
     }
   }
 }

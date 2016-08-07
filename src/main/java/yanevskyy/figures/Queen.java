@@ -1,14 +1,13 @@
 package yanevskyy.figures;
 
 import yanevskyy.Chess;
-
-import java.util.List;
+import yanevskyy.ChessAction;
 
 /**
  * Ферзь
  * Imitations chessman Queen. Makes any steps and any direction.
  */
-public class Queen extends Chess {
+public class Queen extends Chess implements ChessAction {
 
   /**
    * Constructor default.
@@ -25,12 +24,11 @@ public class Queen extends Chess {
    * Return all possible steps.
    * @param chessmen All alive chessmen on the board.
    * @return All possible steps for this figure.
-   * @throws CloneNotSupportedException
    */
-  public List<Chess> chessMove(List<Chess> chessmen) throws CloneNotSupportedException {
-
-    return allStepsChess(chessmen);
-  }
+//  public List<Square> chessMove(List<Chess> chessmen) {
+//
+//    return allStepsChess(chessmen);
+//  }
 
 
 }

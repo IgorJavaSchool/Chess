@@ -6,6 +6,7 @@ import org.junit.Test;
 import yanevskyy.BoardGame;
 import yanevskyy.Chess;
 import yanevskyy.ChessBoard;
+import yanevskyy.Square;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +19,8 @@ import static org.junit.Assert.*;
 public class PawnTest {
     BoardGame chessBoard;
     BoardGame chessBoardTest;
-    List<Chess> result;
-    List<Chess> chesses;
+    List<Square> result;
+    List<Square> chesses;
 
 
     /**
@@ -41,9 +42,9 @@ public class PawnTest {
             System.out.println(result.get(i).toString() + "X  " + result.get(i).getX() + "  " + chesses.get(i).getX());
             System.out.println(result.get(i).toString() + "Y  " + result.get(i).getY() + "  " + chesses.get(i).getY());
         }
-        for (int i = 0; i < result.size(); i++) {
-            chessBoardTest.getChesses().add(result.get(i));
-        }
+//        for (int i = 0; i < result.size(); i++) {
+//            chessBoardTest.getChesses().add(result.get(i));
+//        }
         chessBoardTest.printBoard();
     }
 
@@ -55,8 +56,8 @@ public class PawnTest {
     public void chessMoveFrontFalse() throws Exception {
         Chess pawn = new Pawn(6,3, "♟", false);
         chesses = new ArrayList<>();
-        chesses.add(new Pawn(4,3, "♟", false));
-        chesses.add(new Pawn(5,3, "♟", false));
+        chesses.add(new Square(3,4));
+        chesses.add(new Square(3,5));
         chessBoard.printBoard();
 
         result = pawn.chessMove(chessBoard.getChesses());
@@ -75,7 +76,7 @@ public class PawnTest {
     public void chessMoveFrontFalseSecondStep() throws Exception {
         Chess pawn = new Pawn(6,3, "♟", false);
         chesses = new ArrayList<>();
-        chesses.add(new Pawn(5,3, "♟", false));
+        chesses.add(new Square(3,5));
         pawn.chessMove(chessBoard.getChesses());
         chessBoard.printBoard();
 
@@ -96,10 +97,10 @@ public class PawnTest {
     public void chessMoveFrontFalseAndFight() throws Exception {
         Chess pawn = new Pawn(6,3, "♟", false);
         chesses = new ArrayList<>();
-        chesses.add(new Pawn(5,4, "♟", false));
-        chesses.add(new Pawn(5,2, "♟", false));
-        chesses.add(new Pawn(4,3, "♟", false));
-        chesses.add(new Pawn(5,3, "♟", false));
+        chesses.add(new Square(4,5));
+        chesses.add(new Square(2,5));
+        chesses.add(new Square(3,4));
+        chesses.add(new Square(3,5));
         chessBoard.getChesses().get(1).setX(2);
         chessBoard.getChesses().get(1).setY(5);
         chessBoard.getChesses().get(3).setX(4);
@@ -123,8 +124,8 @@ public class PawnTest {
     public void chessMoveFrontTrue() throws Exception {
         Chess pawn = new Pawn(1,2, "♟", true);
         chesses = new ArrayList<>();
-        chesses.add(new Pawn(3,2, "♟", true));
-        chesses.add(new Pawn(2,2, "♟", true));
+        chesses.add(new Square(2,3));
+        chesses.add(new Square(2,2));
         chessBoard.printBoard();
 
         result = pawn.chessMove(chessBoard.getChesses());
@@ -145,7 +146,7 @@ public class PawnTest {
     public void chessMoveFrontTrueNextStep() throws Exception {
         Chess pawn = new Pawn(1,2, "♟", true);
         chesses = new ArrayList<>();
-        chesses.add(new Pawn(2,2, "♟", true));
+        chesses.add(new Square(2,2));
         pawn.chessMove(chessBoard.getChesses());   // first step
         chessBoard.printBoard();
 
@@ -166,10 +167,10 @@ public class PawnTest {
     public void chessMoveFrontTrueAndFight() throws Exception {
         Chess pawn = new Pawn(1,2, "♟", true);
         chesses = new ArrayList<>();
-        chesses.add(new Pawn(2,3, "♟", true));
-        chesses.add(new Pawn(2,1, "♟", true));
-        chesses.add(new Pawn(3,2, "♟", true));
-        chesses.add(new Pawn(2,2, "♟", true));
+        chesses.add(new Square(3,2));
+        chesses.add(new Square(1,2));
+        chesses.add(new Square(2,3));
+        chesses.add(new Square(2,2));
         chessBoard.getChesses().get(0).setX(3);
         chessBoard.getChesses().get(0).setY(2);
         chessBoard.getChesses().get(2).setX(1);
@@ -193,9 +194,9 @@ public class PawnTest {
     public void chessMoveFrontTrueAndFight2() throws Exception {
         Chess pawn = new Pawn(1,2, "♟", true);
         chesses = new ArrayList<>();
-        chesses.add(new Pawn(2,1, "♟", true));
-        chesses.add(new Pawn(3,2, "♟", true));
-        chesses.add(new Pawn(2,2, "♟", true));
+        chesses.add(new Square(1,2));
+        chesses.add(new Square(2,3));
+        chesses.add(new Square(2,2));
         chessBoard.getChesses().get(0).setX(2);
         chessBoard.getChesses().get(0).setY(3);
         chessBoard.getChesses().get(2).setX(1);

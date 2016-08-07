@@ -6,6 +6,7 @@ import org.junit.Test;
 import yanevskyy.BoardGame;
 import yanevskyy.Chess;
 import yanevskyy.ChessBoard;
+import yanevskyy.Square;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,35 +47,35 @@ public class QueenTest {
         pawn.setX(1);
         queen.setX(2);
         queen.setY(4);
-        List<Chess> chesses = new ArrayList<>();
-        chesses.add(queen.copyChess(1,3));
-        chesses.add(queen.copyChess(1,4));
-        chesses.add(queen.copyChess(0,4));
-        chesses.add(queen.copyChess(1,5));
-        chesses.add(queen.copyChess(2,3));
-        chesses.add(queen.copyChess(2,2));
-        chesses.add(queen.copyChess(2,1));
-        chesses.add(queen.copyChess(2,5));
-        chesses.add(queen.copyChess(3,3));
-        chesses.add(queen.copyChess(4,2));
-        chesses.add(queen.copyChess(5,1));
-        chesses.add(queen.copyChess(3,4));
-        chesses.add(queen.copyChess(4,4));
-        chesses.add(queen.copyChess(5,4));
-        chesses.add(queen.copyChess(6,4));
-        chesses.add(queen.copyChess(7,4));
-        chesses.add(queen.copyChess(3,5));
+        List<Square> chesses = new ArrayList<>();
+        chesses.add(new Square(1,3));
+        chesses.add(new Square(1,4));
+        chesses.add(new Square(0,4));
+        chesses.add(new Square(1,5));
+        chesses.add(new Square(2,3));
+        chesses.add(new Square(2,2));
+        chesses.add(new Square(2,1));
+        chesses.add(new Square(2,5));
+        chesses.add(new Square(3,3));
+        chesses.add(new Square(4,2));
+        chesses.add(new Square(5,1));
+        chesses.add(new Square(3,4));
+        chesses.add(new Square(4,4));
+        chesses.add(new Square(5,4));
+        chesses.add(new Square(6,4));
+        chesses.add(new Square(7,4));
+        chesses.add(new Square(3,5));
 
-        List<Chess> result = queen.chessMove(chessBoard.getChesses());
+        List<Square> result = queen.chessMove(chessBoard.getChesses());
         chessBoard.printBoard();
 
         for (int i = 0; i < result.size(); i++) {
             System.out.println(result.get(i).toString() + "X  " + result.get(i).getX() + "  " + chesses.get(i).getX());
             System.out.println(result.get(i).toString() + "Y  " + result.get(i).getY() + "  " + chesses.get(i).getY());
         }
-        for (int i = 0; i < result.size(); i++) {
-            chessBoardTest.getChesses().add(result.get(i));
-        }
+//        for (int i = 0; i < result.size(); i++) {
+//            chessBoardTest.getChesses().add(result.get(i));
+//        }
 
         for (int i = 0; i < result.size(); i++) {
             assertEquals(result.get(i).getX(), chesses.get(i).getX());

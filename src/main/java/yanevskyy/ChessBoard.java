@@ -30,9 +30,13 @@ public class ChessBoard implements BoardGame {
   /*All destroyed chessmen on the board*/
   private List<Chess> chessesAliveFalse;
   /*All possible steps for this figure*/
-  private List<Chess> chessSteps;
+  private List<Square> chessSteps;
   /*Message in console*/
   private String message;
+  /*Pattern memento*/
+  Originator originator;
+  /*Pattern memento*/
+  CareTaker careTaker;
   private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
   /**
@@ -46,8 +50,9 @@ public class ChessBoard implements BoardGame {
     this.chesses = new ArrayList<>();
     this.chessesAliveFalse = new ArrayList<>();
     this.chessSteps = new ArrayList<>();
+    this.originator = new Originator();
+    this.careTaker = new CareTaker();
   }
-
 
   private User getActiveUser() {
     return activeUser;
@@ -74,11 +79,11 @@ public class ChessBoard implements BoardGame {
     return chessesAliveFalse;
   }
 
-  private List<Chess> getChessSteps() {
+  private List<Square> getChessSteps() {
     return chessSteps;
   }
 
-  private void setChessSteps(List<Chess> chessSteps) {
+  private void setChessSteps(List<Square> chessSteps) {
     this.chessSteps = chessSteps;
   }
 
@@ -250,9 +255,11 @@ public class ChessBoard implements BoardGame {
   private void selectChess(){
     while (true) {
       try {
+        save();
         if (getActiveUser().checkShah(getChesses())){
           writeMessage("\033[32mYou SHAH"+ "\033[37m");
         }
+        load();
         writeMessage("Select chessman");
         setMessage(readMessage());
         if (getMessage().equals("exit")){
@@ -279,20 +286,23 @@ public class ChessBoard implements BoardGame {
    * with new coordinate, move the figure to new place.
    * @param chessSteps All possible steps for selected figure.
    */
-  private void moveChess(List<Chess> chessSteps){
-    Chess chessmanMove;
+  private void moveChess(List<Square> chessSteps){
+    Square chessmanMove;
     while (true){
       try {
         writeMessage("Make a move");
         chessmanMove = getActiveUser().move(readMessage(), chessSteps, getActiveChessman());
-        if (!chessmanMove.equals(getActiveChessman())){
+        if (chessmanMove.getY() != getActiveChessman().getY() || chessmanMove.getX() != getActiveChessman().getX()){
+          save();
           if (!getActiveUser().checkShahAfterMove(this, chessmanMove)) {
+            load();
             if (checkMoveChess(chessmanMove)) {
               getActiveChessman().setY(chessmanMove.getY());
               getActiveChessman().setX(chessmanMove.getX());
               break;
             }
           } else {
+            load();
             writeMessage("\033[32mType \"exit\" and give up or make another run." + "\033[37m");
             countGame--;
             break;
@@ -311,10 +321,10 @@ public class ChessBoard implements BoardGame {
    * @return true if chessmanMove can make run.
    */
   @Override
-  public boolean checkMoveChess(Chess chessmanMove){
+  public boolean checkMoveChess(Square chessmanMove){
     for (Chess chess : getChesses()) {
       if (chess.getX() == chessmanMove.getX() && chess.getY() == chessmanMove.getY()){
-        if (chess.isFront() == chessmanMove.isFront()){
+        if (chess.isFront() == getActiveChessman().isFront()){
           return false;
         } else{
           chess.setAlive(false);
@@ -342,7 +352,23 @@ public class ChessBoard implements BoardGame {
     }
   }
 
+  /**
+   * Restores the saved state of the game.
+   */
+  public void load(){
+    originator.setChessBoard(careTaker.getMemento().getChessBoard());
+    setChesses(originator.getChessBoard().getChesses());
+    setActiveChessman(originator.getChessBoard().getActiveChessman());
+    setActiveUser(originator.getChessBoard().getActiveUser());
+    setChessSteps(originator.getChessBoard().getChessSteps());
+  }
 
+  /**
+   * Saves state of the game.
+   */
+  public void save(){
+    careTaker.setMemento(originator.setToMomento(this));
+  }
 
   public static void main(String[] args) {
     ChessBoard chessBoard = new ChessBoard();

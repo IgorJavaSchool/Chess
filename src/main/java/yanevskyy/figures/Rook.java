@@ -1,6 +1,8 @@
 package yanevskyy.figures;
 
 import yanevskyy.Chess;
+import yanevskyy.ChessAction;
+import yanevskyy.Square;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +11,7 @@ import java.util.List;
  * Ладья
  * Imitations chessman Rook. Makes steps only horizontally or only vertically.
  */
-public class Rook extends Chess {
+public class Rook extends Chess implements ChessAction {
 
   /**
    * Constructor default.
@@ -26,11 +28,11 @@ public class Rook extends Chess {
    * Return all possible steps only horizontally and vertically.
    * @param chessmen All alive chessmen on the board.
    * @return All possible steps for this figure.
-   * @throws CloneNotSupportedException
    */
-  public List<Chess> chessMove(List<Chess> chessmen) throws CloneNotSupportedException {
+  @Override
+  public List<Square> chessMove(List<Chess> chessmen) {
     setChessmen(chessmen);
-    List<Chess> chessList = new ArrayList<>();
+    List<Square> chessList = new ArrayList<>();
     for (int i = -1; i < 2; i++) {
       for (int j = -1; j < 2; j++) {
         if (Math.abs(i) == Math.abs(j)) continue;

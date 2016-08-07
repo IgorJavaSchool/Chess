@@ -1,6 +1,8 @@
 package yanevskyy.figures;
 
 import yanevskyy.Chess;
+import yanevskyy.ChessAction;
+import yanevskyy.Square;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +11,7 @@ import java.util.List;
  * Пешка
  * Imitations chessman Pawn. Makes only one step and only forward and fight only diagonally.
  */
-public class Pawn extends Chess {
+public class Pawn extends Chess implements ChessAction {
   private int count;
 
   /**
@@ -34,11 +36,11 @@ public class Pawn extends Chess {
    * Makes all steps only forward and only diagonally if the cell has opponent's figure.
    * @param chessmen All alive chessmen on the board.
    * @return All possible steps for this figure.
-   * @throws CloneNotSupportedException
    */
-  public List<Chess> chessMove(List<Chess> chessmen) throws CloneNotSupportedException {
+  @Override
+  public List<Square> chessMove(List<Chess> chessmen) {
     setChessmen(chessmen);
-    List<Chess> chessList = new ArrayList<>();
+    List<Square> chessList = new ArrayList<>();
     setStepX(1);
     moveFight(chessList);
     setStepX(-1);
@@ -55,32 +57,30 @@ public class Pawn extends Chess {
   /**
    * Makes step diagonally if the cell has opponent's figure.
    * @param chessList all possible steps this figure.
-   * @throws CloneNotSupportedException
    */
-  public void moveFight(List<Chess> chessList) throws CloneNotSupportedException {
-    setStepChess(this.copyChess(getX(), getY()));
+  public void moveFight(List<Square> chessList){
+    setStepChess(new Square(getX(), getY()));
     getStepChess().setX(getStepChess().getX() + getStepX());
     getStepChess().setY(getStepChess().getY() + getStepY());
     if (checkMoveNegativeFront(getStepChess())){
-      chessList.add(getStepChess().copyChess(getStepChess().getX(), getStepChess().getY()));
+      chessList.add(new Square(getStepChess()));
     }
   }
 
   /**
    * Makes step on the one cell and only forward.
    * @param chessList all possible steps this figure.
-   * @throws CloneNotSupportedException
    */
-  public void moveAhead(List<Chess> chessList) throws CloneNotSupportedException {
-    setStepChess(this.copyChess(getX(), getY()));
+  public void moveAhead(List<Square> chessList) {
+    setStepChess(new Square(getX(), getY()));
     if (count == 0) {
       setStepY(getStepY() + getStepY());
     }
-    if (getStepChess().checkMove()) {
+    if (checkMove()) {
       if (!checkMoveNegativeFront(getStepChess())) {
         getStepChess().setX(getStepChess().getX() + getStepX());
         getStepChess().setY(getStepChess().getY() + getStepY());
-        chessList.add(getStepChess().copyChess(getStepChess().getX(), getStepChess().getY()));
+        chessList.add(new Square(getStepChess()));
         count++;
       }
     }

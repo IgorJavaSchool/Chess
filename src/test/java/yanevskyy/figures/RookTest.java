@@ -6,6 +6,7 @@ import org.junit.Test;
 import yanevskyy.BoardGame;
 import yanevskyy.Chess;
 import yanevskyy.ChessBoard;
+import yanevskyy.Square;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +21,8 @@ public class RookTest {
     Chess rook;
     Chess pawn;
     BoardGame chessBoardTest;
-    List<Chess> result;
-    List<Chess> chesses;
+    List<Square> result;
+    List<Square> chesses;
 
     @Before
     public void addUsers() throws Exception {
@@ -45,10 +46,10 @@ public class RookTest {
             System.out.println(result.get(i).toString() + "X  " + result.get(i).getX() + "  " + chesses.get(i).getX());
             System.out.println(result.get(i).toString() + "Y  " + result.get(i).getY() + "  " + chesses.get(i).getY());
         }
-        for (int i = 0; i < result.size(); i++) {
-            chessBoardTest.getChesses().add(result.get(i));
-        }
-        chessBoardTest.printBoard();
+//        for (int i = 0; i < result.size(); i++) {
+//            chessBoardTest.getChesses().add(result.get(i));
+//        }
+//        chessBoardTest.printBoard();
     }
 
     @Test
@@ -56,8 +57,8 @@ public class RookTest {
         pawn.setY(3);
         pawn.setX(0);
         chesses = new ArrayList<>();
-        chesses.add(rook.copyChess(0,1));
-        chesses.add(rook.copyChess(0,2));
+        chesses.add(new Square(0,1));
+        chesses.add(new Square(0,2));
         chessBoard.printBoard();
 
         result = rook.chessMove(chessBoard.getChesses());
@@ -73,12 +74,12 @@ public class RookTest {
         pawn.setY(5);
         pawn.setX(1);
         chesses = new ArrayList<>();
-        chesses.add(rook.copyChess(0,1));
-        chesses.add(rook.copyChess(0,2));
-        chesses.add(rook.copyChess(0,3));
-        chesses.add(rook.copyChess(0,4));
-        chesses.add(rook.copyChess(0,5));
-        chesses.add(rook.copyChess(0,6));
+        chesses.add(new Square(0,1));
+        chesses.add(new Square(0,2));
+        chesses.add(new Square(0,3));
+        chesses.add(new Square(0,4));
+        chesses.add(new Square(0,5));
+        chesses.add(new Square(0,6));
         chessBoard.printBoard();
 
         result = rook.chessMove(chessBoard.getChesses());
@@ -97,19 +98,19 @@ public class RookTest {
         rook.setX(0);
         rook.setY(3);
         chesses = new ArrayList<>();
-        chesses.add(rook.copyChess(0,2));
-        chesses.add(rook.copyChess(0,1));
-        chesses.add(rook.copyChess(0,0));
-        chesses.add(rook.copyChess(0,4));
-        chesses.add(rook.copyChess(0,5));
-        chesses.add(rook.copyChess(0,6));
-        chesses.add(rook.copyChess(1,3));
-        chesses.add(rook.copyChess(2,3));
-        chesses.add(rook.copyChess(3,3));
-        chesses.add(rook.copyChess(4,3));
-        chesses.add(rook.copyChess(5,3));
-        chesses.add(rook.copyChess(6,3));
-        chesses.add(rook.copyChess(7,3));
+        chesses.add(new Square(0,2));
+        chesses.add(new Square(0,1));
+        chesses.add(new Square(0,0));
+        chesses.add(new Square(0,4));
+        chesses.add(new Square(0,5));
+        chesses.add(new Square(0,6));
+        chesses.add(new Square(1,3));
+        chesses.add(new Square(2,3));
+        chesses.add(new Square(3,3));
+        chesses.add(new Square(4,3));
+        chesses.add(new Square(5,3));
+        chesses.add(new Square(6,3));
+        chesses.add(new Square(7,3));
         chessBoard.printBoard();
 
         result = rook.chessMove(chessBoard.getChesses());
@@ -127,13 +128,13 @@ public class RookTest {
         rook.setX(0);
         rook.setY(3);
         chesses = new ArrayList<>();
-        chesses.add(rook.copyChess(0,2));
-        chesses.add(rook.copyChess(0,1));
-        chesses.add(rook.copyChess(0,0));
-        chesses.add(rook.copyChess(0,4));
-        chesses.add(rook.copyChess(0,5));
-        chesses.add(rook.copyChess(0,6));
-        chesses.add(rook.copyChess(1,3));
+        chesses.add(new Square(0,2));
+        chesses.add(new Square(0,1));
+        chesses.add(new Square(0,0));
+        chesses.add(new Square(0,4));
+        chesses.add(new Square(0,5));
+        chesses.add(new Square(0,6));
+        chesses.add(new Square(1,3));
         chessBoard.printBoard();
 
         result = rook.chessMove(chessBoard.getChesses());

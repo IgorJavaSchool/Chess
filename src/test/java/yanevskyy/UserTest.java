@@ -63,15 +63,16 @@ public class UserTest {
 
     @Test
     public void move() throws Exception {
-        List<Chess> chessesStep = new ArrayList<>();
-        chessesStep.add(new Pawn(5,3, "♟", false));
-        chessesStep.add(new Pawn(4,3, "♟", false));
+        List<Square> chessesStep = new ArrayList<>();
+        chessesStep.add(new Square(3,5));
+        chessesStep.add(new Square(4,3));
         String coordinat = "D3";
         Pawn chessActiv = new Pawn(5,3, "♟", false);
 
-        Chess result = user1.move(coordinat,chessesStep,new Pawn(6,3, "♟", false));
+        Square result = user1.move(coordinat,chessesStep,new Pawn(6,3, "♟", false));
 
-        assertEquals(chessActiv,result);
+        assertEquals(chessActiv.getX(),result.getX());
+        assertEquals(chessActiv.getY(),result.getY());
 
     }
 
@@ -133,7 +134,6 @@ public class UserTest {
 
     @Test
     public void checkShahAfterMove() throws Exception {
-        Pawn pawnMove = (Pawn) pawn2.copyChess(2,2);
         pawn.setY(2);
         pawn.setX(3);
         queen.setX(0);
@@ -141,7 +141,7 @@ public class UserTest {
         chessBoard.setActiveChessman(pawn2);
 
 
-        boolean result = user.checkShahAfterMove( chessBoard, pawnMove);
+        boolean result = user.checkShahAfterMove( chessBoard, new Square(2,2));
 
         assertEquals(result, false);
 
@@ -150,7 +150,6 @@ public class UserTest {
 
     @Test
     public void checkShahAfterMove2() throws Exception {
-        Pawn pawnMove = (Pawn) pawn.copyChess(4,2);
         pawn3.setY(2);
         pawn3.setX(5);
         queen.setX(0);
@@ -160,14 +159,13 @@ public class UserTest {
         chessBoard.setActiveChessman(pawn);
 
 
-        boolean result = user.checkShahAfterMove( chessBoard, pawnMove);
+        boolean result = user.checkShahAfterMove( chessBoard, new Square(4,2));
 
         assertEquals(result, true);
     }
 
     @Test
     public void checkShahAfterMove3() throws Exception {
-        Pawn pawnMove = (Pawn) pawn4.copyChess(4,2);
         pawn3.setY(2);
         pawn3.setX(5);
         queen.setX(0);
@@ -177,7 +175,7 @@ public class UserTest {
         chessBoard.setActiveChessman(pawn4);
 
 
-        boolean result = user.checkShahAfterMove( chessBoard, pawnMove);
+        boolean result = user.checkShahAfterMove( chessBoard, new Square(4,2));
 
         assertEquals(result, false);
     }
