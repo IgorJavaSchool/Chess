@@ -10,6 +10,7 @@ public interface BoardGame {
     void createBoard();
     void printBoard();
     void setActiveChessman(Chess activChessman);
+    void setChesses(List<Chess> chess);
     boolean checkMoveChess(Square chessmanMove);
     Chess getActiveChessman();
     void fillChesses();

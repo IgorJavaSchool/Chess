@@ -34,9 +34,9 @@ public class ChessBoard implements BoardGame {
   /*Message in console*/
   private String message;
   /*Pattern memento*/
-  Originator originator;
+//  Originator originator;
   /*Pattern memento*/
-  CareTaker careTaker;
+//  CareTaker careTaker;
   private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
   /**
@@ -50,8 +50,8 @@ public class ChessBoard implements BoardGame {
     this.chesses = new ArrayList<>();
     this.chessesAliveFalse = new ArrayList<>();
     this.chessSteps = new ArrayList<>();
-    this.originator = new Originator();
-    this.careTaker = new CareTaker();
+//    this.originator = new Originator();
+//    this.careTaker = new CareTaker();
   }
 
   private User getActiveUser() {
@@ -69,10 +69,6 @@ public class ChessBoard implements BoardGame {
 
   private int getCountGame() {
     return countGame;
-  }
-
-  private void setChesses(List<Chess> chesses) {
-    this.chesses = chesses;
   }
 
   private List<Chess> getChessesAliveFalse() {
@@ -112,6 +108,10 @@ public class ChessBoard implements BoardGame {
   @Override
   public void setActiveChessman(Chess activChessman) {
     this.activeChessman = activChessman;
+  }
+  @Override
+  public void setChesses(List<Chess> chesses) {
+    this.chesses = chesses;
   }
 
   /**
@@ -255,11 +255,11 @@ public class ChessBoard implements BoardGame {
   private void selectChess(){
     while (true) {
       try {
-        save();
+//        save();
         if (getActiveUser().checkShah(getChesses())){
           writeMessage("\033[32mYou SHAH"+ "\033[37m");
         }
-        load();
+//        load();
         writeMessage("Select chessman");
         setMessage(readMessage());
         if (getMessage().equals("exit")){
@@ -293,16 +293,16 @@ public class ChessBoard implements BoardGame {
         writeMessage("Make a move");
         chessmanMove = getActiveUser().move(readMessage(), chessSteps, getActiveChessman());
         if (chessmanMove.getY() != getActiveChessman().getY() || chessmanMove.getX() != getActiveChessman().getX()){
-          save();
+//          save();
           if (!getActiveUser().checkShahAfterMove(this, chessmanMove)) {
-            load();
+//            load();
             if (checkMoveChess(chessmanMove)) {
               getActiveChessman().setY(chessmanMove.getY());
               getActiveChessman().setX(chessmanMove.getX());
               break;
             }
           } else {
-            load();
+//            load();
             writeMessage("\033[32mType \"exit\" and give up or make another run." + "\033[37m");
             countGame--;
             break;
@@ -355,20 +355,20 @@ public class ChessBoard implements BoardGame {
   /**
    * Restores the saved state of the game.
    */
-  public void load(){
-    originator.setChessBoard(careTaker.getMemento().getChessBoard());
-    setChesses(originator.getChessBoard().getChesses());
-    setActiveChessman(originator.getChessBoard().getActiveChessman());
-    setActiveUser(originator.getChessBoard().getActiveUser());
-    setChessSteps(originator.getChessBoard().getChessSteps());
-  }
+//  public void load(){
+//    originator.setChessBoard(careTaker.getMemento().getChessBoard());
+//    setChesses(originator.getChessBoard().getChesses());
+//    setActiveChessman(originator.getChessBoard().getActiveChessman());
+//    setActiveUser(originator.getChessBoard().getActiveUser());
+//    setChessSteps(originator.getChessBoard().getChessSteps());
+//  }
 
   /**
    * Saves state of the game.
    */
-  public void save(){
-    careTaker.setMemento(originator.setToMomento(this));
-  }
+//  public void save(){
+//    careTaker.setMemento(originator.setToMomento(this));
+//  }
 
   public static void main(String[] args) {
     ChessBoard chessBoard = new ChessBoard();

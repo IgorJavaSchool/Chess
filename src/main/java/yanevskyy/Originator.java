@@ -1,21 +1,38 @@
 package yanevskyy;
 
+import java.util.List;
+
 /**
  * @author Yanevskyy Igor igor2000@inbox.ru.
  */
 public class Originator {
-    private ChessBoard chessBoard;
+    private List<Chess> chesses;
+    private  Chess activeChess;
 
-    public ChessBoard getChessBoard() {
-        return chessBoard;
+    public List<Chess> getChesses() {
+        return chesses;
     }
 
-    public void setChessBoard(ChessBoard chessBoard) {
-        this.chessBoard = chessBoard;
+    public void setChesses(List<Chess> chesses) {
+        this.chesses = chesses;
     }
 
-    public Memento setToMomento(ChessBoard chessBoard){
-        return new Memento(chessBoard);
+    public Chess getActiveChess() {
+        return activeChess;
     }
 
-}
+    public void setActiveChess(Chess activeChess) {
+        this.activeChess = activeChess;
+    }
+
+    public Memento setToMomento(){
+        return new Memento(chesses);
+    }
+
+    public Memento setToMomentoFull(){
+        return new Memento(chesses, activeChess);
+
+    }
+
+
+    }

@@ -20,6 +20,10 @@ public class User {
     private String name;
     /*Active chessman at this time*/
     private Chess activeChessman;
+    /*Pattern memento*/
+    Originator originator;
+    /*Pattern memento*/
+    CareTaker careTaker;
 
     /**
      * Constructor default.
@@ -31,6 +35,8 @@ public class User {
         this.front = front;
         this.win = false;
         this.name = name;
+        this.originator = new Originator();
+        this.careTaker = new CareTaker();
     }
 
     public void setChess(Chess[] chess) {
@@ -183,6 +189,7 @@ public class User {
      * @return true if opponent's figure can fight to user's king.
      */
     boolean checkShah(List<Chess> chesses) {
+        saveChesses(chesses);
         Chess myKing = null;
         List<Square> chessSteps;
         for (Chess chess : chesses) {
@@ -198,12 +205,15 @@ public class User {
                 if (chess.isFront() != isFront() && chess.isAlive()) {
                     chessSteps = chess.chessMove(chesses);
                     for (Square chessFight : chessSteps) {
-                        if (chessFight.getX() == myKing.getX() && chessFight.getY() == myKing.getY())
+                        if (chessFight.getX() == myKing.getX() && chessFight.getY() == myKing.getY()) {
+                            chesses = loadChesses();
                             return true;
+                        }
                     }
                 }
             }
         }
+        chesses = loadChesses();
         return false;
     }
 
@@ -215,14 +225,37 @@ public class User {
      * @return true or false
      */
     boolean checkShahAfterMove(BoardGame chessBoard, Square chessMove){
+        saveChessesAndActiveChess(chessBoard.getChesses(), chessBoard.getActiveChessman());
         if (chessBoard.checkMoveChess(chessMove)) {
             chessBoard.getActiveChessman().setY(chessMove.getY());
             chessBoard.getActiveChessman().setX(chessMove.getX());
             if (checkShah(chessBoard.getChesses())) {
                 System.out.println("\033[32mYou SHAH" + "\033[37m");
+                chessBoard.setChesses(loadChesses());
+                chessBoard.setActiveChessman(loadActiveChess());
                 return true;
             }
         }
+        chessBoard.setChesses(careTaker.getMemento().getChesses());
+        chessBoard.setActiveChessman(careTaker.getMemento().getActiveChess());
         return false;
     }
+
+    public void saveChesses(List<Chess> chesses){
+        originator.setChesses(chesses);
+        careTaker.setMemento(originator.setToMomento());
+    }
+    public void saveChessesAndActiveChess(List<Chess> chesses, Chess activeChessman){
+        originator.setChesses(chesses);
+        originator.setActiveChess(activeChessman);
+        careTaker.setMemento(originator.setToMomentoFull());
+    }
+    public List<Chess> loadChesses(){
+        return careTaker.getMemento().getChesses();
+    }
+    public Chess loadActiveChess(){
+        return careTaker.getMemento().getActiveChess();
+    }
+
+
 }
