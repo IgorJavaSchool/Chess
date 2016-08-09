@@ -6,11 +6,10 @@ package yanevskyy;
 public class CareTaker {
     private Memento memento;
 
-    public Memento getMemento() {
-        return memento;
+    public void SaveState(Originator originator){
+        memento = originator.GetMemento();
     }
-
-    public void setMemento(Memento memento) {
-        this.memento = memento;
+    public void LoadState(Originator originator){
+        originator.SetMemento(memento);
     }
 }

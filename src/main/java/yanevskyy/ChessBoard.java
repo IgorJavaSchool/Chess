@@ -36,7 +36,7 @@ public class ChessBoard implements BoardGame {
   /*Pattern memento*/
 //  Originator originator;
   /*Pattern memento*/
-//  CareTaker careTaker;
+  CareTaker careTaker;
   private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
   /**
@@ -51,7 +51,7 @@ public class ChessBoard implements BoardGame {
     this.chessesAliveFalse = new ArrayList<>();
     this.chessSteps = new ArrayList<>();
 //    this.originator = new Originator();
-//    this.careTaker = new CareTaker();
+    this.careTaker = new CareTaker();
   }
 
   private User getActiveUser() {
@@ -293,16 +293,16 @@ public class ChessBoard implements BoardGame {
         writeMessage("Make a move");
         chessmanMove = getActiveUser().move(readMessage(), chessSteps, getActiveChessman());
         if (chessmanMove.getY() != getActiveChessman().getY() || chessmanMove.getX() != getActiveChessman().getX()){
-//          save();
+          save();
           if (!getActiveUser().checkShahAfterMove(this, chessmanMove)) {
-//            load();
+            load();
             if (checkMoveChess(chessmanMove)) {
               getActiveChessman().setY(chessmanMove.getY());
               getActiveChessman().setX(chessmanMove.getX());
               break;
             }
           } else {
-//            load();
+            load();
             writeMessage("\033[32mType \"exit\" and give up or make another run." + "\033[37m");
             countGame--;
             break;
@@ -355,20 +355,16 @@ public class ChessBoard implements BoardGame {
   /**
    * Restores the saved state of the game.
    */
-//  public void load(){
-//    originator.setChessBoard(careTaker.getMemento().getChessBoard());
-//    setChesses(originator.getChessBoard().getChesses());
-//    setActiveChessman(originator.getChessBoard().getActiveChessman());
-//    setActiveUser(originator.getChessBoard().getActiveUser());
-//    setChessSteps(originator.getChessBoard().getChessSteps());
-//  }
+  public void load(){
+    careTaker.LoadState(getActiveUser());
+  }
 
   /**
    * Saves state of the game.
    */
-//  public void save(){
-//    careTaker.setMemento(originator.setToMomento(this));
-//  }
+  public void save(){
+    careTaker.SaveState(getActiveUser());
+  }
 
   public static void main(String[] args) {
     ChessBoard chessBoard = new ChessBoard();
