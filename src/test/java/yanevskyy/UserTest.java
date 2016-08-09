@@ -141,7 +141,7 @@ public class UserTest {
         chessBoard.setActiveChessman(pawn2);
 
 
-        boolean result = user.checkShahAfterMove( chessBoard, new Square(2,2));
+        boolean result = user.checkShahAfterMove(new Square(2,2));
 
         assertEquals(result, false);
 
@@ -159,7 +159,7 @@ public class UserTest {
         chessBoard.setActiveChessman(pawn);
 
 
-        boolean result = user.checkShahAfterMove( chessBoard, new Square(4,2));
+        boolean result = user.checkShahAfterMove( new Square(4,2));
 
         assertEquals(result, true);
     }
@@ -175,7 +175,7 @@ public class UserTest {
         chessBoard.setActiveChessman(pawn4);
 
 
-        boolean result = user.checkShahAfterMove( chessBoard, new Square(4,2));
+        boolean result = user.checkShahAfterMove( new Square(4,2));
 
         assertEquals(result, false);
     }

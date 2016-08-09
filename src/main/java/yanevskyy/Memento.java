@@ -1,17 +1,25 @@
 package yanevskyy;
 
 
+import java.util.List;
+
 /**
  * @author Yanevskyy Igor igor2000@inbox.ru.
  */
 public class Memento {
-    private ChessBoard chessBoard;
+    private List<Chess> chesses;
+    private Chess activeChesses;
 
-    public Memento(ChessBoard chessBoard) {
-        this.chessBoard = chessBoard;
+    public Memento(List<Chess> chesses, Chess activeChesses) {
+        this.chesses = chesses;
+        this.activeChesses = activeChesses;
     }
 
-    public ChessBoard getChessBoard() {
-        return chessBoard;
+    public List<Chess> getChesses() {
+        return chesses;
+    }
+
+    public Chess getActiveChesses() {
+        return activeChesses;
     }
 }

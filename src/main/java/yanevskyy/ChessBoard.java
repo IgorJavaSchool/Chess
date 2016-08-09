@@ -294,11 +294,12 @@ public class ChessBoard implements BoardGame {
         chessmanMove = getActiveUser().move(readMessage(), chessSteps, getActiveChessman());
         if (chessmanMove.getY() != getActiveChessman().getY() || chessmanMove.getX() != getActiveChessman().getX()){
           save();
-          if (!getActiveUser().checkShahAfterMove(this, chessmanMove)) {
+          if (!getActiveUser().checkShahAfterMove(chessmanMove)) {
             load();
             if (checkMoveChess(chessmanMove)) {
               getActiveChessman().setY(chessmanMove.getY());
               getActiveChessman().setX(chessmanMove.getX());
+              getActiveChessman().setCount();
               break;
             }
           } else {
@@ -327,13 +328,21 @@ public class ChessBoard implements BoardGame {
         if (chess.isFront() == getActiveChessman().isFront()){
           return false;
         } else{
-          chess.setAlive(false);
-          getChessesAliveFalse().add(chess);
+          chessFight(chess);
           return true;
         }
       }
     }
     return true;
+  }
+
+  /**
+   * Fight chess.
+   * @param chess Figure which need fight.
+     */
+  public void chessFight(Chess chess){
+    chess.setAlive(false);
+    getChessesAliveFalse().add(chess);
   }
 
   /**

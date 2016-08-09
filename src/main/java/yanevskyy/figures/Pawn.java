@@ -12,7 +12,6 @@ import java.util.List;
  * Imitations chessman Pawn. Makes only one step and only forward and fight only diagonally.
  */
 public class Pawn extends Chess implements ChessAction {
-  private int count;
 
   /**
    * Constructor default. Set vertical step depending on the figure's front.
@@ -23,14 +22,10 @@ public class Pawn extends Chess implements ChessAction {
    */
   public Pawn(int y, int x, String name, boolean front) {
     super(y, x, name, front);
-    this.count = 0;
     setStepY(front ? 1 : -1);
   }
 
 
-  public int getCount() {
-    return count;
-  }
 
   /**
    * Makes all steps only forward and only diagonally if the cell has opponent's figure.
@@ -81,7 +76,6 @@ public class Pawn extends Chess implements ChessAction {
         getStepChess().setX(getStepChess().getX() + getStepX());
         getStepChess().setY(getStepChess().getY() + getStepY());
         chessList.add(new Square(getStepChess()));
-        count++;
       }
     }
   }

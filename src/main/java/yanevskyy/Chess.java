@@ -28,6 +28,9 @@ public abstract class Chess implements ChessAction {
     private Square stepChess;
     /*set parameter figure's life*/
     private boolean alive;
+    /*Counts figure's steps*/
+    protected int count;
+
 
 
     /**
@@ -43,6 +46,7 @@ public abstract class Chess implements ChessAction {
         this.front = front;
         this.name = name;
         this.alive = true;
+        this.count = 0;
     }
 
     public Chess(Chess chess) {
@@ -55,6 +59,10 @@ public abstract class Chess implements ChessAction {
 
     public String getName() {
         return name;
+    }
+
+    public int getCount() {
+        return count;
     }
 
     public List<Chess> getChessmen() {
@@ -115,6 +123,10 @@ public abstract class Chess implements ChessAction {
 
     protected void setStepChess(Square stepChess) {
         this.stepChess = stepChess;
+    }
+
+    public void setCount() {
+        this.count++;
     }
 
     @Override

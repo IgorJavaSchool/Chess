@@ -21,7 +21,7 @@ public class User implements Originator {
     /*Active chessman at this time*/
     private Chess activeChessman;
     /*Pattern memento*/
-    BoardGame chessBoard;
+    List<Chess> chesses;
 
     /**
      * Constructor default.
@@ -67,6 +67,10 @@ public class User implements Originator {
         this.win = win;
     }
 
+    public List<Chess> getChesses() {
+        return chesses;
+    }
+
     /**
      * Makes new chessman with coordinates which writes user.
      * @param message from console.
@@ -98,6 +102,7 @@ public class User implements Originator {
      * @return User's figure if its coordinates match those that the user wrote.
      */
     Chess selectChess(String message, List<Chess> chessList){
+        this.chesses = chessList;
         char[] coordinates = message.toCharArray();
         if (coordinates.length == 2){
             int x = checkLater(String.valueOf(coordinates[0]).toLowerCase());
@@ -213,31 +218,29 @@ public class User implements Originator {
     /**
      * User make new step. If after that shah is true for user's king,
      * then user must correct his step or must be lost.
-     * @param chessBoard chess board.
      * @param chessMove new step from user.
      * @return true or false
      */
-    boolean checkShahAfterMove(BoardGame chessBoard, Square chessMove){
-        this.chessBoard = chessBoard;
-        if (chessBoard.checkMoveChess(chessMove)) {
-            chessBoard.getActiveChessman().setY(chessMove.getY());
-            chessBoard.getActiveChessman().setX(chessMove.getX());
-            if (checkShah(chessBoard.getChesses())) {
+    boolean checkShahAfterMove(Square chessMove){
+//        if (chessBoard.checkMoveChess(chessMove)) {
+            getActiveChessman().setY(chessMove.getY());
+            getActiveChessman().setX(chessMove.getX());
+            if (checkShah(getChesses())) {
                 System.out.println("\033[32mYou SHAH" + "\033[37m");
                 return true;
             }
-        }
         return false;
     }
 
 
     @Override
     public Memento GetMemento() {
-        return new Memento((ChessBoard) chessBoard);
+        return new Memento(getChesses(), getActiveChessman());
     }
 
     @Override
     public void SetMemento(Memento memento) {
-        this.chessBoard = memento.getChessBoard();
+        this.chesses = memento.getChesses();
+        this.activeChessman = memento.getActiveChesses();
     }
 }
