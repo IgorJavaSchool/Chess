@@ -289,9 +289,9 @@ public class ChessBoard implements BoardGame {
         writeMessage("Make a move");
         chessmanMove = getActiveUser().move(readMessage(), chessSteps, getActiveChessman());
         if (chessmanMove.getY() != getActiveChessman().getY() || chessmanMove.getX() != getActiveChessman().getX()){
-//          save();
+          save();
           if (!getActiveUser().checkShahAfterMove(chessmanMove)) {
-//            load();
+            load();
             if (checkMoveChess(chessmanMove)) {
               getActiveChessman().setY(chessmanMove.getY());
               getActiveChessman().setX(chessmanMove.getX());
@@ -299,7 +299,7 @@ public class ChessBoard implements BoardGame {
               break;
             }
           } else {
-//            load();
+            load();
             writeMessage("\033[32mType \"exit\" and give up or make another run." + "\033[37m");
             countGame--;
             break;

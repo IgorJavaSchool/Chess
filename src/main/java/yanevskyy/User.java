@@ -227,30 +227,30 @@ public class User implements Originator {
      * @return true or false
      */
     boolean checkShahAfterMove(Square chessMove){
-        int x = getActiveChessman().getX();
-        int y = getActiveChessman().getY();
+//        int x = getActiveChessman().getX();
+//        int y = getActiveChessman().getY();
             getActiveChessman().setY(chessMove.getY());
             getActiveChessman().setX(chessMove.getX());
             if (checkShah(getChesses())) {
                 System.out.println("\033[32mYou SHAH" + "\033[37m");
-                getActiveChessman().setY(y);
-                getActiveChessman().setX(x);
+//                getActiveChessman().setY(y);
+//                getActiveChessman().setX(x);
                 return true;
             }
-        getActiveChessman().setY(y);
-        getActiveChessman().setX(x);
+//        getActiveChessman().setY(y);
+//        getActiveChessman().setX(x);
         return false;
     }
 
 
     @Override
     public Memento GetMemento() {
-        return new Memento(getChesses(), getActiveChessman());
+        return new Memento(getActiveChessman());
     }
 
     @Override
     public void SetMemento(Memento memento) {
-        this.chesses = memento.getChesses();
-        this.activeChessman = memento.getActiveChesses();
+        getActiveChessman().setX(memento.getX());
+        getActiveChessman().setY(memento.getY());
     }
 }

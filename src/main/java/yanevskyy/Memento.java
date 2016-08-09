@@ -7,19 +7,19 @@ import java.util.List;
  * @author Yanevskyy Igor igor2000@inbox.ru.
  */
 public class Memento {
-    private List<Chess> chesses;
-    private Chess activeChesses;
+    private int x;
+    private int y;
 
-    public Memento(List<Chess> chesses, Chess activeChesses) {
-        this.chesses = chesses;
-        this.activeChesses = activeChesses;
+    public Memento(Chess chess) {
+        this.x = chess.getX();
+        this.y = chess.getY();
     }
 
-    public List<Chess> getChesses() {
-        return chesses;
+    public int getX() {
+        return x;
     }
 
-    public Chess getActiveChesses() {
-        return activeChesses;
+    public int getY() {
+        return y;
     }
 }
