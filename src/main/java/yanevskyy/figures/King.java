@@ -24,17 +24,6 @@ public class King extends Chess implements ChessAction {
   }
 
   /**
-   * Makes steps in any direction.
-   * @param chessmen All alive chessmen on the board.
-   * @return All possible steps for this figure.
-   */
-//  @Override
-//  public List<Square> chessMove(List<Chess> chessmen){
-//
-//    return allStepsChess(chessmen);
-//  }
-
-  /**
    * Makes one step in that direction.
    * @param chessList List steps.
    */

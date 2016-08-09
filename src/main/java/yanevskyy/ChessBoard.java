@@ -34,8 +34,6 @@ public class ChessBoard implements BoardGame {
   /*Message in console*/
   private String message;
   /*Pattern memento*/
-//  Originator originator;
-  /*Pattern memento*/
   CareTaker careTaker;
   private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
@@ -255,11 +253,9 @@ public class ChessBoard implements BoardGame {
   private void selectChess(){
     while (true) {
       try {
-//        save();
         if (getActiveUser().checkShah(getChesses())){
           writeMessage("\033[32mYou SHAH"+ "\033[37m");
         }
-//        load();
         writeMessage("Select chessman");
         setMessage(readMessage());
         if (getMessage().equals("exit")){
@@ -293,9 +289,9 @@ public class ChessBoard implements BoardGame {
         writeMessage("Make a move");
         chessmanMove = getActiveUser().move(readMessage(), chessSteps, getActiveChessman());
         if (chessmanMove.getY() != getActiveChessman().getY() || chessmanMove.getX() != getActiveChessman().getX()){
-          save();
+//          save();
           if (!getActiveUser().checkShahAfterMove(chessmanMove)) {
-            load();
+//            load();
             if (checkMoveChess(chessmanMove)) {
               getActiveChessman().setY(chessmanMove.getY());
               getActiveChessman().setX(chessmanMove.getX());
@@ -303,7 +299,7 @@ public class ChessBoard implements BoardGame {
               break;
             }
           } else {
-            load();
+//            load();
             writeMessage("\033[32mType \"exit\" and give up or make another run." + "\033[37m");
             countGame--;
             break;

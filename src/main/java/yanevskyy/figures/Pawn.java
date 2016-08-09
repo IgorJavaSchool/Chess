@@ -41,10 +41,6 @@ public class Pawn extends Chess implements ChessAction {
     setStepX(-1);
     moveFight(chessList);
     setStepX(0);
-    if (getCount() == 0) {
-      moveAhead(chessList);
-      setStepY(isFront() ? 1 : -1);
-    }
     moveAhead(chessList);
     return chessList;
   }
@@ -68,14 +64,12 @@ public class Pawn extends Chess implements ChessAction {
    */
   public void moveAhead(List<Square> chessList) {
     setStepChess(new Square(getX(), getY()));
-    if (count == 0) {
-      setStepY(getStepY() + getStepY());
-    }
     if (checkMove()) {
       if (!checkMoveNegativeFront(getStepChess())) {
-        getStepChess().setX(getStepChess().getX() + getStepX());
-        getStepChess().setY(getStepChess().getY() + getStepY());
-        chessList.add(new Square(getStepChess()));
+        if (getCount() == 0) {
+          chessList.add(new Square(getStepChess().getX() + getStepX(), getStepChess().getY() + getStepY() + getStepY()));
+        }
+        chessList.add(new Square(getStepChess().getX() + getStepX(), getStepChess().getY() + getStepY()));
       }
     }
   }

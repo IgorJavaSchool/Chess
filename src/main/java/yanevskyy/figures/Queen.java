@@ -20,15 +20,4 @@ public class Queen extends Chess implements ChessAction {
     super(y, x, name, front);
   }
 
-  /**
-   * Return all possible steps.
-   * @param chessmen All alive chessmen on the board.
-   * @return All possible steps for this figure.
-   */
-//  public List<Square> chessMove(List<Chess> chessmen) {
-//
-//    return allStepsChess(chessmen);
-//  }
-
-
 }

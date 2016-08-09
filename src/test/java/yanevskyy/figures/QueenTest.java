@@ -18,27 +18,20 @@ import static org.junit.Assert.*;
  */
 public class QueenTest {
     BoardGame chessBoard;
-    BoardGame chessBoardTest;
     Chess queen;
     Chess pawn;
     @Before
     public void setUp() throws Exception {
         chessBoard = new ChessBoard();
-        chessBoardTest = new ChessBoard();
         chessBoard.createBoard();
         chessBoard.fillChesses();
-        chessBoardTest.createBoard();
         for (Chess chess : chessBoard.getChesses()) {
             if (chess.getY() == 1 && chess.getX() == 1) {
-                pawn = (Pawn) chess;
+                pawn =  chess;
             }
             if (chess.getY() == 7 && chess.getX() == 3)
-                queen = (Queen) chess;
+                queen =  chess;
         }
-    }
-    @After
-    public void after() throws Exception{
-        chessBoardTest.printBoard();
     }
 
     @Test
@@ -73,9 +66,6 @@ public class QueenTest {
             System.out.println(result.get(i).toString() + "X  " + result.get(i).getX() + "  " + chesses.get(i).getX());
             System.out.println(result.get(i).toString() + "Y  " + result.get(i).getY() + "  " + chesses.get(i).getY());
         }
-//        for (int i = 0; i < result.size(); i++) {
-//            chessBoardTest.getChesses().add(result.get(i));
-//        }
 
         for (int i = 0; i < result.size(); i++) {
             assertEquals(result.get(i).getX(), chesses.get(i).getX());

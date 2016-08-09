@@ -20,7 +20,6 @@ public class KnightTest {
     BoardGame chessBoard;
     Chess knight;
     Chess pawn;
-    BoardGame chessBoardTest;
     List<Square> result;
     List<Square> chesses;
 
@@ -29,14 +28,12 @@ public class KnightTest {
         chessBoard = new ChessBoard();
         chessBoard.createBoard();
         chessBoard.fillChesses();
-        chessBoardTest = new ChessBoard();
-        chessBoardTest.createBoard();
         for (Chess chess : chessBoard.getChesses()) {
             if (chess.getY() == 6 && chess.getX() == 0) {
-                pawn = (Pawn) chess;
+                pawn =  chess;
             }
             if (chess.getY() == 7 && chess.getX() == 1)
-                knight = (Knight) chess;
+                knight = chess;
         }
     }
 
@@ -46,10 +43,6 @@ public class KnightTest {
                 System.out.println(result.get(i).toString() + "X  " + result.get(i).getX() + "  " + chesses.get(i).getX());
                 System.out.println(result.get(i).toString() + "Y  " + result.get(i).getY() + "  " + chesses.get(i).getY());
             }
-//            for (int i = 0; i < result.size(); i++) {
-//                chessBoardTest.getChesses().add(result.get(i));
-//            }
-//            chessBoardTest.printBoard();
     }
 
     @Test

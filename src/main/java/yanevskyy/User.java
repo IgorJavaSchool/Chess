@@ -21,7 +21,7 @@ public class User implements Originator {
     /*Active chessman at this time*/
     private Chess activeChessman;
     /*Pattern memento*/
-    List<Chess> chesses;
+    private List<Chess> chesses;
 
     /**
      * Constructor default.
@@ -71,6 +71,10 @@ public class User implements Originator {
         return chesses;
     }
 
+    public void setChesses(List<Chess> chesses) {
+        this.chesses = chesses;
+    }
+
     /**
      * Makes new chessman with coordinates which writes user.
      * @param message from console.
@@ -102,7 +106,8 @@ public class User implements Originator {
      * @return User's figure if its coordinates match those that the user wrote.
      */
     Chess selectChess(String message, List<Chess> chessList){
-        this.chesses = chessList;
+        setChesses(chessList);
+        setActiveChessman(null);
         char[] coordinates = message.toCharArray();
         if (coordinates.length == 2){
             int x = checkLater(String.valueOf(coordinates[0]).toLowerCase());
@@ -222,13 +227,18 @@ public class User implements Originator {
      * @return true or false
      */
     boolean checkShahAfterMove(Square chessMove){
-//        if (chessBoard.checkMoveChess(chessMove)) {
+        int x = getActiveChessman().getX();
+        int y = getActiveChessman().getY();
             getActiveChessman().setY(chessMove.getY());
             getActiveChessman().setX(chessMove.getX());
             if (checkShah(getChesses())) {
                 System.out.println("\033[32mYou SHAH" + "\033[37m");
+                getActiveChessman().setY(y);
+                getActiveChessman().setX(x);
                 return true;
             }
+        getActiveChessman().setY(y);
+        getActiveChessman().setX(x);
         return false;
     }
 

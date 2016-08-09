@@ -158,24 +158,6 @@ public abstract class Chess implements ChessAction {
         return result;
     }
 
-//    @Override
-//    protected Object clone() throws CloneNotSupportedException {
-//        return super.clone();
-//    }
-
-    /**
-     * Creates a clone of the caller.
-     * @param x Coordinate on X.
-     * @param y Coordinate on Y.
-     * @return New chess owen's clone.
-     * @throws CloneNotSupportedException
-     */
-//    public Chess copyChess(int x, int y) throws CloneNotSupportedException {
-//        Chess chess = (Chess)this.clone();
-//        chess.setX(x);
-//        chess.setY(y);
-//        return chess;
-//    }
 
     /**
      * Checked array with all chessmen. Return true if one chessman have discrepant Front

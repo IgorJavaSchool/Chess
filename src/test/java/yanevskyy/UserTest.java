@@ -138,7 +138,8 @@ public class UserTest {
         pawn.setX(3);
         queen.setX(0);
         queen.setY(4);
-        chessBoard.setActiveChessman(pawn2);
+        user.setActiveChessman(pawn2);
+        user.setChesses(chessBoard.getChesses());
 
 
         boolean result = user.checkShahAfterMove(new Square(2,2));
@@ -156,7 +157,8 @@ public class UserTest {
         queen.setY(4);
         rook.setY(2);
         rook.setX(4);
-        chessBoard.setActiveChessman(pawn);
+        user.setActiveChessman(pawn);
+        user.setChesses(chessBoard.getChesses());
 
 
         boolean result = user.checkShahAfterMove( new Square(4,2));
@@ -172,7 +174,8 @@ public class UserTest {
         queen.setY(4);
         rook.setY(2);
         rook.setX(4);
-        chessBoard.setActiveChessman(pawn4);
+        user.setActiveChessman(pawn4);
+        user.setChesses(chessBoard.getChesses());
 
 
         boolean result = user.checkShahAfterMove( new Square(4,2));

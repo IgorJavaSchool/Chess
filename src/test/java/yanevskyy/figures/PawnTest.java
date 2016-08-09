@@ -18,7 +18,6 @@ import static org.junit.Assert.*;
  */
 public class PawnTest {
     BoardGame chessBoard;
-    BoardGame chessBoardTest;
     List<Square> result;
     List<Square> chesses;
 
@@ -32,8 +31,6 @@ public class PawnTest {
         chessBoard = new ChessBoard();
         chessBoard.createBoard();
         chessBoard.fillChesses();
-        chessBoardTest = new ChessBoard();
-        chessBoardTest.createBoard();
     }
 
     @After
@@ -42,14 +39,10 @@ public class PawnTest {
             System.out.println(result.get(i).toString() + "X  " + result.get(i).getX() + "  " + chesses.get(i).getX());
             System.out.println(result.get(i).toString() + "Y  " + result.get(i).getY() + "  " + chesses.get(i).getY());
         }
-//        for (int i = 0; i < result.size(); i++) {
-//            chessBoardTest.getChesses().add(result.get(i));
-//        }
-        chessBoardTest.printBoard();
     }
 
     /**
-     * checked moove pawn first step and second step when pawn front = false.
+     * checked move pawn first step when pawn front = false.
      * @throws Exception
      */
     @Test
@@ -70,16 +63,14 @@ public class PawnTest {
     }
 
     /**
-     * checked moove pawn after first step when pawn front = false.
+     * checked move pawn after first step when pawn front = false.
      */
     @Test
     public void chessMoveFrontFalseSecondStep() throws Exception {
         Chess pawn = new Pawn(6,3, "♟", false);
         chesses = new ArrayList<>();
         chesses.add(new Square(3,5));
-        pawn.chessMove(chessBoard.getChesses());
-        chessBoard.printBoard();
-
+        pawn.setCount();
         result = pawn.chessMove(chessBoard.getChesses());
 
         assertEquals(result, chesses);
@@ -90,7 +81,7 @@ public class PawnTest {
     }
 
     /**
-     * checked moove pawn first step and second step when pawn front = false and the pawn can fight front chess.
+     * checked move pawn first step and second step when pawn front = false and the pawn can fight front chess.
      * @throws Exception
      */
     @Test
@@ -147,8 +138,7 @@ public class PawnTest {
         Chess pawn = new Pawn(1,2, "♟", true);
         chesses = new ArrayList<>();
         chesses.add(new Square(2,2));
-        pawn.chessMove(chessBoard.getChesses());   // first step
-        chessBoard.printBoard();
+        pawn.setCount();
 
         result = pawn.chessMove(chessBoard.getChesses());
 
